@@ -15,6 +15,8 @@ public class Employee {
     private String email ;
     private String senha;
     private Character cargo;
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
     @Column(name = "setor_id")
     private long setorId;
     @Column(name = "unidade_id")
@@ -84,6 +86,10 @@ public class Employee {
     public void setCargo(Character cargo) {
         this.cargo = cargo;
     }
+
+    public String getFotoPerfil() {return fotoPerfil;}
+
+    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 
     public long getSetorId() {
         return setorId;

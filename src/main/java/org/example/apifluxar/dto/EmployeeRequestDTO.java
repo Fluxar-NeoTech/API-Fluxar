@@ -1,11 +1,14 @@
 package org.example.apifluxar.dto;
 
+import jakarta.persistence.Column;
+
 public class EmployeeRequestDTO {
     private String nome;
     private String sobrenome;
     private String email ;
     private String senha;
     private Character cargo;
+    private String fotoPerfil;;
     private long setor_id;
     private long unidade_id;
 
@@ -66,4 +69,8 @@ public class EmployeeRequestDTO {
     public void setUnidade_id(long unidade_id) {
         this.unidade_id = unidade_id;
     }
+
+    public String getFotoPerfil() {return fotoPerfil;}
+
+    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 }
