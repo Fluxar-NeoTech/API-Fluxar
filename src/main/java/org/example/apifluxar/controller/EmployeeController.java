@@ -16,7 +16,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
     @GetMapping("search/{id}")
-    public ResponseEntity<EmployeeResponseDTO> selectId(@PathVariable long id) {
+    public ResponseEntity<EmployeeResponseDTO> selectId(@PathVariable Long id) {
          EmployeeResponseDTO res =  employeeService.getEmployeeById(id);
         return ResponseEntity.ok(res);
     }

@@ -1,5 +1,6 @@
 package org.example.apifluxar.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.EmployeeResponseDTO;
 import org.example.apifluxar.dto.EmployeeRequestDTO;
 import org.example.apifluxar.model.Employee;
@@ -11,48 +12,29 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class EmployeeService {
     final EmployeeRepository employeeRepository;
+    final ObjectMapper objectMapper;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, ObjectMapper objectMapper) {
         this.employeeRepository = employeeRepository;
+        this.objectMapper = objectMapper;
     }
 
-    public Employee fromEmployeeRequestDTO(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employee = new Employee();
-        employee.setNome(employeeRequestDTO.getNome());
-        employee.setSobrenome(employeeRequestDTO.getSobrenome());
-        employee.setSenha(employeeRequestDTO.getSenha());
-        employee.setEmail(employeeRequestDTO.getEmail());
-        employee.setCargo(employeeRequestDTO.getCargo());
-        employee.setSetorId(employeeRequestDTO.getSetor_id());
-        employee.setUnidadeId(employeeRequestDTO.getUnidade_id());
-        return employee;
-    }
-    public EmployeeResponseDTO fromEmployeeResposeDTO(Employee employee) {
-        EmployeeResponseDTO employeeReposeDTO = new EmployeeResponseDTO();
-        employeeReposeDTO.setNome(employee.getNome());
-        employeeReposeDTO.setSobrenome(employee.getSobrenome());
-        employeeReposeDTO.setId(employee.getId());
-        employeeReposeDTO.setSetor_id(employee.getSetorId());
-        employeeReposeDTO.setUnidade_id(employee.getUnidadeId());
-        return employeeReposeDTO;
-    }
-
-    public EmployeeResponseDTO getEmployeeById(long id) {
+    public EmployeeResponseDTO getEmployeeById(Long id) {
        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-       return fromEmployeeResposeDTO(employee);
+       return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
 
     }
 
     public EmployeeResponseDTO getEmployeeByEmail(String email) {
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return fromEmployeeResposeDTO(employee);
+        return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
     }
 
     public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employee = fromEmployeeRequestDTO(employeeRequestDTO);
+        Employee employee = objectMapper.convertValue(employeeRequestDTO, Employee.class);
         employee = employeeRepository
                 .findByEmailAndSenha(employee.getEmail(), employee.getSenha())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        return fromEmployeeResposeDTO(employee);
+        return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
     }
 }

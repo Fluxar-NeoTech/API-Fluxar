@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 
 // We only read this table, so no further validations are needed.
 @Entity
-@Table(name = "Funcionario")
+@Table(name = "funcionario")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String nome;
     private String sobrenome;
@@ -22,7 +22,7 @@ public class Employee {
 
     //Construct
 
-    public Employee(Character cargo, String email, long id, String nome, String senha, long setorId, String sobrenome, long unidadeId) {
+    public Employee(Character cargo, String email, Long id, String nome, String senha, long setorId, String sobrenome, long unidadeId) {
         this.cargo = cargo;
         this.email = email;
         this.id = id;
@@ -41,7 +41,7 @@ public class Employee {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
