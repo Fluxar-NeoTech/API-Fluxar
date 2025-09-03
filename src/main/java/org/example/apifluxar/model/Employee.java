@@ -21,19 +21,6 @@ public class Employee {
     private long unidadeId;
 
     //Construct
-
-    public Employee(Character cargo, String email, Long id, String nome, String senha, long setorId, String sobrenome, long unidadeId) {
-        this.cargo = cargo;
-        this.email = email;
-        this.id = id;
-        this.nome = nome;
-        this.senha = senha;
-        this.setorId = setorId;
-        this.sobrenome = sobrenome;
-        this.unidadeId = unidadeId;
-    }
-
-
     public Employee() {}
 
     //Getter e Setter

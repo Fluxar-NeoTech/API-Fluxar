@@ -19,15 +19,6 @@ public class Industry {
     private LocalDateTime dataCadastro;
 
     //Constructor
-
-    public Industry(Long id, String nome, String cnpj, String email, LocalDateTime dataCadastro) {
-        this.id = id;
-        this.nome = nome;
-        this.cnpj = cnpj;
-        this.email = email;
-        this.dataCadastro = dataCadastro;
-    }
-
     public Industry() {}
 
     //Getter e Setter 
@@ -70,17 +61,5 @@ public class Industry {
 
     public void setDataCadastro(LocalDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
-    }
-
-    //toString
-    @Override
-    public String toString() {
-        return "Industry{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cnpj='" + cnpj + '\'' +
-                ", email='" + email + '\'' +
-                ", dataCadastro=" + dataCadastro +
-                '}';
     }
 }

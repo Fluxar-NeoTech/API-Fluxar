@@ -15,14 +15,6 @@ public class Plan {
     private Integer duracaoMeses;
 
     //Construct
-
-    public Plan(Long id, String nome, Double preco, Integer duracaoMeses) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.duracaoMeses = duracaoMeses;
-    }
-
     public Plan() {}
 
     //Getter e Setter
@@ -60,15 +52,4 @@ public class Plan {
         this.duracaoMeses = duracaoMeses;
     }
 
-    //ToString
-
-    @Override
-    public String toString() {
-        return "Plan{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", preco=" + preco +
-                ", duracaoMeses=" + duracaoMeses +
-                '}';
-    }
 }
