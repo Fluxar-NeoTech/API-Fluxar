@@ -24,7 +24,7 @@ public class ProductService {
     }
 
     public ProductResponseDTO getProductByName(String name) {
-        Product product = productRepository.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Product product = productRepository.findByNome(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return objectMapper.convertValue(product, ProductResponseDTO.class);
     }
 
