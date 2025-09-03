@@ -6,6 +6,7 @@ public class EmployeeResponseDTO {
     private long id;
     private String nome;
     private String sobrenome;
+    private String email;
     private String fotoPerfil;
 
     public long getId() {
@@ -35,4 +36,7 @@ public class EmployeeResponseDTO {
     public String getFotoPerfil() {return fotoPerfil;}
 
     public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
+
+    public void setEmail(String email) {this.email = email;}
+    public String getEmail() {return email;}
 }
