@@ -17,7 +17,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Copia apenas o .jar gerado da etapa de build
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/API-Fluxar-0.0.1-SNAPSHOT.jar app.jar
 
 # Define variável de ambiente para UTF-8 no runtime também
 ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
