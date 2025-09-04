@@ -16,7 +16,7 @@ public class PlanController {
         this.planService = planService;
     }
 
-    @GetMapping("search/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<PlanResponseDTO> selectId(@PathVariable Long id) {
         PlanResponseDTO res = planService.getPlanById(id);
         return ResponseEntity.ok(res);
