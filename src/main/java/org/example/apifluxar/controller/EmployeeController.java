@@ -10,27 +10,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
-    final EmployeeService employeeService;
+
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-    @GetMapping("search/{id}")
+
+    @GetMapping("/search/{id}")
     public ResponseEntity<EmployeeResponseDTO> selectId(@PathVariable Long id) {
-         EmployeeResponseDTO res =  employeeService.getEmployeeById(id);
+        EmployeeResponseDTO res = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("search/email/{email}")
+    @GetMapping("/search/email/{email}")
     public ResponseEntity<EmployeeResponseDTO> selectEmail(@PathVariable String email) {
-        EmployeeResponseDTO res =  employeeService.getEmployeeByEmail(email);
+        EmployeeResponseDTO res = employeeService.getEmployeeByEmail(email);
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("/login")
     public ResponseEntity<EmployeeResponseDTO> login(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
-        EmployeeResponseDTO res =  employeeService.login(employeeRequestDTO);
+        EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
         return ResponseEntity.ok(res);
     }
-
 }

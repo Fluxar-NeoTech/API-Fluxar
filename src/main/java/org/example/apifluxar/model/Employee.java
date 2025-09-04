@@ -15,25 +15,14 @@ public class Employee {
     private String email ;
     private String senha;
     private Character cargo;
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
     @Column(name = "setor_id")
     private long setorId;
     @Column(name = "unidade_id")
     private long unidadeId;
 
     //Construct
-
-    public Employee(Character cargo, String email, Long id, String nome, String senha, long setorId, String sobrenome, long unidadeId) {
-        this.cargo = cargo;
-        this.email = email;
-        this.id = id;
-        this.nome = nome;
-        this.senha = senha;
-        this.setorId = setorId;
-        this.sobrenome = sobrenome;
-        this.unidadeId = unidadeId;
-    }
-
-
     public Employee() {}
 
     //Getter e Setter
@@ -84,6 +73,10 @@ public class Employee {
     public void setCargo(Character cargo) {
         this.cargo = cargo;
     }
+
+    public String getFotoPerfil() {return fotoPerfil;}
+
+    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 
     public long getSetorId() {
         return setorId;
