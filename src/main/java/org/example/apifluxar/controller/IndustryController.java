@@ -17,7 +17,7 @@ public class IndustryController {
         this.industryService = industryService;
     }
 
-    @GetMapping
+    @GetMapping("/search/{id}")
     public ResponseEntity<IndustryResponseDTO> selectId(@PathVariable Long id) {
         IndustryResponseDTO res = industryService.getPlanById(id);
         return ResponseEntity.ok(res);

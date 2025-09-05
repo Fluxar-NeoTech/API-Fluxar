@@ -15,7 +15,7 @@ public class UnitController {
         this.unitService = unitService;
     }
 
-    @GetMapping("search/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<UnitResponseDTO> searchUnit(@PathVariable Long id) {
         UnitResponseDTO res = unitService.getUnitById(id);
         return ResponseEntity.ok(res);
