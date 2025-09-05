@@ -10,8 +10,6 @@ public class EmployeeRequestDTO {
     private String email ;
     @NotNull(message = "O campo senha não deve ser nulo", groups = OnCreate.class)
     private String senha;
-    @NotNull(message = "O campo foto de perfil não deve ser nulo", groups = OnPatch.class)
-    private String fotoPerfil;
 
     // Getter e Setter
     public String getEmail() {
@@ -28,13 +26,5 @@ public class EmployeeRequestDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(String fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
     }
 }

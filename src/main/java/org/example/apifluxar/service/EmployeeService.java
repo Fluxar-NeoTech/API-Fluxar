@@ -3,6 +3,7 @@ package org.example.apifluxar.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.EmployeeResponseDTO;
 import org.example.apifluxar.dto.EmployeeRequestDTO;
+import org.example.apifluxar.dto.UpdatePhotoRequestDTO;
 import org.example.apifluxar.model.Employee;
 import org.example.apifluxar.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
@@ -38,10 +39,10 @@ public class EmployeeService {
         return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
     }
 
-    public EmployeeResponseDTO updadePhoto(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employeeResquest = objectMapper.convertValue(employeeRequestDTO, Employee.class);
-        Employee employee = employeeRepository.findByEmail(employeeResquest.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        employee.setFotoPerfil(employeeResquest.getFotoPerfil());
+    public EmployeeResponseDTO updadePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
+        Employee updateResquest = objectMapper.convertValue(updatePhotoRequestDTO, Employee.class);
+        Employee employee = employeeRepository.findByEmail(updateResquest.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        employee.setFotoPerfil(updateResquest.getFotoPerfil());
         employeeRepository.save(employee);
         return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
     }
