@@ -8,6 +8,8 @@ public class EmployeeResponseDTO {
     private String sobrenome;
     private String email;
     private String fotoPerfil;
+    private Long unidadeId;
+    private Long setorId;
 
     public long getId() {
         return id;

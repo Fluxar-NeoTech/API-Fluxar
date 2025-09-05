@@ -8,6 +8,8 @@ import org.example.apifluxar.service.BatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/batch")
@@ -32,6 +34,18 @@ public class BatchController {
     public ResponseEntity<BatchResposeDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
         BatchResposeDTO batchRespose = batchService.createBatch(batchRequestDTO);
         return ResponseEntity.ok(batchRespose);
+    }
+
+    @GetMapping("/getAllBatchAndProduct")
+    public ResponseEntity<List<BatchResposeDTO>> getAllLotesAndProduct(){
+        List<BatchResposeDTO> bachtDTO = batchService.getAllLotesAndProduct();
+        return ResponseEntity.ok(bachtDTO);
+    }
+
+    @DeleteMapping("/DeleteBatch/{id}")
+    public ResponseEntity<BatchResposeDTO> deleteBatch(@PathVariable Long id){
+        BatchResposeDTO batchResposeDTO = batchService.deleteBatch(id);
+        return ResponseEntity.ok(batchResposeDTO);
     }
 
 }

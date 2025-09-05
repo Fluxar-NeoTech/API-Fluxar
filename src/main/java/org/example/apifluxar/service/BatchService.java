@@ -14,6 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BatchService {
     final BatchRepository batchRepository;
@@ -40,6 +44,33 @@ public class BatchService {
         return  objectMapper.convertValue(batch, BatchResposeDTO.class);
     }
 
+    public List<BatchResposeDTO> getAllLotesAndProduct(){
+         List<ProductResponseDTO> products = productService.getAllProducts();
+         List<Batch>  batches = batchRepository.findAll();
+         List<BatchResposeDTO> batchesDTO =new ArrayList<>();
+
+        for (Batch batch : batches) {
+            BatchResposeDTO dto = new BatchResposeDTO();
+            dto.setIdLote(batch.getId().toString());
+            dto.setValidade(batch.getValidade());
+            dto.setAltura(batch.getAltura());
+            dto.setComprimento(batch.getComprimento());
+            dto.setLargura(batch.getLargura());
+
+            Optional<ProductResponseDTO> product = products.stream()
+                    .filter(p -> p.getId().equals(batch.getProduto()))
+                    .findFirst();
+
+            if (product.isPresent()) {
+                dto.setProduto(product.get().getId());
+                dto.setNomeProduto(product.get().getNome());
+            }
+
+            batchesDTO.add(dto);
+        }
+        return batchesDTO;
+    }
+
     //restona id do produto
     public BatchResposeDTO createBatch(BatchRequestDTO batchRequestDTO){
         ProductResponseDTO produto = productService.getProductByName(batchRequestDTO.getNomeProduto());
@@ -47,6 +78,12 @@ public class BatchService {
         Batch batch = objectMapper.convertValue(batchRequestDTO, Batch.class);
         batch.setProduto(produto.getId());
         batchRepository.save(batch);
+        return objectMapper.convertValue(batch, BatchResposeDTO.class);
+    }
+
+    public BatchResposeDTO deleteBatch(Long id){
+        Batch batch = batchRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        batchRepository.delete(batch);
         return objectMapper.convertValue(batch, BatchResposeDTO.class);
     }
 }
