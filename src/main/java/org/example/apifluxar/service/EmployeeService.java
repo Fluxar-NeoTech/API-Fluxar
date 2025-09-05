@@ -37,4 +37,12 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
         return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
     }
+
+    public EmployeeResponseDTO updadePhoto(EmployeeRequestDTO employeeRequestDTO) {
+        Employee employeeResquest = objectMapper.convertValue(employeeRequestDTO, Employee.class);
+        Employee employee = employeeRepository.findByEmail(employeeResquest.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        employee.setFotoPerfil(employeeResquest.getFotoPerfil());
+        employeeRepository.save(employee);
+        return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
+    }
 }
