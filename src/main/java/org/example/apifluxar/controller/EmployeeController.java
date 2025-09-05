@@ -1,9 +1,13 @@
 package org.example.apifluxar.controller;
 
+import jakarta.validation.Valid;
 import org.example.apifluxar.dto.EmployeeResponseDTO;
 import org.example.apifluxar.dto.EmployeeRequestDTO;
 import org.example.apifluxar.service.EmployeeService;
+import org.example.apifluxar.validation.OnCreate;
+import org.example.apifluxar.validation.OnPatch;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -30,8 +34,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<EmployeeResponseDTO> login(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class}) EmployeeRequestDTO employeeRequestDTO) {
         EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/updade/photo")
+    public ResponseEntity<EmployeeResponseDTO> updadePhoto(@RequestBody @Validated({OnPatch.class}) EmployeeRequestDTO employeeRequestDTO) {
+        EmployeeResponseDTO res = employeeService.updadePhoto(employeeRequestDTO);
         return ResponseEntity.ok(res);
     }
 }
