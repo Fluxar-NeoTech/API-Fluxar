@@ -1,6 +1,7 @@
 package org.example.apifluxar.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.example.apifluxar.dto.EmployeeResponseDTO;
 import org.example.apifluxar.dto.EmployeeRequestDTO;
 import org.example.apifluxar.service.EmployeeService;
@@ -34,13 +35,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class}) EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
         EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
         return ResponseEntity.ok(res);
     }
 
     @PutMapping("/updade/photo")
-    public ResponseEntity<EmployeeResponseDTO> updadePhoto(@RequestBody @Validated({OnPatch.class}) EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<EmployeeResponseDTO> updadePhoto(@RequestBody @Validated({OnPatch.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
         EmployeeResponseDTO res = employeeService.updadePhoto(employeeRequestDTO);
         return ResponseEntity.ok(res);
     }
