@@ -2,8 +2,17 @@ package org.example.apifluxar.dto;
 
 public class ProductResponseDTO {
 
+    private Long id;
     private String nome;
     private String tipo;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
