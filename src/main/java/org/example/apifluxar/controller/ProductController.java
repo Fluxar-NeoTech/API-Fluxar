@@ -19,19 +19,19 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("search/name/{name}")
+    @GetMapping("/search/name/{name}")
     public ResponseEntity<ProductResponseDTO> selectByName(@PathVariable String name) {
         ProductResponseDTO res = productService.getProductByName(name);
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("search/product")
+    @GetMapping("/search/product")
     public ResponseEntity<List<ProductResponseDTO>> selectProduct() {
         List<ProductResponseDTO> res = productService.getAllProducts();
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("create/product")
+    @PostMapping("/create/product")
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
         ProductResponseDTO res = productService.createProduct(productRequestDTO);
         return ResponseEntity.ok(res);

@@ -18,9 +18,9 @@ public class Employee {
     @Column(name = "foto_perfil")
     private String fotoPerfil;
     @Column(name = "setor_id")
-    private long setorId;
+    private Long setorId;
     @Column(name = "unidade_id")
-    private long unidadeId;
+    private Long unidadeId;
 
     //Construct
     public Employee() {}
