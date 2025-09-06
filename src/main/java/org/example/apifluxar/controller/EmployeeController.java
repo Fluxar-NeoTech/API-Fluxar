@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import org.example.apifluxar.dto.EmployeeResponseDTO;
 import org.example.apifluxar.dto.EmployeeRequestDTO;
+import org.example.apifluxar.dto.UpdatePhotoRequestDTO;
 import org.example.apifluxar.service.EmployeeService;
 import org.example.apifluxar.validation.OnCreate;
 import org.example.apifluxar.validation.OnPatch;
@@ -41,8 +42,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/updade/photo")
-    public ResponseEntity<EmployeeResponseDTO> updadePhoto(@RequestBody @Validated({OnPatch.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
-        EmployeeResponseDTO res = employeeService.updadePhoto(employeeRequestDTO);
+    public ResponseEntity<EmployeeResponseDTO> updadePhoto(@RequestBody @Validated({OnPatch.class, Default.class}) UpdatePhotoRequestDTO updatePhotoRequestDTO) {
+        EmployeeResponseDTO res = employeeService.updadePhoto(updatePhotoRequestDTO);
         return ResponseEntity.ok(res);
     }
 }
