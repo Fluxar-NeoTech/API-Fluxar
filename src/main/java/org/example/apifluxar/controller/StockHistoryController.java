@@ -2,6 +2,7 @@ package org.example.apifluxar.controller;
 
 import org.example.apifluxar.dto.StockHistoryResponseDTO;
 import org.example.apifluxar.service.StockHistoryService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -15,8 +16,8 @@ public class StockHistoryController {
     }
 
     @GetMapping("search/id/{id}")
-    public StockHistoryResponseDTO selectById(@PathVariable Long id) {
-        StockHistoryResponseDTO stockHistoryResponseDTO = stockHistoryService.getStockHistoryById(id);
-        return stockHistoryResponseDTO;
+    public ResponseEntity<StockHistoryResponseDTO> selectId(@PathVariable Long id) {
+        StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(id);
+        return ResponseEntity.ok(dto);
     }
 }
