@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/capacityStock")
@@ -24,4 +26,15 @@ public class CapacityStockController {
         return ResponseEntity.ok(capacityStockRequestDTO);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<List<CapacityStockResposeDTO>> getAllCapacityStock(){
+        List<CapacityStockResposeDTO> capacityStockResposeDTOS = capacityStockService.getAllCapacityStock();
+        return ResponseEntity.ok(capacityStockResposeDTOS);
+    }
+
+    @GetMapping("/search/{id}")
+    public ResponseEntity<CapacityStockResposeDTO> searchId(@PathVariable Long id){
+        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findById(id);
+        return ResponseEntity.ok(capacityStockResposeDTO);
+    }
 }
