@@ -1,7 +1,6 @@
 package org.example.apifluxar.dto;
 
 public class ProductResponseDTO {
-
     private String nome;
     private String tipo;
 

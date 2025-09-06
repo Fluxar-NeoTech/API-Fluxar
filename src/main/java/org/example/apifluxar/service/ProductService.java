@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -21,6 +22,11 @@ public class ProductService {
     public ProductService(ProductRepository productRepository, ObjectMapper objectMapper) {
         this.productRepository = productRepository;
         this.objectMapper = objectMapper;
+    }
+
+    public  ProductResponseDTO getProductById(Long id){
+        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return objectMapper.convertValue(product, ProductResponseDTO.class);
     }
 
     public ProductResponseDTO getProductByName(String name) {
