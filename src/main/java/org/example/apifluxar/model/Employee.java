@@ -17,15 +17,21 @@ public class Employee {
     private Character cargo;
     @Column(name = "foto_perfil")
     private String fotoPerfil;
-    @Column(name = "setor_id")
-    private Long setorId;
-    @Column(name = "unidade_id")
-    private Long unidadeId;
 
-    //Construct
+    @ManyToOne()
+    @JoinColumn(name = "unidade_id")
+    private Unit unidade;
+
+    @ManyToOne()
+    @JoinColumn(name  = "setor_id")
+    private Sector setor;
+
+    //Constructor
+
     public Employee() {}
 
-    //Getter e Setter
+    //Getters e Setters
+
     public long getId() {
         return id;
     }
@@ -78,19 +84,19 @@ public class Employee {
 
     public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 
-    public long getSetorId() {
-        return setorId;
+    public Sector getSetor() {
+        return setor;
     }
 
-    public void setSetorId(long setorId) {
-        this.setorId = setorId;
+    public void setSetor(Sector setor) {
+        this.setor = setor;
     }
 
-    public long getUnidadeId() {
-        return unidadeId;
+    public Unit getUnidade() {
+        return unidade;
     }
 
-    public void setUnidadeId(long unidade_id) {
-        this.unidadeId = unidadeId;
+    public void setUnidade(Unit unidade) {
+        this.unidade = unidade;
     }
 }

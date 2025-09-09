@@ -18,7 +18,11 @@ public class CapacityHistory {
     @Column(name = "capacidade_total_ocupada")
     private Integer capacidadeTotal;
 
+    // Constructor
+
     public CapacityHistory() {}
+
+    // Getters e Setters
 
     public Long getId() {
         return id;

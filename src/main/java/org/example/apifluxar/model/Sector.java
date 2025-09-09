@@ -1,9 +1,8 @@
 package org.example.apifluxar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Table(name = "Setor")
 @Entity
@@ -20,8 +19,12 @@ public class Sector {
         this.nome = nome;
     }
 
+    //Constructor
+
     public Sector() {}
-    //Getter e Setter
+
+    //Getters e Setters
+
     public long getId() {
         return id;
     }

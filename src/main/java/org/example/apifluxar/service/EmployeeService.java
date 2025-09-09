@@ -1,11 +1,12 @@
 package org.example.apifluxar.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.apifluxar.dto.EmployeeResponseDTO;
-import org.example.apifluxar.dto.EmployeeRequestDTO;
-import org.example.apifluxar.dto.UpdatePhotoRequestDTO;
+import org.example.apifluxar.dto.*;
 import org.example.apifluxar.model.Employee;
+import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.repository.EmployeeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,37 +14,84 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class EmployeeService {
     final EmployeeRepository employeeRepository;
-    final ObjectMapper objectMapper;
+    final IndustryService industryService;
+    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
-    public EmployeeService(EmployeeRepository employeeRepository, ObjectMapper objectMapper) {
+
+    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService) {
+        this.industryService = industryService;
         this.employeeRepository = employeeRepository;
-        this.objectMapper = objectMapper;
     }
 
     public EmployeeResponseDTO getEmployeeById(Long id) {
-       Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-       return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-    }
 
-    public EmployeeResponseDTO getEmployeeByEmail(String email) {
-        Employee employee = employeeRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
+        EmployeeResponseDTO dto = new EmployeeResponseDTO(
+                employee.getId(),
+                employee.getNome(),
+                employee.getSobrenome(),
+                employee.getEmail(),
+                employee.getCargo(),
+                employee.getFotoPerfil()
+        );
+
+        Sector setor = employee.getSetor();
+        if (setor != null) {
+            SectorResponseDTO sectorDTO = new SectorResponseDTO(
+                    setor.getId(),
+                    setor.getNome(),
+                    setor.getDescricao()
+            );
+
+            dto.setSetor(sectorDTO);
+        }
+
+        Unit unit = employee.getUnidade();
+        if (unit != null) {
+            UnitResponseDTO unitDTO = new UnitResponseDTO(
+                    unit.getNome(),
+                    unit.getCep(),
+                    unit.getRua(),
+                    unit.getCidade(),
+                    unit.getEstado(),
+                    unit.getNumero(),
+                    unit.getBairro(),
+                    industryService.getIndustryById(employee.getId())
+
+            );
+
+            dto.setUnit(unitDTO);
+        }
+
+        return dto;
     }
 
     public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employee = objectMapper.convertValue(employeeRequestDTO, Employee.class);
-        employee = employeeRepository
-                .findByEmailAndSenha(employee.getEmail(), employee.getSenha())
+        Employee employee = employeeRepository
+                .findByEmailAndSenha(employeeRequestDTO.getEmail(), employeeRequestDTO.getSenha())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
+
+
+        return new EmployeeResponseDTO(
+                employee.getId(),
+                employee.getNome(),
+                employee.getSobrenome(),
+                employee.getEmail(),
+                employee.getCargo(),
+                employee.getFotoPerfil()
+        );
     }
 
-    public EmployeeResponseDTO updadePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
-        Employee updateResquest = objectMapper.convertValue(updatePhotoRequestDTO, Employee.class);
-        Employee employee = employeeRepository.findByEmail(updateResquest.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        employee.setFotoPerfil(updateResquest.getFotoPerfil());
+    public void updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
+        Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        employee.setFotoPerfil(updatePhotoRequestDTO.getFotoPerfil());
         employeeRepository.save(employee);
-        return objectMapper.convertValue(employee, EmployeeResponseDTO.class);
+
+        log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!",
+                employee.getId(), employee.getEmail());
     }
 }

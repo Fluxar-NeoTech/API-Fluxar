@@ -1,5 +1,6 @@
 package org.example.apifluxar.controller;
 
+import org.example.apifluxar.dto.AllProductsResponseDTO;
 import org.example.apifluxar.dto.ProductRequestDTO;
 import org.example.apifluxar.dto.ProductResponseDTO;
 import org.example.apifluxar.model.Product;
@@ -19,6 +20,12 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/search/id/{id}")
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
+        ProductResponseDTO res = productService.getProductById(id);
+        return ResponseEntity.ok(res);
+    }
+
     @GetMapping("/search/name/{name}")
     public ResponseEntity<ProductResponseDTO> selectByName(@PathVariable String name) {
         ProductResponseDTO res = productService.getProductByName(name);
@@ -26,8 +33,8 @@ public class ProductController {
     }
 
     @GetMapping("/search/product")
-    public ResponseEntity<List<ProductResponseDTO>> selectProduct() {
-        List<ProductResponseDTO> res = productService.getAllProducts();
+    public ResponseEntity<List<AllProductsResponseDTO>> selectProduct() {
+        List<AllProductsResponseDTO> res = productService.getAllProducts();
         return ResponseEntity.ok(res);
     }
 

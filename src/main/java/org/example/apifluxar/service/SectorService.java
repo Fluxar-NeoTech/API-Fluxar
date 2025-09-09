@@ -1,5 +1,6 @@
 package org.example.apifluxar.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.SectorResponseDTO;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.repository.SectorRepository;
@@ -10,24 +11,15 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class SectorService {
     final SectorRepository sectorRepository;
-    public SectorService(SectorRepository sectorRepository) {
+    final ObjectMapper objectMapper;
+
+    public SectorService(SectorRepository sectorRepository, ObjectMapper objectMapper) {
         this.sectorRepository = sectorRepository;
-    }
-    public SectorResponseDTO fromSectorResponseDTO(Sector sector) {
-        SectorResponseDTO sectorResponseDTO = new SectorResponseDTO();
-        sectorResponseDTO.setId(sector.getId());
-        sectorResponseDTO.setNome(sector.getNome());
-        sectorResponseDTO.setDescricao(sector.getDescricao());
-        return sectorResponseDTO;
+        this.objectMapper = objectMapper;
     }
 
-    public SectorResponseDTO getSectorById(long id) {
+    public SectorResponseDTO getSectorById(Long id) {
         Sector sector = sectorRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return fromSectorResponseDTO(sector);
-    }
-
-    public SectorResponseDTO getSectorByName(String name) {
-        Sector sector = sectorRepository.findByNome(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return fromSectorResponseDTO(sector);
+        return objectMapper.convertValue(sector, SectorResponseDTO.class);
     }
 }

@@ -12,15 +12,21 @@ public class Product {
     private String nome;
     private String tipo;
 
-    @Column(name = "setor_id")
-    private Long setorId;
+    @ManyToOne()
+    @JoinColumn(name = "setor_id")
+    private Sector setor;
 
     // Constructor
 
     public Product() {}
 
-    // Getter e Setter
+    public Product(String nome, String tipo, Sector setor) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.setor = setor;
+    }
 
+    // Getters e Setters
 
     public Long getId() {
         return id;
@@ -46,11 +52,11 @@ public class Product {
         this.tipo = tipo;
     }
 
-    public Long getSetorId() {
-        return setorId;
+    public Sector getSetor() {
+        return setor;
     }
 
-    public void setSetorId(Long setorId) {
-        this.setorId = setorId;
+    public void setSetor(Sector setor) {
+        this.setor = setor;
     }
 }

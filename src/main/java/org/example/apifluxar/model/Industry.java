@@ -19,9 +19,10 @@ public class Industry {
     private LocalDateTime dataCadastro;
 
     //Constructor
+
     public Industry() {}
 
-    //Getter e Setter 
+    //Getters e Setters
 
     public Long getId() {
         return id;

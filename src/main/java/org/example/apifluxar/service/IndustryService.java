@@ -20,7 +20,7 @@ public class IndustryService {
         this.objectMapper = objectMapper;
     }
 
-    public IndustryResponseDTO getPlanById(Long id) {
+    public IndustryResponseDTO getIndustryById(Long id) {
         Industry industry = industryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return objectMapper.convertValue(industry, IndustryResponseDTO.class);
     }

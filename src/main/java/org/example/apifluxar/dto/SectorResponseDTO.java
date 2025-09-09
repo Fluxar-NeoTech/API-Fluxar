@@ -1,15 +1,23 @@
 package org.example.apifluxar.dto;
 
+import java.util.List;
+
 public class SectorResponseDTO {
-    private long id;
+    private Long id;
     private String nome;
     private String descricao;
+
+    public SectorResponseDTO(Long id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

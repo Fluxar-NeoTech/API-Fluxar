@@ -1,13 +1,10 @@
 package org.example.apifluxar.dto;
 
-import org.example.apifluxar.model.Sector;
-
-public class ProductResponseDTO {
+public class AllProductsResponseDTO {
     private String nome;
     private String tipo;
-    private SectorResponseDTO setor;
 
-    public ProductResponseDTO(String nome, String tipo) {
+    public AllProductsResponseDTO(String nome, String tipo) {
         this.nome = nome;
         this.tipo = tipo;
     }
@@ -26,12 +23,5 @@ public class ProductResponseDTO {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public SectorResponseDTO getSetor() {
-        return setor;
-    }
-    public void setSetor(SectorResponseDTO setor) {
-        this.setor = setor;
     }
 }
