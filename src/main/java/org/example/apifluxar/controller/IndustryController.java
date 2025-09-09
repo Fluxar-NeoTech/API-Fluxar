@@ -19,7 +19,7 @@ public class IndustryController {
 
     @GetMapping("/search/{id}")
     public ResponseEntity<IndustryResponseDTO> selectId(@PathVariable Long id) {
-        IndustryResponseDTO res = industryService.getPlanById(id);
+        IndustryResponseDTO res = industryService.getIndustryById(id);
         return ResponseEntity.ok(res);
     }
 }

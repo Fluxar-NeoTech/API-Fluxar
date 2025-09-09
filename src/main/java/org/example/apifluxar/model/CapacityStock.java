@@ -23,8 +23,14 @@ public class CapacityStock {
 
     @Column(name = "unidade_id")
     private Long unidadeId;
-    
+
+    //Constructor
+
+    public CapacityStock() {
+    }
+
     // Getters e Setters
+    
     public Long getId() {
         return id;
     }

@@ -26,11 +26,13 @@ public class StockHistory {
     private Long setorId;
 
     @Column(name = "lote_id")
-    private Long loteId;
+    private String loteId;
+
+    // Constructor
 
     public StockHistory() {}
 
-    // Getter e Setter
+    // Getters e Setters
 
     public Long getId() { return id; }
 
@@ -68,11 +70,11 @@ public class StockHistory {
         this.setorId = setorId;
     }
 
-    public Long getLoteId() {
+    public String getLoteId() {
         return loteId;
     }
 
-    public void setLoteId(Long loteId) {
+    public void setLoteId(String loteId) {
         this.loteId = loteId;
     }
 }

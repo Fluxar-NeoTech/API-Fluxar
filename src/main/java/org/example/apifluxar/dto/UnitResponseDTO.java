@@ -1,6 +1,9 @@
 package org.example.apifluxar.dto;
 
+import org.example.apifluxar.model.Industry;
+
 public class UnitResponseDTO {
+    private Long id;
     private String nome;
     private String cep;
     private String rua;
@@ -8,6 +11,36 @@ public class UnitResponseDTO {
     private String estado;
     private String numero;
     private String bairro;
+    private IndustryResponseDTO industry;
+
+    public UnitResponseDTO(String nome, String cep, String rua, String cidade, String estado, String numero, String bairro) {
+        this.nome = nome;
+        this.cep = cep;
+        this.rua = rua;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.numero = numero;
+        this.bairro = bairro;
+    }
+
+    public UnitResponseDTO(String nome, String cep, String rua, String cidade, String estado, String numero, String bairro, IndustryResponseDTO industry) {
+        this.nome = nome;
+        this.cep = cep;
+        this.rua = rua;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.industry = industry;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -63,5 +96,13 @@ public class UnitResponseDTO {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
+    }
+
+    public IndustryResponseDTO getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(IndustryResponseDTO industry) {
+        this.industry = industry;
     }
 }

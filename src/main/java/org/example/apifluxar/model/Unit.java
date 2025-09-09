@@ -17,13 +17,15 @@ public class Unit {
     private String numero;
     private String bairro;
 
-    @Column(name = "industria_id")
-    private Long industriaId;
+    @ManyToOne()
+    @JoinColumn(name = "industria_id")
+    private Industry industry;
 
-    //Contruct
+    //Contructor
+
     public Unit() {}
 
-    //Getter e Setter
+    //Getters e Setters
 
     public Long getId() {
         return id;
@@ -89,11 +91,11 @@ public class Unit {
         this.bairro = bairro;
     }
 
-    public Long getIndustriaId() {
-        return industriaId;
+    public Industry getIndustry() {
+        return industry;
     }
 
-    public void setIndustriaId(Long industriaId) {
-        this.industriaId = industriaId;
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
     }
 }

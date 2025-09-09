@@ -14,11 +14,11 @@ public class Plan {
     @Column(name = "duracao_meses")
     private Integer duracaoMeses;
 
-    //Construct
+    //Constructor
+
     public Plan() {}
 
-    //Getter e Setter
-
+    //Getters e Setters
 
     public Long getId() {
         return id;
