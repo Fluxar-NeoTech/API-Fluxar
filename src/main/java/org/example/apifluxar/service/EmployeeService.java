@@ -59,9 +59,7 @@ public class EmployeeService {
                     unit.getNumero(),
                     unit.getBairro(),
                     industryService.getIndustryById(employee.getId())
-
             );
-
             dto.setUnit(unitDTO);
         }
 

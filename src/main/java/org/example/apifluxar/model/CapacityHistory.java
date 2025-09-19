@@ -18,6 +18,22 @@ public class CapacityHistory {
     @Column(name = "capacidade_total_ocupada")
     private Integer capacidadeTotal;
 
+    @ManyToOne()
+    @JoinColumn(name = "produto_id")
+    private Product produto;
+
+    @ManyToOne()
+    @JoinColumn(name = "unidade_id")
+    private Unit unidade;
+
+    @ManyToOne()
+    @JoinColumn(name = "setor_id")
+    private Sector sector;
+
+    @ManyToOne()
+    @JoinColumn(name = "lote_id")
+    private Batch lote;
+
     // Constructor
 
     public CapacityHistory() {}
@@ -46,5 +62,37 @@ public class CapacityHistory {
 
     public void setCapacidadeTotal(Integer capacidadeTotal) {
         this.capacidadeTotal = capacidadeTotal;
+    }
+
+    public Product getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Product produto) {
+        this.produto = produto;
+    }
+
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
+    }
+
+    public Unit getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unit unidade) {
+        this.unidade = unidade;
+    }
+
+    public Batch getLote() {
+        return lote;
+    }
+
+    public void setLote(Batch lote) {
+        this.lote = lote;
     }
 }
