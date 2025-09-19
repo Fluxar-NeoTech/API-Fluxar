@@ -13,6 +13,7 @@ public class EmployeeResponseDTO {
     private SectorResponseDTO setor;
     private UnitResponseDTO unit;
 
+
     public EmployeeResponseDTO(Long id, String nome, String sobrenome, String email, Character cargo, String foto) {
         this.id = id;
         this.nome = nome;
