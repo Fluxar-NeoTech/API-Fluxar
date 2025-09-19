@@ -27,7 +27,7 @@ public class StockHistoryService {
         return objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
     }
 
-    public Long deleteByBatchId(String id) {
-        return stockHistoryRepository.deleteByIdLote(id);
-    }
+//    public Long deleteByBatchId(String id) {
+//        return stockHistoryRepository.deleteByIdLote(id);
+//    }
 }
