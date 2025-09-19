@@ -60,6 +60,7 @@ public class EmployeeService {
                     unit.getBairro(),
                     industryService.getIndustryById(employee.getId())
             );
+            unitDTO.setId(unit.getId());
             dto.setUnit(unitDTO);
         }
 
@@ -72,7 +73,7 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
 
-        return new EmployeeResponseDTO(
+        EmployeeResponseDTO dto = new EmployeeResponseDTO(
                 employee.getId(),
                 employee.getNome(),
                 employee.getSobrenome(),
@@ -80,6 +81,35 @@ public class EmployeeService {
                 employee.getCargo(),
                 employee.getFotoPerfil()
         );
+
+        Sector setor = employee.getSetor();
+        if (setor != null) {
+            SectorResponseDTO sectorDTO = new SectorResponseDTO(
+                    setor.getId(),
+                    setor.getNome(),
+                    setor.getDescricao()
+            );
+
+            dto.setSetor(sectorDTO);
+        }
+
+        Unit unit = employee.getUnidade();
+        if (unit != null) {
+            UnitResponseDTO unitDTO = new UnitResponseDTO(
+                    unit.getNome(),
+                    unit.getCep(),
+                    unit.getRua(),
+                    unit.getCidade(),
+                    unit.getEstado(),
+                    unit.getNumero(),
+                    unit.getBairro(),
+                    industryService.getIndustryById(employee.getId())
+            );
+            unitDTO.setId(unit.getId());
+            dto.setUnit(unitDTO);
+        }
+
+        return dto;
     }
 
     public void updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
