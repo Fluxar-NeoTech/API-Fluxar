@@ -15,12 +15,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class EmployeeService {
     final EmployeeRepository employeeRepository;
     final IndustryService industryService;
+    final CapacityStockService capacityStockService;
     private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
 
-    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService) {
+    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService) {
         this.industryService = industryService;
         this.employeeRepository = employeeRepository;
+        this.capacityStockService = capacityStockService;
     }
 
     public EmployeeResponseDTO getEmployeeById(Long id) {
@@ -108,6 +110,12 @@ public class EmployeeService {
             unitDTO.setId(unit.getId());
             dto.setUnit(unitDTO);
         }
+        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findByUnidadeId(unit.getId());
+        if (capacityStockResposeDTO != null) {
+            Double capacidadeMaxima= capacityStockResposeDTO.getCapacidadeMaxima();
+            dto.setCapacidadeMaxima(capacidadeMaxima);
+        }
+
 
         return dto;
     }
