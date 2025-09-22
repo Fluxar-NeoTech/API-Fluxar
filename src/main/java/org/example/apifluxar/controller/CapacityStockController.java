@@ -5,6 +5,7 @@ import org.example.apifluxar.dto.CapacityStockResposeDTO;
 import org.example.apifluxar.service.CapacityStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +22,9 @@ public class CapacityStockController {
     }
 
     @PostMapping("/addCapacityStock")
-    public ResponseEntity<CapacityStockRequestDTO> addCapacityStock(@RequestBody CapacityStockRequestDTO capacityStockRequestDTO){
+    public ResponseEntity<CapacityStockResposeDTO> addCapacityStock(@RequestBody @Validated CapacityStockRequestDTO capacityStockRequestDTO){
         CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.addCapacityStock(capacityStockRequestDTO);
-        return ResponseEntity.ok(capacityStockRequestDTO);
+        return ResponseEntity.ok(capacityStockResposeDTO);
     }
 
     @GetMapping("/getAll")

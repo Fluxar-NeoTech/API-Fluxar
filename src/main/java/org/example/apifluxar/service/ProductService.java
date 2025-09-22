@@ -2,14 +2,12 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.apifluxar.dto.AllProductsResponseDTO;
-import org.example.apifluxar.dto.ProductRequestDTO;
-import org.example.apifluxar.dto.ProductResponseDTO;
-import org.example.apifluxar.dto.SectorResponseDTO;
+import org.example.apifluxar.dto.*;
 import org.example.apifluxar.mapper.ProductMapper;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.repository.ProductRepository;
+import org.example.apifluxar.repository.SectorRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,10 +22,14 @@ public class ProductService {
 
     ProductRepository productRepository;
     ProductMapper productMapper;
+    final ObjectMapper objectMapper;
+    final SectorRepository sectorRepository;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.sectorRepository = sectorRepository;
+        this.objectMapper = objectMapper;
     }
 
     public ProductResponseDTO getProductById(Long id){
@@ -90,8 +92,13 @@ public class ProductService {
     }
 
     public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
-        Product product = productMapper.mapToProduct(productRequestDTO);
+        Sector setor = sectorRepository.findById(productRequestDTO.getSetor())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setor não encontrado"));
+
+        Product product = productMapper.mapToProduct(productRequestDTO, setor);
         Product savedProduct = productRepository.save(product);
+
         return productMapper.mapToProductResponseDTO(savedProduct);
     }
+
 }

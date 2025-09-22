@@ -29,6 +29,7 @@ public class UnitService {
                 unit.getNumero(),
                 unit.getBairro()
         );
+        dto.setId(id);
 
         Industry industry = unit.getIndustry();
         if (industry != null) {

@@ -34,6 +34,9 @@ public class UnitResponseDTO {
         this.industry = industry;
     }
 
+    public UnitResponseDTO() {
+    }
+
     public Long getId() {
         return id;
     }

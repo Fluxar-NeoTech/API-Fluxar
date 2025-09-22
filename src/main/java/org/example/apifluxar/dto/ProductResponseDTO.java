@@ -7,6 +7,13 @@ public class ProductResponseDTO {
     private String tipo;
     private SectorResponseDTO setor;
 
+    public ProductResponseDTO(String nome, String tipo, SectorResponseDTO setor) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.setor = setor;
+    }
+
+
     public ProductResponseDTO(String nome, String tipo) {
         this.nome = nome;
         this.tipo = tipo;

@@ -18,7 +18,9 @@ public class CapacityStockRequestDTO {
     @DecimalMin(value = "1.00", message = "O comprimento deve ser maior ou igual a 1")
     private Double comprimento;
 
+    @NotNull(message = "o id do setor não pode ser nulo")
     private Long setorId;
+    @NotNull(message = "o id da unidade não pode ser nulo")
     private Long unidadeId;
 
 
@@ -44,5 +46,21 @@ public class CapacityStockRequestDTO {
 
     public void setComprimento(Double comprimento) {
         this.comprimento = comprimento;
+    }
+
+    public  Long getSetorId() {
+        return setorId;
+    }
+
+    public void setSetorId( Long setorId) {
+        this.setorId = setorId;
+    }
+
+    public @NotNull(message = "o id da unidade não pode ser nulo") Long getUnidadeId() {
+        return unidadeId;
+    }
+
+    public void setUnidadeId(@NotNull(message = "o id da unidade não pode ser nulo") Long unidadeId) {
+        this.unidadeId = unidadeId;
     }
 }

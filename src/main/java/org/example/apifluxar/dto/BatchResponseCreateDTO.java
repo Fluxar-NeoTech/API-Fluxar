@@ -9,8 +9,18 @@ public class BatchResponseCreateDTO {
     private Double comprimento;
     private Double largura;
     private Double volume;
-    private Long product;
-    private Long unit;
+    private ProductResponseDTO product;
+    private UnitResponseDTO unit;
+
+    public BatchResponseCreateDTO(Double altura, Double comprimento, String idLote, Double largura, ProductResponseDTO product, UnitResponseDTO unit, LocalDate validade) {
+        this.altura = altura;
+        this.comprimento = comprimento;
+        this.idLote = idLote;
+        this.largura = largura;
+        this.product = product;
+        this.unit = unit;
+        this.validade = validade;
+    }
 
     public BatchResponseCreateDTO(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Double volume) {
         this.idLote = idLote;
@@ -69,19 +79,19 @@ public class BatchResponseCreateDTO {
         this.volume = volume;
     }
 
-    public Long getUnit() {
+    public UnitResponseDTO getUnit() {
         return unit;
     }
 
-    public void setUnit(Long unit) {
+    public void setUnit(UnitResponseDTO unit) {
         this.unit = unit;
     }
 
-    public Long getProduct() {
+    public ProductResponseDTO getProduct() {
         return product;
     }
 
-    public void setProduct(Long product) {
+    public void setProduct(ProductResponseDTO product) {
         this.product = product;
     }
 }

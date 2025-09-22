@@ -1,6 +1,9 @@
 package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
+import org.example.apifluxar.dto.ProductResponseDTO;
+import org.example.apifluxar.dto.UnitResponseDTO;
+import org.hibernate.annotations.Formula;
 
 import java.time.LocalDate;
 
@@ -18,6 +21,7 @@ public class Batch {
     private Double altura;
     private Double comprimento;
     private Double largura;
+    @Formula("largura * altura * comprimento")
     private Double volume;
 
     @ManyToOne()
@@ -28,12 +32,14 @@ public class Batch {
     @JoinColumn(name = "unidade_id")
     private Unit unidade;
 
-    public Batch(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura) {
+    public Batch(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Product produto, Unit unidade) {
         this.idLote = idLote;
         this.validade = validade;
         this.altura = altura;
         this.comprimento = comprimento;
         this.largura = largura;
+        this.produto = produto;
+        this.unidade = unidade;
     }
 
     public Batch() {

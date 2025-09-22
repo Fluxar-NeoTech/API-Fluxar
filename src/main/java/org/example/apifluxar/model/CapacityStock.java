@@ -1,10 +1,11 @@
 package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
 
 import java.lang.Double;
 
-@Table(name = "CapacidadeEstoque")
+@Table(name = "capacidadeestoque")
 @Entity
 public class CapacityStock {
     @Id
@@ -15,14 +16,16 @@ public class CapacityStock {
     private Double altura;
     private Double comprimento;
 
-    @Column(name = "capacidade_maxima", insertable = false, updatable = false)
+    @Formula("largura * altura * comprimento")
     private Double capacidadeMaxima;
 
-    @Column(name = "setor_id")
-    private Long setorId;
+    @ManyToOne()
+    @JoinColumn(name = "setor_id", nullable = false)
+    private Sector setor;
 
-    @Column(name = "unidade_id")
-    private Long unidadeId;
+    @ManyToOne()
+    @JoinColumn(name = "unidade_id", nullable = false)
+    private Unit unidade;
 
     //Constructor
 
@@ -67,19 +70,23 @@ public class CapacityStock {
         return capacidadeMaxima;
     }
 
-    public Long getSetorId() {
-        return setorId;
+    public void setCapacidadeMaxima(Double capacidadeMaxima) {
+        this.capacidadeMaxima = capacidadeMaxima;
     }
 
-    public void setSetorId(Long setorId) {
-        this.setorId = setorId;
+    public Sector getSetor() {
+        return setor;
     }
 
-    public Long getUnidadeId() {
-        return unidadeId;
+    public void setSetor(Sector setor) {
+        this.setor = setor;
     }
 
-    public void setUnidadeId(Long unidadeId) {
-        this.unidadeId = unidadeId;
+    public Unit getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unit unidade) {
+        this.unidade = unidade;
     }
 }

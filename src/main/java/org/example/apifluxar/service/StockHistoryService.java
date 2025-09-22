@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
+
 @Service
 public class StockHistoryService {
 
@@ -23,8 +26,25 @@ public class StockHistoryService {
     }
 
     public StockHistoryResponseDTO getStockHistoryById(Long id) {
-        StockHistory stockHistory = stockHistoryRepository.findById(id).orElse(null);
-        return objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
+            System.out.println("🔎 Buscando StockHistory com id: " + id);
+
+            Optional<StockHistory> optional = stockHistoryRepository.findById(id);
+
+            if (optional.isEmpty()) {
+                System.out.println("⚠️ Não encontrei nenhum registro com id: " + id);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id não encontrado: " + id);
+            }
+
+            StockHistory stockHistory = optional.get();
+            System.out.println("✅ Registro encontrado: " + stockHistory);
+
+            StockHistoryResponseDTO dto = objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
+            System.out.println("📦 Convertido para DTO: " + dto);
+
+            return dto;
+
+
+
     }
 
 //    public Long deleteByBatchId(String id) {

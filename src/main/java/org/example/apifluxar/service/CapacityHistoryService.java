@@ -72,7 +72,7 @@ public class CapacityHistoryService {
     }
 
     public List<CapacityHistoryResponseDTO> getCapacityHistoryByLote(Long loteId) {
-        List<CapacityHistory> capacityHistory = capacityHistporyRepository.findByLote(loteId);
+        List<CapacityHistory> capacityHistory = capacityHistporyRepository.findByLote_Id(loteId);
         List<CapacityHistoryResponseDTO> dtos = new ArrayList<>();
         for(CapacityHistory capacityHistoryItem : capacityHistory) {
             CapacityHistoryResponseDTO dto = new CapacityHistoryResponseDTO(

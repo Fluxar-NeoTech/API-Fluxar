@@ -1,12 +1,25 @@
 package org.example.apifluxar.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.model.Unit;
+
 public class CapacityStockResposeDTO {
 
     private Double largura;
     private Double altura;
     private Double comprimento;
-
     private Double capacidadeMaxima;
+    private SectorResponseDTO setor;
+    private UnitResponseDTO unidade;
+
+    public CapacityStockResposeDTO(Double altura, Double capacidadeMaxima, Double comprimento, Double largura) {
+        this.altura = altura;
+        this.capacidadeMaxima = capacidadeMaxima;
+        this.comprimento = comprimento;
+        this.largura = largura;
+    }
 
     public Double getCapacidadeMaxima() {
         return capacidadeMaxima;
@@ -38,5 +51,21 @@ public class CapacityStockResposeDTO {
 
     public void setComprimento(Double comprimento) {
         this.comprimento = comprimento;
+    }
+
+    public SectorResponseDTO getSetor() {
+        return setor;
+    }
+
+    public void setSetor(SectorResponseDTO setor) {
+        this.setor = setor;
+    }
+
+    public UnitResponseDTO getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(UnitResponseDTO unidade) {
+        this.unidade = unidade;
     }
 }

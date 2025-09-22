@@ -15,9 +15,7 @@ public interface CapacityHistporyRepository extends JpaRepository<CapacityHistor
     List<CapacityHistory> findByProdutoAndSectorAndAndUnidade(@Param("idProduto") Long idProduto,
                                                               @Param("idSector") Long idSector,
                                                               @Param("idUnidade") Long idUnidade);
-    @Modifying
-    @Query("SELECT c FROM CapacityHistory c WHERE  c.lote.id = :idlote")
-    List<CapacityHistory> findByLote(@Param("idLote") Long idLote);
+    List<CapacityHistory> findByLote_Id(Long loteId);
     @Modifying
     @Transactional
     @Query("DELETE FROM CapacityHistory c WHERE c.lote.id = :id")

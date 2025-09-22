@@ -3,15 +3,18 @@ package org.example.apifluxar.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "HistoricoEstoque")
+@Table(name = "historicoestoque")
 public class StockHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate data;
+    @Column(name = "data")
+    private LocalDateTime data;
+
 
     @Column(name = "capacidade_ocupada")
     private Integer capacidadeOcupada;
@@ -38,9 +41,9 @@ public class StockHistory {
 
     public void setId(Long id) { this.id = id; }
 
-    public LocalDate getData() { return data; }
+    public LocalDateTime getData() { return data; }
 
-    public void setData(LocalDate data) { this.data = data; }
+    public void setData(LocalDateTime data) { this.data = data; }
 
     public Integer getCapacidadeOcupada() { return capacidadeOcupada; }
 
