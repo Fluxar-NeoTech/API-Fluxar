@@ -1,6 +1,4 @@
-package org.example.apifluxar.dto;
-
-import java.util.List;
+package org.example.apifluxar.dto.sector;
 
 public class SectorResponseDTO {
     private Long id;

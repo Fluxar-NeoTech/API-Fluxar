@@ -1,14 +1,15 @@
 package org.example.apifluxar.controller;
 
-import org.example.apifluxar.dto.CapacityStockRequestDTO;
-import org.example.apifluxar.dto.CapacityStockResposeDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
 import org.example.apifluxar.service.CapacityStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -22,20 +23,30 @@ public class CapacityStockController {
     }
 
     @PostMapping("/addCapacityStock")
+    @Operation(summary = "Adicionar a capacidade do estoque",
+            description = "Adiciona a capacidade do estoque.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Capacidade do estoque adicionada com sucesso"),
+            @ApiResponse( responseCode = "400", description = "Requisição inválida"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<CapacityStockResposeDTO> addCapacityStock(@RequestBody @Validated CapacityStockRequestDTO capacityStockRequestDTO){
         CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.addCapacityStock(capacityStockRequestDTO);
         return ResponseEntity.ok(capacityStockResposeDTO);
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<CapacityStockResposeDTO>> getAllCapacityStock(){
-        List<CapacityStockResposeDTO> capacityStockResposeDTOS = capacityStockService.getAllCapacityStock();
-        return ResponseEntity.ok(capacityStockResposeDTOS);
+    @GetMapping("/search/unidade/{id}")
+    @Operation(summary = "Buscar capacidade do estoque por ID da unidade",
+            description = "Retorna os detalhes da capacidade do estoque específica com base no ID da unidade fornecido.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Capacidade do estoque encontrada com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Capacidade do estoque não encontrada"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
+    public ResponseEntity<CapacityStockResposeDTO> findByUnidadeId(@PathVariable Long id){
+        CapacityStockResposeDTO dto = capacityStockService.findByUnidadeId(id);
+        return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/search/{id}")
-    public ResponseEntity<CapacityStockResposeDTO> searchId(@PathVariable Long id){
-        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findById(id);
-        return ResponseEntity.ok(capacityStockResposeDTO);
-    }
+    //Método de alterar a capacidade do estoque
 }

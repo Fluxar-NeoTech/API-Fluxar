@@ -1,4 +1,4 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.employee;
 
 import jakarta.validation.constraints.NotNull;
 import org.example.apifluxar.validation.OnPatch;

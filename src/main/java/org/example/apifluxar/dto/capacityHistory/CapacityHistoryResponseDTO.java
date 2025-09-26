@@ -1,11 +1,7 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.capacityHistory;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import org.example.apifluxar.model.Batch;
-import org.example.apifluxar.model.Product;
-import org.example.apifluxar.model.Sector;
-import org.example.apifluxar.model.Unit;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 
 import java.time.LocalDate;
 

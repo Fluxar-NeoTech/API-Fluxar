@@ -1,7 +1,7 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.employee;
 
-import jakarta.persistence.Column;
-import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 
 public class EmployeeResponseDTO {
     private Long id;

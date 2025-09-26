@@ -1,8 +1,11 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.batch;
+
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
+import org.example.apifluxar.dto.products.ProductResponseDTO;
 
 import java.time.LocalDate;
 
-public class BatchResponseDTO {
+public class BatchResponseCreateDTO {
     private String idLote;
     private LocalDate validade;
     private Double altura;
@@ -12,7 +15,7 @@ public class BatchResponseDTO {
     private ProductResponseDTO product;
     private UnitResponseDTO unit;
 
-    public BatchResponseDTO(Double altura, Double comprimento, String idLote, Double largura, ProductResponseDTO product, UnitResponseDTO unit, LocalDate validade) {
+    public BatchResponseCreateDTO(Double altura, Double comprimento, String idLote, Double largura, ProductResponseDTO product, UnitResponseDTO unit, LocalDate validade) {
         this.altura = altura;
         this.comprimento = comprimento;
         this.idLote = idLote;
@@ -22,7 +25,7 @@ public class BatchResponseDTO {
         this.validade = validade;
     }
 
-    public BatchResponseDTO(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Double volume) {
+    public BatchResponseCreateDTO(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Double volume) {
         this.idLote = idLote;
         this.validade = validade;
         this.altura = altura;
@@ -59,14 +62,6 @@ public class BatchResponseDTO {
         return comprimento;
     }
 
-    public Double getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Double volume) {
-        this.volume = volume;
-    }
-
     public void setComprimento(Double comprimento) {
         this.comprimento = comprimento;
     }
@@ -79,14 +74,12 @@ public class BatchResponseDTO {
         this.largura = largura;
     }
 
-
-
-    public ProductResponseDTO getProduct() {
-        return product;
+    public Double getVolume() {
+        return volume;
     }
 
-    public void setProduct(ProductResponseDTO product) {
-        this.product = product;
+    public void setVolume(Double volume) {
+        this.volume = volume;
     }
 
     public UnitResponseDTO getUnit() {
@@ -95,5 +88,13 @@ public class BatchResponseDTO {
 
     public void setUnit(UnitResponseDTO unit) {
         this.unit = unit;
+    }
+
+    public ProductResponseDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductResponseDTO product) {
+        this.product = product;
     }
 }

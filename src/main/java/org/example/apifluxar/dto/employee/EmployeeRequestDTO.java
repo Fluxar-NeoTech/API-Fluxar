@@ -1,9 +1,7 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.employee;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import org.example.apifluxar.validation.OnCreate;
-import org.example.apifluxar.validation.OnPatch;
 
 public class EmployeeRequestDTO {
     @NotNull(message = "O campo email não deve ser nulo")

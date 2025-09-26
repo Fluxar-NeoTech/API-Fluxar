@@ -1,6 +1,6 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.products;
 
-import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
 
 public class ProductResponseDTO {
     private String nome;

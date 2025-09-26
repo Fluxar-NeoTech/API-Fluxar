@@ -1,6 +1,11 @@
 package org.example.apifluxar.service;
 
-import org.example.apifluxar.dto.*;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
+import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
+import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
+import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.Employee;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;

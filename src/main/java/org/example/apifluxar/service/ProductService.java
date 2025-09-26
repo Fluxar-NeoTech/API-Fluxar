@@ -1,8 +1,10 @@
 package org.example.apifluxar.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.apifluxar.dto.*;
+import org.example.apifluxar.dto.products.AllProductsResponseDTO;
+import org.example.apifluxar.dto.products.ProductRequestDTO;
+import org.example.apifluxar.dto.products.ProductResponseDTO;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.mapper.ProductMapper;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Sector;
@@ -14,8 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {

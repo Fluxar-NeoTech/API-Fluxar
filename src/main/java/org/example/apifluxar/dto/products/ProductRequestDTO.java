@@ -1,9 +1,7 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.products;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.validation.OnCreate;
 
 public class ProductRequestDTO {
