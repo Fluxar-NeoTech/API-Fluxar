@@ -53,7 +53,6 @@ public class CapacityStockService {
         return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
     }
 
-
     public CapacityStockResposeDTO findById(Long id){
         CapacityStock capacityStock = capacityStockRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         CapacityStockResposeDTO dto = new CapacityStockResposeDTO(

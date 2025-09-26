@@ -20,7 +20,6 @@ public class BatchResponseDTO {
         this.product = product;
         this.unit = unit;
         this.validade = validade;
-
     }
 
     public BatchResponseDTO(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Double volume) {

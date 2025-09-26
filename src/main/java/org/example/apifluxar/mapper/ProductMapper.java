@@ -34,12 +34,10 @@ public class ProductMapper {
             );
         }
 
-
         return new ProductResponseDTO(
                 product.getNome(),
                 product.getTipo(),
                 setorDTO
         );
     }
-
 }

@@ -26,25 +26,13 @@ public class CapacityHistoryController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/search/bachtId/{id}")
-    public ResponseEntity<List<CapacityHistoryResponseDTO>> selectBachId(@PathVariable Long id) {
-        List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryByLote(id);
-        return ResponseEntity.ok(res);
-    }
-
-    @GetMapping("/search/ProdutoAndSectorAndAndUnidade")
-    public ResponseEntity<List<CapacityHistoryResponseDTO>> selectProdAndSectorAndUnidade(@RequestParam Long produtoId,
-                                                                                          @RequestParam Long setorId,
+    @GetMapping("/search/SectorAndAndUnidade")
+    public ResponseEntity<List<CapacityHistoryResponseDTO>> selectProdAndSectorAndUnidade(@RequestParam Long setorId,
                                                                                           @RequestParam Long unidadeId) {
-        List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryBySectorAndProdutoAndUnidade(produtoId, setorId, unidadeId);
+        List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryBySectorAndUnidade( setorId, unidadeId);
         return ResponseEntity.ok(res);
     }
 
-    @DeleteMapping("/delete/bachtId/{id}")
-    public ResponseEntity<Object> deleteBachId(@PathVariable Long id) {
-        Integer qnt = capacityHistoryService.deleteCapacityHistoryByIdLote(id);
-        return ResponseEntity.ok(qnt);
-    }
 
     @DeleteMapping("/delete/unitId/{id}")
     public ResponseEntity<Object> deleteUnitId(@PathVariable Long id) {

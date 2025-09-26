@@ -25,7 +25,7 @@ public class BatchService {
     final ProductService productService;
     final UnitService unitService;
     final BatchMapper batchMapper;
-    final StockHistoryRepository stockHistoryRepository;
+    final StockHistoryService stockHistoryService;
     private final ProductRepository productRepository;
     private final UnitRepository unitRepository;
     final ObjectMapper objectMapper;
@@ -36,7 +36,7 @@ public class BatchService {
                         BatchMapper batchMapper,
                         ProductRepository productRepository,
                         UnitRepository unitRepository,
-                        StockHistoryRepository stockHistoryRepository,
+                        StockHistoryService stockHistoryService,
                         ObjectMapper objectMapper
     ) {
         this.batchRepository = batchRepository;
@@ -45,7 +45,7 @@ public class BatchService {
         this.batchMapper = batchMapper;
         this.productRepository = productRepository;
         this.unitRepository = unitRepository;
-        this.stockHistoryRepository = stockHistoryRepository;
+        this.stockHistoryService = stockHistoryService;
         this.objectMapper = objectMapper;
     }
 
@@ -99,30 +99,26 @@ public class BatchService {
     }
 
     public BatchResponseCreateDTO createBatch(BatchRequestDTO batchRequestDTO) {
-        // Busca entidades
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unidade não encontrada"));
 
-        // Converte request -> entidade
         Batch batchEntity = batchMapper.mapToBatch(batchRequestDTO, productEntity, unitEntity);
 
-        // Salva no banco
         Batch savedBatch = batchRepository.save(batchEntity);
 
-        // Converte entidade salva -> resposta
         return batchMapper.mapToBatchCreate(savedBatch);
     }
 
 
-//        public BatchResponseDTO deleteBatch(String id){
-//        Batch batch = batchRepository.findByIdLote(id)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//        stockHistoryRepository.deleteByIdLote(batch.getIdLote());
-//        batchRepository.delete(batch);
-//
-//        return batchMapper.mapToBatchResponseDTO(batch);
-//    }
+    public BatchResponseDTO deleteBatch(String id){
+        Batch batch = batchRepository.findByIdLote(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        stockHistoryService.deleteByBatchId(batch.getId());
+        batchRepository.deleteByIdCustom(batch.getId());
+        BatchResponseDTO res = batchMapper.mapToBatch(batch,batch.getProduto(),batch.getUnidade());
+        return res;
+    }
 }

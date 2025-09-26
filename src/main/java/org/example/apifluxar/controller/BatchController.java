@@ -41,9 +41,9 @@ public class BatchController {
 //        return ResponseEntity.ok(bachtDTO);
 //    }
 
-//    @DeleteMapping("/DeleteBatch/{id}")
-//    public ResponseEntity<BatchResponseDTO> deleteBatch(@PathVariable String id){
-//        BatchResponseDTO batchResposeDTO = batchService.deleteBatch(id);
-//        return ResponseEntity.ok(batchResposeDTO);
-//    }
+    @DeleteMapping("/DeleteBatch/{idLote}")
+    public ResponseEntity<BatchResponseDTO> deleteBatch(@PathVariable String idLote){
+        BatchResponseDTO batchResposeDTO = batchService.deleteBatch(idLote);
+        return ResponseEntity.ok(batchResposeDTO);
+    }
 }

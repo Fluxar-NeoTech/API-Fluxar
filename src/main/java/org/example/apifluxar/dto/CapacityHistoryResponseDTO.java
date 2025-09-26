@@ -13,10 +13,8 @@ public class CapacityHistoryResponseDTO {
 
     private LocalDate dataCompleta;
     private Integer capacidadeTotal;
-    private ProductResponseDTO produto;
     private UnitResponseDTO unidade;
     private SectorResponseDTO sector;
-    private BatchResponseDTO lote;
 
     public CapacityHistoryResponseDTO(Integer capacidadeTotal, LocalDate dataCompleta) {
         this.capacidadeTotal = capacidadeTotal;
@@ -43,13 +41,6 @@ public class CapacityHistoryResponseDTO {
         this.capacidadeTotal = capacidadeTotal;
     }
 
-    public ProductResponseDTO getProduto() {
-        return produto;
-    }
-
-    public void setProduto(ProductResponseDTO produto) {
-        this.produto = produto;
-    }
 
     public SectorResponseDTO getSector() {
         return sector;
@@ -67,11 +58,4 @@ public class CapacityHistoryResponseDTO {
         this.unidade = unidade;
     }
 
-    public BatchResponseDTO getLote() {
-        return lote;
-    }
-
-    public void setLote(BatchResponseDTO lote) {
-        this.lote = lote;
-    }
 }
