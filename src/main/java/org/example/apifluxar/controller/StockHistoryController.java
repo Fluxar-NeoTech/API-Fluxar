@@ -1,5 +1,8 @@
 package org.example.apifluxar.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.StockHistoryResponseDTO;
 import org.example.apifluxar.service.StockHistoryService;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,13 @@ public class StockHistoryController {
     }
 
     @GetMapping("search/id/{id}")
+    @Operation(summary = "Buscar histórico de estoque por ID",
+            description = "Retorna os detalhes de um histórico de estoque específico com base no ID fornecido.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Histórico de estoque encontrado com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Histórico de estoque não encontrado"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<StockHistoryResponseDTO> selectId(@PathVariable Long id) {
         StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(id);
         return ResponseEntity.ok(dto);

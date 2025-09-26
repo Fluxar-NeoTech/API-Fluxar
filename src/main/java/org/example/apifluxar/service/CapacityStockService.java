@@ -53,42 +53,6 @@ public class CapacityStockService {
         return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
     }
 
-    public CapacityStockResposeDTO findById(Long id){
-        CapacityStock capacityStock = capacityStockRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
-                capacityStock.getAltura(),
-                capacityStock.getCapacidadeMaxima(),
-                capacityStock.getComprimento(),
-                capacityStock.getLargura()
-        );
-        Sector setor = capacityStock.getSetor();
-        if (setor != null) {
-            SectorResponseDTO sectorResponseDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-              dto.setSetor(sectorResponseDTO);
-        }
-
-        Unit unit = capacityStock.getUnidade();
-        if (unit != null) {
-            UnitResponseDTO unitResponseDTO = new UnitResponseDTO (
-                    unit.getNome(),
-                    unit.getCep(),
-                    unit.getRua(),
-                    unit.getCidade(),
-                    unit.getEstado(),
-                    unit.getNumero(),
-                    unit.getBairro(),
-                    objectMapper.convertValue(unit.getIndustry(), IndustryResponseDTO.class)
-            );
-            unitResponseDTO.setId(unit.getId());
-            dto.setUnidade(unitResponseDTO);
-        }
-        return  dto;
-    }
-
     public CapacityStockResposeDTO findByUnidadeId(Long id){
         CapacityStock capacityStock = capacityStockRepository.findByUnidade(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
@@ -123,46 +87,6 @@ public class CapacityStockService {
             dto.setUnidade(unitResponseDTO);
         }
         return  dto;
-    }
-
-    public List<CapacityStockResposeDTO> getAllCapacityStock(){
-        List<CapacityStock> capacityStockAll = capacityStockRepository.findAll();
-        List<CapacityStockResposeDTO> dtos =  new ArrayList<>();
-        for (CapacityStock capacityStock : capacityStockAll) {
-            CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
-                    capacityStock.getAltura(),
-                    capacityStock.getCapacidadeMaxima(),
-                    capacityStock.getComprimento(),
-                    capacityStock.getLargura()
-            );
-            Sector setor = capacityStock.getSetor();
-            if (setor != null) {
-                SectorResponseDTO sectorResponseDTO = new SectorResponseDTO(
-                        setor.getId(),
-                        setor.getNome(),
-                        setor.getDescricao()
-                );
-                dto.setSetor(sectorResponseDTO);
-            }
-
-            Unit unit = capacityStock.getUnidade();
-            if (unit != null) {
-                UnitResponseDTO unitResponseDTO = new UnitResponseDTO (
-                        unit.getNome(),
-                        unit.getCep(),
-                        unit.getRua(),
-                        unit.getCidade(),
-                        unit.getEstado(),
-                        unit.getNumero(),
-                        unit.getBairro(),
-                        objectMapper.convertValue(unit.getIndustry(), IndustryResponseDTO.class)
-                );
-                unitResponseDTO.setId(unit.getId());
-                dto.setUnidade(unitResponseDTO);
-            }
-            dtos.add(dto);
-        }
-        return dtos;
     }
 
 }

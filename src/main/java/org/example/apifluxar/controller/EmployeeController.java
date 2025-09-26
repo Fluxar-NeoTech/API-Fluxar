@@ -1,5 +1,8 @@
 package org.example.apifluxar.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.groups.Default;
 import org.example.apifluxar.dto.EmployeeResponseDTO;
 import org.example.apifluxar.dto.EmployeeRequestDTO;
@@ -28,18 +31,39 @@ public class EmployeeController {
     }
 
     @GetMapping("/search/{id}")
+    @Operation(summary = "Buscar funcionário por ID",
+            description = "Retorna os detalhes de um funcionário específico com base no ID fornecido.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Funcionário encontrado com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Funcionário não encontrado"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<EmployeeResponseDTO> selectId(@PathVariable Long id) {
         EmployeeResponseDTO res = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Login de funcionário",
+            description = "Autentica um funcionário com base nas credenciais fornecidas.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Funcionário autenticado com sucesso"),
+            @ApiResponse( responseCode = "401", description = "Credenciais inválidas"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
         EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
         return ResponseEntity.ok(res);
     }
 
     @PutMapping("/update/photo")
+    @Operation(summary = "Atualizar foto de perfil do funcionário",
+            description = "Atualiza a foto de perfil de um funcionário com base nas informações fornecidas.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Foto de perfil atualizada com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Funcionário não encontrado"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<Map<String, String>> updatePhoto(
             @RequestBody @Validated({OnPatch.class, Default.class}) UpdatePhotoRequestDTO updatePhotoRequestDTO
     ) {
@@ -62,6 +86,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/senha")
+    @Operation(summary = "Atualizar senha de perfil do funcionário",
+            description = "Atualiza a senha de perfil de um funcionário com base nas informações fornecidas.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Senha de perfil atualizada com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Funcionário não encontrado"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<Map<String, String>> updateSenha(
             @RequestBody @Validated() EmployeeRequestDTO employeeRequestDTO
     ) {

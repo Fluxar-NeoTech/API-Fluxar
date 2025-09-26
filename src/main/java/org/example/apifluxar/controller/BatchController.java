@@ -1,5 +1,8 @@
 package org.example.apifluxar.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.BatchRequestDTO;
 import org.example.apifluxar.dto.BatchResponseCreateDTO;
 import org.example.apifluxar.dto.BatchResponseDTO;
@@ -20,20 +23,48 @@ public class BatchController {
     }
 
     @GetMapping("/search/id/{loteId}")
+    @Operation(summary = "Buscar lote por ID",
+            description = "Retorna os detalhes de um lote específico com base no ID fornecido.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Lote encontrado com sucesso")
+            ,@ApiResponse( responseCode = "404", description = "Lote não encontrado")
+            ,@ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<BatchResponseDTO> findByIdBatch(@PathVariable String loteId) {
         return ResponseEntity.ok(batchService.getBatchByIdLote(loteId));
     }
 
     @GetMapping("/search/batch")
+    @Operation(summary = "Listar todos os lotes",
+            description = "Retorna uma lista de todos os lotes cadastrados no sistema.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Lista de lotes retornada com sucesso"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<List<BatchResponseDTO>> findAllBatch() {
         return ResponseEntity.ok(batchService.getAllBatch());
     }
+
     @GetMapping("/search/batch/{idUnit}")
+    @Operation(summary = "Listar todos os lotes por ID da unidade",
+            description = "Retorna uma lista de todos os lotes cadastrados no sistema filtrando pelo ID da unidade.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Lista de lotes retornada com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Unidade não encontrada"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<List<BatchResponseDTO>> findAllBatchByUnit(@PathVariable Long idUnit) {
         return ResponseEntity.ok(batchService.getAllBatchByUnit(idUnit));
     }
 
     @PostMapping("/add/batch")
+    @Operation(summary = "Adicionar um novo lote",
+            description = "Adiciona um novo lote ao sistema com base nos dados fornecidos.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Lote adicionado com sucesso"),
+            @ApiResponse( responseCode = "400", description = "Dados inválidos fornecidos"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<BatchResponseCreateDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
         BatchResponseCreateDTO batchRespose = batchService.createBatch(batchRequestDTO);
         return ResponseEntity.ok(batchRespose);
@@ -46,6 +77,12 @@ public class BatchController {
 //    }
 
     @DeleteMapping("/DeleteBatch/{idLote}")
+    @Operation(summary = "Deletar um lote por ID", description = "Deleta um lote do sistema com base no ID fornecido.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Lote deletado com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Lote não encontrado"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<BatchResponseDTO> deleteBatch(@PathVariable String idLote){
         BatchResponseDTO batchResposeDTO = batchService.deleteBatch(idLote);
         return ResponseEntity.ok(batchResposeDTO);
