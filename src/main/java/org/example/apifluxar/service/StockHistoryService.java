@@ -11,6 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+
 @Service
 public class StockHistoryService {
 
@@ -23,11 +28,14 @@ public class StockHistoryService {
     }
 
     public StockHistoryResponseDTO getStockHistoryById(Long id) {
-        StockHistory stockHistory = stockHistoryRepository.findById(id).orElse(null);
+        StockHistory stockHistory = stockHistoryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
     }
 
-    public Long deleteByBatchId(String id) {
-        return stockHistoryRepository.deleteByIdLote(id);
+
+
+    public void deleteByBatchId(Long id) {
+        int deletedCount = stockHistoryRepository.deleteAllByLoteId(id);
     }
+
 }

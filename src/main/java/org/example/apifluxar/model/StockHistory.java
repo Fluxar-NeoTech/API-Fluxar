@@ -3,30 +3,37 @@ package org.example.apifluxar.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "HistoricoEstoque")
+@Table(name = "historicoestoque")
 public class StockHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate data;
+    @Column(name = "data")
+    private LocalDateTime data;
+
 
     @Column(name = "capacidade_ocupada")
     private Integer capacidadeOcupada;
 
-    @Column(name = "produto_id")
-    private Long produtoId;
+    @ManyToOne()
+    @JoinColumn(name = "produto_id")
+    private Product produto;
 
-    @Column(name = "unidade_id")
-    private Long unidadeId;
+    @ManyToOne()
+    @JoinColumn(name = "unidade_id")
+    private Unit unidade;
 
-    @Column(name = "setor_id")
-    private Long setorId;
+    @ManyToOne()
+    @JoinColumn(name = "setor_id")
+    private Sector setor;
 
-    @Column(name = "lote_id")
-    private String loteId;
+    @ManyToOne()
+    @JoinColumn(name = "lote_id")
+    private Batch lote;
 
     // Constructor
 
@@ -38,43 +45,43 @@ public class StockHistory {
 
     public void setId(Long id) { this.id = id; }
 
-    public LocalDate getData() { return data; }
+    public LocalDateTime getData() { return data; }
 
-    public void setData(LocalDate data) { this.data = data; }
+    public void setData(LocalDateTime data) { this.data = data; }
 
     public Integer getCapacidadeOcupada() { return capacidadeOcupada; }
 
     public void setCapacidadeOcupada(Integer capacidadeOcupada) { this.capacidadeOcupada = capacidadeOcupada; }
 
-    public Long getProdutoId() {
-        return produtoId;
+    public Product getProdutoId() {
+        return produto;
     }
 
-    public void setProdutoId(Long produtoId) {
-        this.produtoId = produtoId;
+    public void setProdutoId(Product produto) {
+        this.produto = produto;
     }
 
-    public Long getUnidadeId() {
-        return unidadeId;
+    public Unit getUnidadeId() {
+        return unidade;
     }
 
-    public void setUnidadeId(Long unidadeId) {
-        this.unidadeId = unidadeId;
+    public void setUnidadeId(Unit unidade) {
+        this.unidade = unidade;
     }
 
-    public Long getSetorId() {
-        return setorId;
+    public Sector getSetorId() {
+        return setor;
     }
 
-    public void setSetorId(Long setorId) {
-        this.setorId = setorId;
+    public void setSetorId(Sector setor) {
+        this.setor = setor;
     }
 
-    public String getLoteId() {
-        return loteId;
+    public Batch getLoteId() {
+        return lote;
     }
 
-    public void setLoteId(String loteId) {
-        this.loteId = loteId;
+    public void setLoteId(Batch lote) {
+        this.lote = lote;
     }
 }

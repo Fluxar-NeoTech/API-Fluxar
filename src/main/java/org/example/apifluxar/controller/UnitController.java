@@ -5,6 +5,8 @@ import org.example.apifluxar.service.UnitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("api/unit")
@@ -18,6 +20,11 @@ public class UnitController {
     @GetMapping("/search/{id}")
     public ResponseEntity<UnitResponseDTO> searchUnit(@PathVariable Long id) {
         UnitResponseDTO res = unitService.getUnitById(id);
+        return ResponseEntity.ok(res);
+    }
+    @GetMapping("/searchAll/Industry/{id}")
+    public ResponseEntity<List<UnitResponseDTO>> searchAllIndustry(@PathVariable Long id) {
+        List<UnitResponseDTO> res = unitService.getUnitByIndustryId(id);
         return ResponseEntity.ok(res);
     }
 }

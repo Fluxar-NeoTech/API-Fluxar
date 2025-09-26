@@ -25,9 +25,10 @@ public class BatchService {
     final ProductService productService;
     final UnitService unitService;
     final BatchMapper batchMapper;
-    final StockHistoryRepository stockHistoryRepository;
+    final StockHistoryService stockHistoryService;
     private final ProductRepository productRepository;
     private final UnitRepository unitRepository;
+    final ObjectMapper objectMapper;
 
     public BatchService(BatchRepository batchRepository,
                         ProductService productService,
@@ -35,7 +36,8 @@ public class BatchService {
                         BatchMapper batchMapper,
                         ProductRepository productRepository,
                         UnitRepository unitRepository,
-                        StockHistoryRepository stockHistoryRepository
+                        StockHistoryService stockHistoryService,
+                        ObjectMapper objectMapper
     ) {
         this.batchRepository = batchRepository;
         this.productService = productService;
@@ -43,7 +45,8 @@ public class BatchService {
         this.batchMapper = batchMapper;
         this.productRepository = productRepository;
         this.unitRepository = unitRepository;
-        this.stockHistoryRepository = stockHistoryRepository;
+        this.stockHistoryService = stockHistoryService;
+        this.objectMapper = objectMapper;
     }
 
     public BatchResponseDTO getBatchByIdLote(String loteId){
@@ -96,39 +99,26 @@ public class BatchService {
     }
 
     public BatchResponseCreateDTO createBatch(BatchRequestDTO batchRequestDTO) {
-        // Busca entidades
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unidade não encontrada"));
 
-        // Cria batch
-        Batch batch = batchMapper.mapToBatch(batchRequestDTO);
-        batch.setProduto(productEntity);
-        batch.setUnidade(unitEntity);
+        Batch batchEntity = batchMapper.mapToBatch(batchRequestDTO, productEntity, unitEntity);
 
-        // Salva no banco
-        batchRepository.save(batch);
+        Batch savedBatch = batchRepository.save(batchEntity);
 
-        // Recarrega para pegar volume calculado
-        Batch savedBatch = batchRepository.findById(batch.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Batch não encontrado"));
-
-        // Retorna DTO com volume e IDs preenchidos
-        return batchMapper.mapToBatchResponseCreateDTO(
-                savedBatch,
-                productEntity.getId(),
-                unitEntity.getId()
-        );
+        return batchMapper.mapToBatchCreate(savedBatch);
     }
 
-//        public BatchResponseDTO deleteBatch(String id){
-//        Batch batch = batchRepository.findByIdLote(id)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//        stockHistoryRepository.deleteByIdLote(batch.getIdLote());
-//        batchRepository.delete(batch);
-//
-//        return batchMapper.mapToBatchResponseDTO(batch);
-//    }
+
+    public BatchResponseDTO deleteBatch(String id){
+        Batch batch = batchRepository.findByIdLote(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        stockHistoryService.deleteByBatchId(batch.getId());
+        batchRepository.deleteByIdCustom(batch.getId());
+        BatchResponseDTO res = batchMapper.mapToBatch(batch,batch.getProduto(),batch.getUnidade());
+        return res;
+    }
 }

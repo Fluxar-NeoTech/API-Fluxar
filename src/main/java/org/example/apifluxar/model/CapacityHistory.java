@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "HistoricoCapacidade")
+@Table(name = "historicocapacidade")
 public class CapacityHistory {
 
     @Id
@@ -17,6 +17,14 @@ public class CapacityHistory {
 
     @Column(name = "capacidade_total_ocupada")
     private Integer capacidadeTotal;
+
+    @ManyToOne()
+    @JoinColumn(name = "unidade_id")
+    private Unit unidade;
+
+    @ManyToOne()
+    @JoinColumn(name = "setor_id")
+    private Sector sector;
 
     // Constructor
 
@@ -47,4 +55,22 @@ public class CapacityHistory {
     public void setCapacidadeTotal(Integer capacidadeTotal) {
         this.capacidadeTotal = capacidadeTotal;
     }
+
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
+    }
+
+    public Unit getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unit unidade) {
+        this.unidade = unidade;
+    }
+
+
 }

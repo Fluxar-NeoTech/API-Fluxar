@@ -12,6 +12,7 @@ public class EmployeeResponseDTO {
     private String fotoPerfil;
     private SectorResponseDTO setor;
     private UnitResponseDTO unit;
+    private Double capacidadeMaxima;
 
     public EmployeeResponseDTO(Long id, String nome, String sobrenome, String email, Character cargo, String foto) {
         this.id = id;
@@ -78,5 +79,13 @@ public class EmployeeResponseDTO {
 
     public void setUnit(UnitResponseDTO unit) {
         this.unit = unit;
+    }
+
+    public Double getCapacidadeMaxima() {
+        return capacidadeMaxima;
+    }
+
+    public void setCapacidadeMaxima(Double capacidadeMaxima) {
+        this.capacidadeMaxima = capacidadeMaxima;
     }
 }
