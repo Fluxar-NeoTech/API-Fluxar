@@ -3,15 +3,13 @@ package org.example.apifluxar.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.example.apifluxar.dto.CapacityStockRequestDTO;
-import org.example.apifluxar.dto.CapacityStockResposeDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
 import org.example.apifluxar.service.CapacityStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController

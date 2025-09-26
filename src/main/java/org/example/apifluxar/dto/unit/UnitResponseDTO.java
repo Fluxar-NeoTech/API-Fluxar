@@ -1,6 +1,6 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.unit;
 
-import org.example.apifluxar.model.Industry;
+import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 
 public class UnitResponseDTO {
     private Long id;

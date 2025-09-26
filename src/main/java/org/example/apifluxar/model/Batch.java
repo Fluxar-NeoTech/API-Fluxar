@@ -1,8 +1,6 @@
 package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
-import org.example.apifluxar.dto.ProductResponseDTO;
-import org.example.apifluxar.dto.UnitResponseDTO;
 import org.hibernate.annotations.Formula;
 
 import java.time.LocalDate;

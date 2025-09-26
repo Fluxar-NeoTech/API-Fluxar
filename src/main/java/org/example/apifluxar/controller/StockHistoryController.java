@@ -3,7 +3,7 @@ package org.example.apifluxar.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.example.apifluxar.dto.StockHistoryResponseDTO;
+import org.example.apifluxar.dto.stockHistory.StockHistoryResponseDTO;
 import org.example.apifluxar.service.StockHistoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

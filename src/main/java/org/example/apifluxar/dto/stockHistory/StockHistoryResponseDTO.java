@@ -1,4 +1,4 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.stockHistory;
 
 public class StockHistoryResponseDTO {
 

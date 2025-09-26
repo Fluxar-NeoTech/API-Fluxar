@@ -1,8 +1,8 @@
 package org.example.apifluxar.mapper;
 
-import org.example.apifluxar.dto.ProductRequestDTO;
-import org.example.apifluxar.dto.ProductResponseDTO;
-import org.example.apifluxar.dto.SectorResponseDTO;
+import org.example.apifluxar.dto.products.ProductRequestDTO;
+import org.example.apifluxar.dto.products.ProductResponseDTO;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.model.Employee;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Sector;

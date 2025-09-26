@@ -1,9 +1,7 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.capacityStock;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import org.example.apifluxar.model.Sector;
-import org.example.apifluxar.model.Unit;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 
 public class CapacityStockResposeDTO {
 

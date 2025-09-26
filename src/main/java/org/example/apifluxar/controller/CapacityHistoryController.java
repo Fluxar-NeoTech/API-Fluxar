@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.example.apifluxar.dto.CapacityHistoryResponseDTO;
+import org.example.apifluxar.dto.capacityHistory.CapacityHistoryResponseDTO;
 import org.example.apifluxar.service.CapacityHistoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

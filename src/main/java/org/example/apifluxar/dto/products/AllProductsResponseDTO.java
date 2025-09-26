@@ -1,4 +1,4 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.products;
 
 public class AllProductsResponseDTO {
     private String nome;

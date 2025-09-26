@@ -1,8 +1,12 @@
 package org.example.apifluxar.mapper;
 
-import org.example.apifluxar.dto.*;
+import org.example.apifluxar.dto.batch.BatchRequestDTO;
+import org.example.apifluxar.dto.batch.BatchResponseCreateDTO;
+import org.example.apifluxar.dto.batch.BatchResponseDTO;
+import org.example.apifluxar.dto.industry.IndustryResponseDTO;
+import org.example.apifluxar.dto.products.ProductResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.Batch;
-import org.example.apifluxar.model.Industry;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Unit;
 import org.springframework.stereotype.Component;

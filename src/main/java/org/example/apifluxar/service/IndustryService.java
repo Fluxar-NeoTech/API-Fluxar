@@ -1,7 +1,7 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.apifluxar.dto.IndustryResponseDTO;
+import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 import org.example.apifluxar.model.Industry;
 import org.example.apifluxar.repository.IndustryRepository;
 import org.springframework.http.HttpStatus;

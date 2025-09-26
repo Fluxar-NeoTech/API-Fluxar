@@ -2,7 +2,11 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import org.example.apifluxar.dto.*;
+import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
+import org.example.apifluxar.dto.industry.IndustryResponseDTO;
+import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.CapacityStock;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;
@@ -10,13 +14,8 @@ import org.example.apifluxar.repository.CapacityStockRepository;
 import org.example.apifluxar.repository.SectorRepository;
 import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CapacityStockService {

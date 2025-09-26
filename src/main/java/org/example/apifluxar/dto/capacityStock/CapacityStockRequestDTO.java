@@ -1,6 +1,5 @@
-package org.example.apifluxar.dto;
+package org.example.apifluxar.dto.capacityStock;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 

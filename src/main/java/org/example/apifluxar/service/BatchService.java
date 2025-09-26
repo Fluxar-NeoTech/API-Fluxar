@@ -1,15 +1,17 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.apifluxar.dto.*;
+import org.example.apifluxar.dto.batch.BatchRequestDTO;
+import org.example.apifluxar.dto.batch.BatchResponseCreateDTO;
+import org.example.apifluxar.dto.batch.BatchResponseDTO;
+import org.example.apifluxar.dto.products.ProductResponseDTO;
+import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.mapper.BatchMapper;
 import org.example.apifluxar.model.Batch;
-import org.example.apifluxar.model.Employee;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.repository.BatchRepository;
 import org.example.apifluxar.repository.ProductRepository;
-import org.example.apifluxar.repository.StockHistoryRepository;
 import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BatchService {

@@ -1,6 +1,4 @@
-package org.example.apifluxar.dto;
-
-import org.example.apifluxar.model.Product;
+package org.example.apifluxar.dto.batch;
 
 import java.time.LocalDate;
 
