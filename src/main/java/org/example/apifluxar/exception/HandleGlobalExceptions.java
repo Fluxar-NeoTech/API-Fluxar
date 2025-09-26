@@ -14,8 +14,6 @@ import java.util.Map;
 
 @ControllerAdvice
 public class HandleGlobalExceptions extends RuntimeException {
-
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> HandlerEntityNotFoundExceptio
             (EntityNotFoundException ex){

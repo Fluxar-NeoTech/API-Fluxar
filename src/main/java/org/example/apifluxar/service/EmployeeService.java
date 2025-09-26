@@ -4,6 +4,7 @@ import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.Employee;
@@ -125,25 +126,28 @@ public class EmployeeService {
         return dto;
     }
 
-    public void updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
+    public MessageResponseDTO updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
         Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
 
         employee.setFotoPerfil(updatePhotoRequestDTO.getFotoPerfil());
         employeeRepository.save(employee);
 
-        log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!",
-                employee.getId(), employee.getEmail());
+        log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
+
+        return new MessageResponseDTO("Foto de perfil atualizada com sucesso!");
     }
 
-    public void updateSenha( EmployeeRequestDTO employeeRequestDTO) {
+    public MessageResponseDTO updateSenha(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
 
-        employee.setFotoPerfil(employee.getSenha());
+        employee.setSenha(employeeRequestDTO.getSenha());
         employeeRepository.save(employee);
 
-        log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!",
-                employee.getId(), employee.getEmail());
+        log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
+
+        return new MessageResponseDTO("Senha atualizada com sucesso!");
     }
+
 }
