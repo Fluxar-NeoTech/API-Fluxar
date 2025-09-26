@@ -28,6 +28,10 @@ public class BatchController {
     public ResponseEntity<List<BatchResponseDTO>> findAllBatch() {
         return ResponseEntity.ok(batchService.getAllBatch());
     }
+    @GetMapping("/search/batch/{idUnit}")
+    public ResponseEntity<List<BatchResponseDTO>> findAllBatchByUnit(@PathVariable Long idUnit) {
+        return ResponseEntity.ok(batchService.getAllBatchByUnit(idUnit));
+    }
 
     @PostMapping("/add/batch")
     public ResponseEntity<BatchResponseCreateDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){

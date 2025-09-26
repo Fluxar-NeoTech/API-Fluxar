@@ -86,10 +86,47 @@ public class BatchService {
             );
 
             Product product = batch.getProduto();
-
             if (product != null) {
                 ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
                 dto.setProduct(productResponseDTO);
+            }
+
+
+            Unit unit = batch.getUnidade();
+            if (unit != null) {
+                UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+                dto.setUnit(unitResponseDTO);
+            }
+            batchDtos.add(dto);
+        }
+
+        return batchDtos;
+    }
+
+    public List<BatchResponseDTO> getAllBatchByUnit(Long idUnit){
+        List<Batch> batchs = batchRepository.findAllByUnidade(idUnit);
+        List<BatchResponseDTO> batchDtos = new ArrayList<>();
+
+        for (Batch batch : batchs) {
+            BatchResponseDTO dto = new BatchResponseDTO(
+                    batch.getIdLote(),
+                    batch.getValidade(),
+                    batch.getAltura(),
+                    batch.getComprimento(),
+                    batch.getLargura(),
+                    batch.getVolume()
+            );
+
+            Product product = batch.getProduto();
+            if (product != null) {
+                ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
+                dto.setProduct(productResponseDTO);
+            }
+
+            Unit unit = batch.getUnidade();
+            if (unit != null) {
+                UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+                dto.setUnit(unitResponseDTO);
             }
 
             batchDtos.add(dto);
