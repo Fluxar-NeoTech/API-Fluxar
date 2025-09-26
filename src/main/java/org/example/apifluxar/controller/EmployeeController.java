@@ -61,4 +61,26 @@ public class EmployeeController {
         }
     }
 
+    @PutMapping("/update/senha")
+    public ResponseEntity<Map<String, String>> updateSenha(
+            @RequestBody @Validated() EmployeeRequestDTO employeeRequestDTO
+    ) {
+        try {
+            employeeService.updateSenha(employeeRequestDTO);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Senha de perfil atualizada com sucesso!");
+            return ResponseEntity.ok(response);
+
+        } catch (ResponseStatusException ex) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Funcionário não encontrado para o email informado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        } catch (Exception ex) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Erro inesperado ao atualizar a senha de perfil");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
+    }
+
 }

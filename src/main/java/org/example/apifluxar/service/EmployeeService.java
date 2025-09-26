@@ -130,4 +130,15 @@ public class EmployeeService {
         log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!",
                 employee.getId(), employee.getEmail());
     }
+
+    public void updateSenha( EmployeeRequestDTO employeeRequestDTO) {
+        Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        employee.setFotoPerfil(employee.getSenha());
+        employeeRepository.save(employee);
+
+        log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!",
+                employee.getId(), employee.getEmail());
+    }
 }
