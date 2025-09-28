@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/batch")
-public class BatchController {
+public class    BatchController {
     final BatchService batchService;
 
     public BatchController(BatchService batchService) {
