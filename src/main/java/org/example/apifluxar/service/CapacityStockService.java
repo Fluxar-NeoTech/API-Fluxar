@@ -22,13 +22,19 @@ public class CapacityStockService {
     final CapacityStockRepository capacityStockRepository;
     final SectorRepository sectorRepository;
     final UnitRepository unitRepository;
+    final IndustryService industryService;
     final ObjectMapper objectMapper;
 
-    public CapacityStockService(CapacityStockRepository capacityStockRepository,SectorRepository sectorRepository, UnitRepository unitRepository, ObjectMapper objectMapper) {
+    public CapacityStockService(CapacityStockRepository capacityStockRepository,
+                                SectorRepository sectorRepository,
+                                UnitRepository unitRepository,
+                                IndustryService industryService,
+                                ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
         this.capacityStockRepository = capacityStockRepository;
         this.sectorRepository = sectorRepository;
         this.unitRepository = unitRepository;
-        this.objectMapper = objectMapper;
+        this.industryService = industryService;
     }
 
     @Transactional
@@ -52,8 +58,8 @@ public class CapacityStockService {
         return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
     }
 
-    public CapacityStockResposeDTO findByUnidadeId(Long id){
-        CapacityStock capacityStock = capacityStockRepository.findByUnidade(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public CapacityStockResposeDTO findByUnidadeIdAndSectorId(Long unidadeId, Long sectorId) {
+        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
                 capacityStock.getAltura(),
                 capacityStock.getCapacidadeMaxima(),
@@ -73,6 +79,7 @@ public class CapacityStockService {
         Unit unit = capacityStock.getUnidade();
         if (unit != null) {
             UnitResponseDTO unitResponseDTO = new UnitResponseDTO (
+                    unit.getId(),
                     unit.getNome(),
                     unit.getCep(),
                     unit.getRua(),
@@ -80,7 +87,7 @@ public class CapacityStockService {
                     unit.getEstado(),
                     unit.getNumero(),
                     unit.getBairro(),
-                    objectMapper.convertValue(unit.getIndustry(), IndustryResponseDTO.class)
+                    industryService.getIndustryById(unit.getIndustry().getId())
             );
             unitResponseDTO.setId(unit.getId());
             dto.setUnidade(unitResponseDTO);
