@@ -46,4 +46,10 @@ public class HandleGlobalExceptions extends RuntimeException {
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros);
     }
+
+    //Personalizadas
+    @ExceptionHandler(EmptyCapacityHistory.class)
+    public ResponseEntity<String> HandlerEmptyCapacityHistory (EmptyCapacityHistory ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
