@@ -43,8 +43,8 @@ public class ProductController {
             @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<ProductResponseDTO> selectByName(@PathVariable String name) {
-        ProductResponseDTO res = productService.getProductByName(name);
+    public ResponseEntity<List<ProductResponseDTO>> selectByName(@PathVariable String name) {
+        List<ProductResponseDTO> res = productService.getProductByName(name);
         return ResponseEntity.ok(res);
     }
 

@@ -54,26 +54,34 @@ public class ProductService {
         return dto;
     }
 
-    public ProductResponseDTO getProductByName(String name) {
-        Product product = productRepository.findByNome(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public List<ProductResponseDTO> getProductByName(String name) {
+        List<Product> product = productRepository.findByNome(name);
+        List<ProductResponseDTO> dtos = new ArrayList<>();
 
-        ProductResponseDTO dto = new ProductResponseDTO(
-                product.getNome(),
-                product.getTipo()
-        );
-
-        Sector setor = product.getSetor();
-        if (setor != null) {
-            SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-
-            dto.setSetor(sectorDTO);
+        if (product.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
         }
 
-        return dto;
+        for (Product p : product) {
+            ProductResponseDTO dto = new ProductResponseDTO(
+                    p.getNome(),
+                    p.getTipo()
+            );
+
+            Sector setor = p.getSetor();
+            if (setor != null) {
+                SectorResponseDTO sectorDTO = new SectorResponseDTO(
+                        setor.getId(),
+                        setor.getNome(),
+                        setor.getDescricao()
+                );
+
+                dto.setSetor(sectorDTO);
+            }
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 
     public List<AllProductsResponseDTO> getAllProducts() {
