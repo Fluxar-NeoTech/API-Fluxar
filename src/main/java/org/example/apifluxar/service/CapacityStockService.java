@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class CapacityStockService {
     final CapacityStockRepository capacityStockRepository;
@@ -43,20 +45,40 @@ public class CapacityStockService {
 
         Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSetorId())
                 .orElseThrow(() -> new RuntimeException("Setor não encontrado"));
+
         Unit unidade = unitRepository.findById(capacityStockRequestDTO.getUnidadeId())
                 .orElseThrow(() -> new RuntimeException("Unidade não encontrada"));
 
-        capacityStock.setSetor(setor);
-        capacityStock.setUnidade(unidade);
+        Optional<CapacityStock> exist = capacityStockRepository.findBySetorAndUnidade(setor, unidade);
 
-        capacityStock.setCapacidadeMaxima(
-                capacityStock.getLargura() * capacityStock.getAltura() * capacityStock.getComprimento()
-        );
+        //se ja existir um registro, atualiza
+        if (exist.isPresent()) {
+            CapacityStock existingStock = exist.get();
+            existingStock.setAltura(capacityStock.getAltura());
+            existingStock.setLargura(capacityStock.getLargura());
+            existingStock.setComprimento(capacityStock.getComprimento());
 
-        CapacityStock saved = capacityStockRepository.save(capacityStock);
 
-        return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
+            existingStock.setCapacidadeMaxima(
+                    existingStock.getLargura() * existingStock.getAltura() * existingStock.getComprimento()
+            );
+
+            CapacityStock updated = capacityStockRepository.save(existingStock);
+            return objectMapper.convertValue(updated, CapacityStockResposeDTO.class);
+
+            //se nao existir, cria novo
+        } else {
+            capacityStock.setSetor(setor);
+            capacityStock.setUnidade(unidade);
+            capacityStock.setCapacidadeMaxima(
+                    capacityStock.getLargura() * capacityStock.getAltura() * capacityStock.getComprimento()
+            );
+
+            CapacityStock saved = capacityStockRepository.save(capacityStock);
+            return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
+        }
     }
+
 
     public CapacityStockResposeDTO findByUnidadeIdAndSectorId(Long unidadeId, Long sectorId) {
         CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

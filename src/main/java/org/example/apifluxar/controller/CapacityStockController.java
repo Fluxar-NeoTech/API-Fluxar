@@ -35,7 +35,7 @@ public class CapacityStockController {
         return ResponseEntity.ok(capacityStockResposeDTO);
     }
 
-    @GetMapping("/search/unidade/{id}")
+    @GetMapping("/search/unidade/{unitId}/sector/{sectorId}")
     @Operation(summary = "Buscar capacidade do estoque por ID da unidade",
             description = "Retorna os detalhes da capacidade do estoque específica com base no ID da unidade fornecido.")
     @ApiResponses({
@@ -47,6 +47,4 @@ public class CapacityStockController {
         CapacityStockResposeDTO dto = capacityStockService.findByUnidadeIdAndSectorId(unitId, sectorId);
         return ResponseEntity.ok(dto);
     }
-
-    //Método de alterar a capacidade do estoque
 }
