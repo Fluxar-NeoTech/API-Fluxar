@@ -1,12 +1,30 @@
 package org.example.apifluxar.dto.industry;
 
 public class IndustryResponseDTO {
+    private Long id;
     private String nome;
     private String cnpj;
+
+    public IndustryResponseDTO(String nome, String cnpj, Long id) {
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.id = id;
+    }
 
     public IndustryResponseDTO(String nome, String cnpj) {
         this.nome = nome;
         this.cnpj = cnpj;
+    }
+
+    public IndustryResponseDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

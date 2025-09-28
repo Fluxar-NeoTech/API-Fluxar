@@ -2,8 +2,7 @@ package org.example.apifluxar.dto.unit;
 
 import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 
-public class UnitResponseDTO {
-    private Long id;
+public class UnitBatchResponseDTO {
     private String nome;
     private String cep;
     private String rua;
@@ -11,13 +10,8 @@ public class UnitResponseDTO {
     private String estado;
     private String numero;
     private String bairro;
-    private IndustryResponseDTO industry;
 
-    public UnitResponseDTO() {
-    }
-
-    public UnitResponseDTO(Long id, String nome, String cep, String rua, String cidade, String estado, String numero, String bairro, IndustryResponseDTO industry) {
-        this.id = id;
+    public UnitBatchResponseDTO(String nome, String cep, String rua, String cidade, String estado, String numero, String bairro) {
         this.nome = nome;
         this.cep = cep;
         this.rua = rua;
@@ -25,15 +19,6 @@ public class UnitResponseDTO {
         this.estado = estado;
         this.numero = numero;
         this.bairro = bairro;
-        this.industry = industry;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -60,20 +45,20 @@ public class UnitResponseDTO {
         this.rua = rua;
     }
 
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
     public String getEstado() {
         return estado;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getNumero() {
@@ -90,13 +75,5 @@ public class UnitResponseDTO {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public IndustryResponseDTO getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(IndustryResponseDTO industry) {
-        this.industry = industry;
     }
 }
