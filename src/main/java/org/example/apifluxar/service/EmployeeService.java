@@ -31,50 +31,6 @@ public class EmployeeService {
         this.capacityStockService = capacityStockService;
     }
 
-    public EmployeeResponseDTO getEmployeeById(Long id) {
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-
-        EmployeeResponseDTO dto = new EmployeeResponseDTO(
-                employee.getId(),
-                employee.getNome(),
-                employee.getSobrenome(),
-                employee.getEmail(),
-                employee.getCargo(),
-                employee.getFotoPerfil()
-        );
-
-        Sector setor = employee.getSetor();
-        if (setor != null) {
-            SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-
-            dto.setSetor(sectorDTO);
-        }
-
-        Unit unit = employee.getUnidade();
-        if (unit != null) {
-            UnitResponseDTO unitDTO = new UnitResponseDTO(
-                    unit.getNome(),
-                    unit.getCep(),
-                    unit.getRua(),
-                    unit.getCidade(),
-                    unit.getEstado(),
-                    unit.getNumero(),
-                    unit.getBairro(),
-                    industryService.getIndustryById(employee.getId())
-            );
-            unitDTO.setId(unit.getId());
-            dto.setUnit(unitDTO);
-        }
-
-        return dto;
-    }
-
     public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
                 .findByEmailAndSenha(employeeRequestDTO.getEmail(), employeeRequestDTO.getSenha())
@@ -104,6 +60,7 @@ public class EmployeeService {
         Unit unit = employee.getUnidade();
         if (unit != null) {
             UnitResponseDTO unitDTO = new UnitResponseDTO(
+                    unit.getId(),
                     unit.getNome(),
                     unit.getCep(),
                     unit.getRua(),
@@ -111,12 +68,12 @@ public class EmployeeService {
                     unit.getEstado(),
                     unit.getNumero(),
                     unit.getBairro(),
-                    industryService.getIndustryById(employee.getId())
+                    industryService.getIndustryById(employee.getUnidade().getIndustry().getId())
             );
             unitDTO.setId(unit.getId());
             dto.setUnit(unitDTO);
         }
-        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findByUnidadeId(unit.getId());
+        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findByUnidadeIdAndSectorId(unit.getId(), setor.getId());
         if (capacityStockResposeDTO != null) {
             Double capacidadeMaxima= capacityStockResposeDTO.getCapacidadeMaxima();
             dto.setCapacidadeMaxima(capacidadeMaxima);

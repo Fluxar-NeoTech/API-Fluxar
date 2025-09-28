@@ -31,19 +31,6 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/search/{id}")
-    @Operation(summary = "Buscar funcionário por ID",
-            description = "Retorna os detalhes de um funcionário específico com base no ID fornecido.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Funcionário encontrado com sucesso"),
-            @ApiResponse( responseCode = "404", description = "Funcionário não encontrado"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-    })
-    public ResponseEntity<EmployeeResponseDTO> selectId(@PathVariable Long id) {
-        EmployeeResponseDTO res = employeeService.getEmployeeById(id);
-        return ResponseEntity.ok(res);
-    }
-
     @PostMapping("/login")
     @Operation(summary = "Login de funcionário",
             description = "Autentica um funcionário com base nas credenciais fornecidas.")
