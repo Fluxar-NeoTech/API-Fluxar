@@ -2,7 +2,9 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.stockHistory.StockHistoryResponseDTO;
+import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.StockHistory;
+import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.repository.StockHistoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,13 @@ public class StockHistoryService {
         this.objectMapper = objectMapper;
     }
 
-    public StockHistoryResponseDTO getStockHistoryById(Long id) {
-        StockHistory stockHistory = stockHistoryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
+    public StockHistoryResponseDTO getStockHistoryById(Long unitId, Long sectorId) {
+        StockHistory stockHistory = stockHistoryRepository.findByUnidadeIdAndSetorId(unitId, sectorId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        StockHistoryResponseDTO dto = objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
+        return dto;
+
     }
 
 
