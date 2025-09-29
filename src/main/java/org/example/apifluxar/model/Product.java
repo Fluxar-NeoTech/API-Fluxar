@@ -3,13 +3,16 @@ package org.example.apifluxar.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Produto")
+@Table(name = "produto")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nome")
     private String name;
+
+    @Column(name = "tipo")
     private String type;
 
     @ManyToOne()

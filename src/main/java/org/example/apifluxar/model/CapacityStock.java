@@ -11,11 +11,17 @@ public class CapacityStock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "largura")
     private Double width;
+
+    @Column(name = "altura")
     private Double height;
+
+    @Column(name = "comprimento")
     private Double length;
 
     @Formula("largura * altura * comprimento")
+    @Column(name = "capacidade_maxima")
     private Double maxCapacity;
 
     @ManyToOne()

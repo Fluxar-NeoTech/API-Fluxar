@@ -54,8 +54,8 @@ public class BatchService {
         Batch batch = batchRepository.findByIdLote(loteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         BatchResponseDTO dto = new BatchResponseDTO(
-                batch.getIdLote(),
-                batch.getValidade(),
+                batch.getBatchId(),
+                batch.getExpirationDate(),
                 batch.getAltura(),
                 batch.getComprimento(),
                 batch.getLargura(),

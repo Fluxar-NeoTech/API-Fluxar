@@ -16,20 +16,27 @@ public class Batch {
     @Column(name = "id_lote")
     private String batchId;
 
+    @Column(name = "validade")
     private LocalDate expirationDate;
+
+    @Column(name = "altura")
     private Double height;
+
+    @Column(name = "comprimento")
     private Double length;
+
+    @Column(name = "largura")
     private Double width;
 
     @Formula("width * height * length")
     private Double volume;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "produto_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "unit_id")
+    @JoinColumn(name = "unidade_id")
     private Unit unit;
 
     public Batch(String batchId, LocalDate expirationDate, Double height, Double length, Double width, Product product, Unit unit) {

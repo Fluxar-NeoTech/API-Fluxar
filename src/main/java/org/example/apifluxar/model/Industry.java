@@ -10,8 +10,11 @@ public class Industry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nome")
     private String name;
+
     private String cnpj;
+
     private String email;
 
     @Column(name = "data_cadastro")

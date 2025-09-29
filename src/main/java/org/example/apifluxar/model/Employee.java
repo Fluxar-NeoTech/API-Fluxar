@@ -9,10 +9,18 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nome")
     private String firstName;
+
+    @Column(name = "sobrenome")
     private String lastName;
+
     private String email;
+
+    @Column(name = "senha")
     private String password;
+
+    @Column(name = "cargo")
     private Character role;
 
     @Column(name = "foto_perfil")

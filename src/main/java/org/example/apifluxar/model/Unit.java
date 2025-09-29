@@ -9,12 +9,25 @@ public class Unit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nome")
     private String name;
+
+    @Column(name = "cep")
     private String postalCode;
+
+    @Column(name = "rua")
     private String street;
+
+    @Column(name = "cidade")
     private String city;
+
+    @Column(name = "estado")
     private String state;
+
+    @Column(name = "numero")
     private String number;
+
+    @Column(name = "bairro")
     private String neighborhood;
 
     @ManyToOne()

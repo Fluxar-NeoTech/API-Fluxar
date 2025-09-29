@@ -9,7 +9,10 @@ public class Sector {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "nome")
     private String name;
+
+    @Column(name = "descricao")
     private String description;
 
     public Sector(String description, long id, String name) {
