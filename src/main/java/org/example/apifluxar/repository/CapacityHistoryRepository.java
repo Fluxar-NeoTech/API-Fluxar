@@ -15,6 +15,6 @@ public interface CapacityHistoryRepository extends JpaRepository<CapacityHistory
                                                               @Param("idunidade") Long idUnidade);
     @Modifying
     @Transactional
-    @Query("DELETE FROM CapacityHistory c WHERE c.sector.id = :id and c.unidade.id = :idunidade")
+    @Query("DELETE FROM CapacityHistory c WHERE c.sector.id = :idsector and c.unidade.id = :idunidade")
     Integer deleteBySectorAndUnidade(@Param("idsector") Long id,@Param("idunidade") Long idunidade);
 }

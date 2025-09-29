@@ -1,6 +1,7 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseCreateDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
@@ -51,7 +52,7 @@ public class BatchService {
     }
 
     public BatchResponseDTO getBatchByIdLote(String loteId){
-        Batch batch = batchRepository.findByIdLote(loteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Batch batch = batchRepository.findByIdLote(loteId).orElseThrow(() ->  new EntityNotFoundException("Lote não encontrado"));
 
         BatchResponseDTO dto = new BatchResponseDTO(
                 batch.getIdLote(),
@@ -113,6 +114,10 @@ public class BatchService {
         List<Batch> batchs = batchRepository.findAllByUnidade(idUnit);
         List<BatchResponseDTO> batchDtos = new ArrayList<>();
 
+        if (batchs.isEmpty()){
+            throw  new EntityNotFoundException("Unidade não encontrada");
+        }
+
         for (Batch batch : batchs) {
             BatchResponseDTO dto = new BatchResponseDTO(
                     batch.getIdLote(),
@@ -143,10 +148,10 @@ public class BatchService {
 
     public BatchResponseCreateDTO createBatch(BatchRequestDTO batchRequestDTO) {
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unidade não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
         Batch batchEntity = batchMapper.batchToMap(batchRequestDTO, productEntity, unitEntity);
 
@@ -158,7 +163,7 @@ public class BatchService {
 
     public BatchResponseDTO deleteBatch(String id){
         Batch batch = batchRepository.findByIdLote(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException("Lote não encontrado"));
         stockHistoryService.deleteByBatchId(batch.getId());
         batchRepository.deleteByIdCustom(batch.getId());
         BatchResponseDTO res = batchMapper.mapToBatch(batch,batch.getProduto(),batch.getUnidade());

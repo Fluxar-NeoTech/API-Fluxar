@@ -2,14 +2,10 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.stockHistory.StockHistoryResponseDTO;
-import org.example.apifluxar.model.Sector;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.model.StockHistory;
-import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.repository.StockHistoryRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 
 @Service
 public class StockHistoryService {
@@ -24,7 +20,7 @@ public class StockHistoryService {
 
     public StockHistoryResponseDTO getStockHistoryById(Long unitId, Long sectorId) {
         StockHistory stockHistory = stockHistoryRepository.findByUnidadeIdAndSetorId(unitId, sectorId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException("Unidade ou setor não encontrado"));
 
         StockHistoryResponseDTO dto = objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
         return dto;

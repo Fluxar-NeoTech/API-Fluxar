@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class HandleGlobalExceptions extends RuntimeException {
+public class HandleGlobalExceptions {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> HandlerEntityNotFoundExceptio
             (EntityNotFoundException ex){
