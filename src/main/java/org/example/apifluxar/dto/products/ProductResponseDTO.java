@@ -3,42 +3,46 @@ package org.example.apifluxar.dto.products;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 
 public class ProductResponseDTO {
-    private String nome;
-    private String tipo;
-    private SectorResponseDTO setor;
+    private String name;
+    private String type;
+    private SectorResponseDTO sector;
 
-    public ProductResponseDTO(String nome, String tipo, SectorResponseDTO setor) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.setor = setor;
+    public ProductResponseDTO() {
     }
 
-
-    public ProductResponseDTO(String nome, String tipo) {
-        this.nome = nome;
-        this.tipo = tipo;
+    public ProductResponseDTO(String name, String type, SectorResponseDTO sector) {
+        this.name = name;
+        this.type = type;
+        this.sector = sector;
     }
 
-    public String getNome() {
-        return nome;
+    public ProductResponseDTO(String name, String type) {
+        this.name = name;
+        this.type = type;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    // Getters and Setters
+    public String getName() {
+        return name;
     }
 
-    public String getTipo() {
-        return tipo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public String getType() {
+        return type;
     }
 
-    public SectorResponseDTO getSetor() {
-        return setor;
+    public void setType(String type) {
+        this.type = type;
     }
-    public void setSetor(SectorResponseDTO setor) {
-        this.setor = setor;
+
+    public SectorResponseDTO getSector() {
+        return sector;
+    }
+
+    public void setSector(SectorResponseDTO sector) {
+        this.sector = sector;
     }
 }

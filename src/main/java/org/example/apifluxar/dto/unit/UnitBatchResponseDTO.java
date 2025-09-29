@@ -3,77 +3,78 @@ package org.example.apifluxar.dto.unit;
 import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 
 public class UnitBatchResponseDTO {
-    private String nome;
-    private String cep;
-    private String rua;
-    private String cidade;
-    private String estado;
-    private String numero;
-    private String bairro;
+    private String name;
+    private String postalCode;
+    private String street;
+    private String city;
+    private String state;
+    private String number;
+    private String neighborhood;
 
-    public UnitBatchResponseDTO(String nome, String cep, String rua, String cidade, String estado, String numero, String bairro) {
-        this.nome = nome;
-        this.cep = cep;
-        this.rua = rua;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.numero = numero;
-        this.bairro = bairro;
+    public UnitBatchResponseDTO(String name, String postalCode, String street, String city, String state, String number, String neighborhood) {
+        this.name = name;
+        this.postalCode = postalCode;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.number = number;
+        this.neighborhood = neighborhood;
     }
 
-    public String getNome() {
-        return nome;
+    // Getters and Setters
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCep() {
-        return cep;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public String getRua() {
-        return rua;
+    public String getStreet() {
+        return street;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getState() {
+        return state;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getCidade() {
-        return cidade;
+    public String getCity() {
+        return city;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 }

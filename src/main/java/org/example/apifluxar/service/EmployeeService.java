@@ -1,6 +1,6 @@
 package org.example.apifluxar.service;
 
-import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
@@ -62,7 +62,7 @@ public class EmployeeService {
             dto.setUnit(unitResponseDTO);
         }
 
-        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
+        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
         if (capacityStockResposeDTO != null) {
             Double capacidadeMaxima= capacityStockResposeDTO.getCapacidadeMaxima();
             dto.setCapacidadeMaxima(capacidadeMaxima);

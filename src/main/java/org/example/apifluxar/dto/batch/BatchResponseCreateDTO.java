@@ -8,72 +8,72 @@ import org.example.apifluxar.dto.products.ProductResponseDTO;
 import java.time.LocalDate;
 
 public class BatchResponseCreateDTO {
-    private String idLote;
-    private LocalDate validade;
-    private Double altura;
-    private Double comprimento;
-    private Double largura;
+    private String batchCode;
+    private LocalDate expirationDate;
+    private Double height;
+    private Double length;
+    private Double width;
     private Double volume;
     private AllProductsResponseDTO product;
     private UnitBatchResponseDTO unit;
 
-    public BatchResponseCreateDTO(Double altura, Double comprimento, String idLote, Double largura, AllProductsResponseDTO product, UnitBatchResponseDTO unit, LocalDate validade) {
-        this.altura = altura;
-        this.comprimento = comprimento;
-        this.idLote = idLote;
-        this.largura = largura;
+    public BatchResponseCreateDTO(Double height, Double length, String batchCode, Double width, AllProductsResponseDTO product, UnitBatchResponseDTO unit, LocalDate expirationDate) {
+        this.height = height;
+        this.length = length;
+        this.batchCode = batchCode;
+        this.width = width;
         this.product = product;
         this.unit = unit;
-        this.validade = validade;
+        this.expirationDate = expirationDate;
     }
 
-    public BatchResponseCreateDTO(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Double volume) {
-        this.idLote = idLote;
-        this.validade = validade;
-        this.altura = altura;
-        this.comprimento = comprimento;
-        this.largura = largura;
+    public BatchResponseCreateDTO(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, Double volume) {
+        this.batchCode = batchCode;
+        this.expirationDate = expirationDate;
+        this.height = height;
+        this.length = length;
+        this.width = width;
         this.volume = volume;
     }
 
-    public String getIdLote() {
-        return idLote;
+    public String getBatchCode() {
+        return batchCode;
     }
 
-    public void setIdLote(String idLote) {
-        this.idLote = idLote;
+    public void setBatchCode(String batchId) {
+        this.batchCode = batchId;
     }
 
-    public LocalDate getValidade() {
-        return validade;
+    public LocalDate getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
-    public Double getAltura() {
-        return altura;
+    public Double getHeight() {
+        return height;
     }
 
-    public void setAltura(Double altura) {
-        this.altura = altura;
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
-    public Double getComprimento() {
-        return comprimento;
+    public Double getLength() {
+        return length;
     }
 
-    public void setComprimento(Double comprimento) {
-        this.comprimento = comprimento;
+    public void setLength(Double length) {
+        this.length = length;
     }
 
-    public Double getLargura() {
-        return largura;
+    public Double getWidth() {
+        return width;
     }
 
-    public void setLargura(Double largura) {
-        this.largura = largura;
+    public void setWidth(Double width) {
+        this.width = width;
     }
 
     public Double getVolume() {

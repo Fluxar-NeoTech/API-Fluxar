@@ -14,7 +14,7 @@ public class Batch {
     private Long id;
 
     @Column(name = "id_lote")
-    private String batchId;
+    private String batchCode;
 
     @Column(name = "validade")
     private LocalDate expirationDate;
@@ -39,8 +39,8 @@ public class Batch {
     @JoinColumn(name = "unidade_id")
     private Unit unit;
 
-    public Batch(String batchId, LocalDate expirationDate, Double height, Double length, Double width, Product product, Unit unit) {
-        this.batchId = batchId;
+    public Batch(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, Product product, Unit unit) {
+        this.batchCode = batchCode;
         this.expirationDate = expirationDate;
         this.height = height;
         this.length = length;
@@ -61,12 +61,12 @@ public class Batch {
         this.id = id;
     }
 
-    public String getBatchId() {
-        return batchId;
+    public String getBatchCode() {
+        return batchCode;
     }
 
-    public void setBatchId(String batchCode) {
-        this.batchId = batchCode;
+    public void setBatchCode(String batchCode) {
+        this.batchCode = batchCode;
     }
 
     public LocalDate getExpirationDate() {

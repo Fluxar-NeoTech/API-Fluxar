@@ -4,30 +4,31 @@ import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 
 public class UnitResponseDTO {
     private Long id;
-    private String nome;
-    private String cep;
-    private String rua;
-    private String cidade;
-    private String estado;
-    private String numero;
-    private String bairro;
+    private String name;
+    private String postalCode;
+    private String street;
+    private String city;
+    private String state;
+    private String number;
+    private String neighborhood;
     private IndustryResponseDTO industry;
 
     public UnitResponseDTO() {
     }
 
-    public UnitResponseDTO(Long id, String nome, String cep, String rua, String cidade, String estado, String numero, String bairro, IndustryResponseDTO industry) {
+    public UnitResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, IndustryResponseDTO industry) {
         this.id = id;
-        this.nome = nome;
-        this.cep = cep;
-        this.rua = rua;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.numero = numero;
-        this.bairro = bairro;
+        this.name = name;
+        this.postalCode = postalCode;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.number = number;
+        this.neighborhood = neighborhood;
         this.industry = industry;
     }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -36,60 +37,60 @@ public class UnitResponseDTO {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCep() {
-        return cep;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public String getRua() {
-        return rua;
+    public String getStreet() {
+        return street;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getCidade() {
-        return cidade;
+    public String getCity() {
+        return city;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getState() {
+        return state;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
     public IndustryResponseDTO getIndustry() {

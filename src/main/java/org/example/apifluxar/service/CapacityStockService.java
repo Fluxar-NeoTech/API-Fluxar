@@ -3,8 +3,7 @@ package org.example.apifluxar.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
-import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
-import org.example.apifluxar.dto.industry.IndustryResponseDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.CapacityStock;
@@ -46,7 +45,7 @@ public class CapacityStockService {
     }
 
     @Transactional
-    public CapacityStockResposeDTO addCapacityStock(CapacityStockRequestDTO capacityStockRequestDTO) {
+    public CapacityStockResponseDTO addCapacityStock(CapacityStockRequestDTO capacityStockRequestDTO) {
         CapacityStock capacityStock = objectMapper.convertValue(capacityStockRequestDTO, CapacityStock.class);
 
         Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSetorId())
@@ -70,7 +69,7 @@ public class CapacityStockService {
             );
 
             CapacityStock updated = capacityStockRepository.save(existingStock);
-            return objectMapper.convertValue(updated, CapacityStockResposeDTO.class);
+            return objectMapper.convertValue(updated, CapacityStockResponseDTO.class);
 
             //se nao existir, cria novo
         } else {
@@ -81,14 +80,14 @@ public class CapacityStockService {
             );
 
             CapacityStock saved = capacityStockRepository.save(capacityStock);
-            return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
+            return objectMapper.convertValue(saved, CapacityStockResponseDTO.class);
         }
     }
 
 
-    public CapacityStockResposeDTO getByUnitAndSector(Long unidadeId, Long sectorId) {
+    public CapacityStockResponseDTO getByUnitAndSector(Long unidadeId, Long sectorId) {
         CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
+        CapacityStockResponseDTO dto = new CapacityStockResponseDTO(
                 capacityStock.getHeight(),
                 capacityStock.getMaxCapacity(),
                 capacityStock.getLength(),

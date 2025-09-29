@@ -2,16 +2,20 @@ package org.example.apifluxar.dto.sector;
 
 public class SectorResponseDTO {
     private Long id;
-    private String nome;
-    private String descricao;
+    private String name;
+    private String description;
 
-    public SectorResponseDTO(Long id, String nome, String descricao) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
+    public SectorResponseDTO() {
     }
 
-    public long getId() {
+    public SectorResponseDTO(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
 
@@ -19,19 +23,19 @@ public class SectorResponseDTO {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

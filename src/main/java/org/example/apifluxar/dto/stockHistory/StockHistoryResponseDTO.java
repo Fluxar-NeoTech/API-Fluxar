@@ -2,13 +2,14 @@ package org.example.apifluxar.dto.stockHistory;
 
 public class StockHistoryResponseDTO {
 
-    private Integer capacidadeOcupada;
+    private Integer occupiedCapacity;
 
-    public Integer getCapacidadeOcupada() {
-        return capacidadeOcupada;
+    // Getter and Setter
+    public Integer getOccupiedCapacity() {
+        return occupiedCapacity;
     }
 
-    public void setCapacidadeOcupada(Integer capacidadeOcupada) {
-        this.capacidadeOcupada = capacidadeOcupada;
+    public void setOccupiedCapacity(Integer occupiedCapacity) {
+        this.occupiedCapacity = occupiedCapacity;
     }
 }

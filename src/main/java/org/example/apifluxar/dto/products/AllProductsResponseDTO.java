@@ -1,27 +1,31 @@
 package org.example.apifluxar.dto.products;
 
 public class AllProductsResponseDTO {
-    private String nome;
-    private String tipo;
+    private String name;
+    private String type;
 
-    public AllProductsResponseDTO(String nome, String tipo) {
-        this.nome = nome;
-        this.tipo = tipo;
+    public AllProductsResponseDTO() {
     }
 
-    public String getNome() {
-        return nome;
+    public AllProductsResponseDTO(String name, String type) {
+        this.name = name;
+        this.type = type;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    // Getters and Setters
+    public String getName() {
+        return name;
     }
 
-    public String getTipo() {
-        return tipo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

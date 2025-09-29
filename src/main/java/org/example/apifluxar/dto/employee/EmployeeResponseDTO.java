@@ -5,22 +5,22 @@ import org.example.apifluxar.dto.unit.UnitResponseDTO;
 
 public class EmployeeResponseDTO {
     private Long id;
-    private String nome;
-    private String sobrenome;
+    private String firstName;
+    private String lastName;
     private String email;
-    private Character cargo;
-    private String fotoPerfil;
-    private SectorResponseDTO setor;
+    private Character role;
+    private String profilePhoto;
+    private SectorResponseDTO sector;
     private UnitResponseDTO unit;
-    private Double capacidadeMaxima;
+    private Double maxCapacity;
 
-    public EmployeeResponseDTO(Long id, String nome, String sobrenome, String email, Character cargo, String foto) {
+    public EmployeeResponseDTO(Long id, String firstName, String lastName, String email, Character role, String profilePhoto) {
         this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.cargo = cargo;
-        this.fotoPerfil = foto;
+        this.role = role;
+        this.profilePhoto = profilePhoto;
     }
 
     public long getId() {
@@ -31,46 +31,54 @@ public class EmployeeResponseDTO {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getFotoPerfil() {return fotoPerfil;}
-
-    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
-
-    public void setEmail(String email) {this.email = email;}
-    public String getEmail() {return email;}
-
-    public SectorResponseDTO getSetor() {
-        return setor;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
-    public void setSetor(SectorResponseDTO setor) {
-        this.setor = setor;
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public SectorResponseDTO getSector() {
+        return sector;
+    }
+    public void setSector(SectorResponseDTO sector) {
+        this.sector = sector;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Character getCargo() {
-        return cargo;
+    public Character getRole() {
+        return role;
     }
 
-    public void setCargo(Character cargo) {
-        this.cargo = cargo;
+    public void setRole(Character role) {
+        this.role = role;
     }
 
     public UnitResponseDTO getUnit() {
@@ -81,11 +89,11 @@ public class EmployeeResponseDTO {
         this.unit = unit;
     }
 
-    public Double getCapacidadeMaxima() {
-        return capacidadeMaxima;
+    public Double getMaxCapacity() {
+        return maxCapacity;
     }
 
-    public void setCapacidadeMaxima(Double capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
+    public void setMaxCapacity(Double maxCapacity) {
+        this.maxCapacity = maxCapacity;
     }
 }
