@@ -63,10 +63,15 @@ public class BatchService {
         );
 
         Product product = batch.getProduto();
-
         if (product != null) {
             ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
             dto.setProduct(productResponseDTO);
+        }
+
+        Unit unit = batch.getUnidade();
+        if (unit != null) {
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+            dto.setUnit(unitResponseDTO);
         }
 
         return dto;
@@ -143,7 +148,7 @@ public class BatchService {
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unidade não encontrada"));
 
-        Batch batchEntity = batchMapper.mapToBatch(batchRequestDTO, productEntity, unitEntity);
+        Batch batchEntity = batchMapper.batchToMap(batchRequestDTO, productEntity, unitEntity);
 
         Batch savedBatch = batchRepository.save(batchEntity);
 

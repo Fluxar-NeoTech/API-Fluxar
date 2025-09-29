@@ -14,8 +14,6 @@ import java.util.Map;
 
 @ControllerAdvice
 public class HandleGlobalExceptions extends RuntimeException {
-
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> HandlerEntityNotFoundExceptio
             (EntityNotFoundException ex){
@@ -47,5 +45,11 @@ public class HandleGlobalExceptions extends RuntimeException {
             erros.put(erro.getField(), erro.getDefaultMessage());
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros);
+    }
+
+    //Personalizadas
+    @ExceptionHandler(EmptyCapacityHistory.class)
+    public ResponseEntity<String> HandlerEmptyCapacityHistory (EmptyCapacityHistory ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

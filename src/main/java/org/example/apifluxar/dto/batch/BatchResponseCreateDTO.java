@@ -1,5 +1,7 @@
 package org.example.apifluxar.dto.batch;
 
+import org.example.apifluxar.dto.products.AllProductsResponseDTO;
+import org.example.apifluxar.dto.unit.UnitBatchResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 
@@ -12,10 +14,10 @@ public class BatchResponseCreateDTO {
     private Double comprimento;
     private Double largura;
     private Double volume;
-    private ProductResponseDTO product;
-    private UnitResponseDTO unit;
+    private AllProductsResponseDTO product;
+    private UnitBatchResponseDTO unit;
 
-    public BatchResponseCreateDTO(Double altura, Double comprimento, String idLote, Double largura, ProductResponseDTO product, UnitResponseDTO unit, LocalDate validade) {
+    public BatchResponseCreateDTO(Double altura, Double comprimento, String idLote, Double largura, AllProductsResponseDTO product, UnitBatchResponseDTO unit, LocalDate validade) {
         this.altura = altura;
         this.comprimento = comprimento;
         this.idLote = idLote;
@@ -82,19 +84,19 @@ public class BatchResponseCreateDTO {
         this.volume = volume;
     }
 
-    public UnitResponseDTO getUnit() {
+    public UnitBatchResponseDTO getUnit() {
         return unit;
     }
 
-    public void setUnit(UnitResponseDTO unit) {
+    public void setUnit(UnitBatchResponseDTO unit) {
         this.unit = unit;
     }
 
-    public ProductResponseDTO getProduct() {
+    public AllProductsResponseDTO getProduct() {
         return product;
     }
 
-    public void setProduct(ProductResponseDTO product) {
+    public void setProduct(AllProductsResponseDTO product) {
         this.product = product;
     }
 }

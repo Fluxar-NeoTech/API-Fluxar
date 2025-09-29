@@ -9,8 +9,6 @@ public class CapacityHistoryResponseDTO {
 
     private LocalDate dataCompleta;
     private Integer capacidadeTotal;
-    private UnitResponseDTO unidade;
-    private SectorResponseDTO sector;
 
     public CapacityHistoryResponseDTO(Integer capacidadeTotal, LocalDate dataCompleta) {
         this.capacidadeTotal = capacidadeTotal;
@@ -35,23 +33,6 @@ public class CapacityHistoryResponseDTO {
 
     public void setCapacidadeTotal(Integer capacidadeTotal) {
         this.capacidadeTotal = capacidadeTotal;
-    }
-
-
-    public SectorResponseDTO getSector() {
-        return sector;
-    }
-
-    public void setSector(SectorResponseDTO sector) {
-        this.sector = sector;
-    }
-
-    public UnitResponseDTO getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(UnitResponseDTO unidade) {
-        this.unidade = unidade;
     }
 
 }

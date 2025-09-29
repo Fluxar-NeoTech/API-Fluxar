@@ -3,6 +3,7 @@ package org.example.apifluxar.service;
 import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 import org.example.apifluxar.model.*;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
+import org.example.apifluxar.repository.IndustryRepository;
 import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,34 +15,27 @@ import java.util.List;
 @Service
 public class UnitService {
     final UnitRepository unitRepository;
+    final IndustryService industryService;
 
-    public UnitService(UnitRepository unitRepository) {
+    public UnitService(UnitRepository unitRepository, IndustryService industryService) {
         this.unitRepository = unitRepository;
+        this.industryService = industryService;
     }
 
     public UnitResponseDTO getUnitById(Long id) {
         Unit unit = unitRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         UnitResponseDTO dto = new UnitResponseDTO(
+                unit.getId(),
                 unit.getNome(),
                 unit.getCep(),
                 unit.getRua(),
                 unit.getCidade(),
                 unit.getEstado(),
                 unit.getNumero(),
-                unit.getBairro()
+                unit.getBairro(),
+                industryService.getIndustryById(unit.getIndustry().getId())
         );
-        dto.setId(id);
-
-        Industry industry = unit.getIndustry();
-        if (industry != null) {
-            IndustryResponseDTO industryDTO = new IndustryResponseDTO(
-                    industry.getNome(),
-                    industry.getCnpj()
-            );
-
-            dto.setIndustry(industryDTO);
-        }
 
         return dto;
     }
@@ -51,25 +45,18 @@ public class UnitService {
         List<UnitResponseDTO> dtos = new ArrayList<>();
         for (Unit unitItem : unit) {
             UnitResponseDTO dto = new UnitResponseDTO(
+                    unitItem.getId(),
                     unitItem.getNome(),
                     unitItem.getCep(),
                     unitItem.getRua(),
                     unitItem.getCidade(),
                     unitItem.getEstado(),
                     unitItem.getNumero(),
-                    unitItem.getBairro()
+                    unitItem.getBairro(),
+                    industryService.getIndustryById(unitItem.getIndustry().getId())
+
+
             );
-            dto.setId(id);
-
-            Industry industry = unitItem.getIndustry();
-            if (industry != null) {
-                IndustryResponseDTO industryDTO = new IndustryResponseDTO(
-                        industry.getNome(),
-                        industry.getCnpj()
-                );
-
-                dto.setIndustry(industryDTO);
-            }
             dtos.add(dto);
         }
         return dtos;
