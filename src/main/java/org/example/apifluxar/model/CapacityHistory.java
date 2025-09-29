@@ -13,64 +13,39 @@ public class CapacityHistory {
     private Long id;
 
     @Column(name = "data_completa")
-    private LocalDate dataCompleta;
+    private LocalDate fullDate;
 
     @Column(name = "capacidade_total_ocupada")
-    private Integer capacidadeTotal;
+    private Integer totalCapacity;
 
     @ManyToOne()
     @JoinColumn(name = "unidade_id")
-    private Unit unidade;
+    private Unit unit;
 
     @ManyToOne()
     @JoinColumn(name = "setor_id")
     private Sector sector;
 
-    // Constructor
-
     public CapacityHistory() {}
 
-    // Getters e Setters
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public LocalDate getFullDate() { return fullDate; }
 
-    public LocalDate getDataCompleta() {
-        return dataCompleta;
-    }
+    public void setFullDate(LocalDate fullDate) { this.fullDate = fullDate; }
 
-    public void setDataCompleta(LocalDate dataCompleta) {
-        this.dataCompleta = dataCompleta;
-    }
+    public Integer getTotalCapacity() { return totalCapacity; }
 
-    public Integer getCapacidadeTotal() {
-        return capacidadeTotal;
-    }
+    public void setTotalCapacity(Integer totalCapacity) { this.totalCapacity = totalCapacity; }
 
-    public void setCapacidadeTotal(Integer capacidadeTotal) {
-        this.capacidadeTotal = capacidadeTotal;
-    }
+    public Sector getSector() { return sector; }
 
-    public Sector getSector() {
-        return sector;
-    }
+    public void setSector(Sector sector) { this.sector = sector; }
 
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
+    public Unit getUnit() { return unit; }
 
-    public Unit getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(Unit unidade) {
-        this.unidade = unidade;
-    }
-
-
+    public void setUnit(Unit unit) { this.unit = unit; }
 }

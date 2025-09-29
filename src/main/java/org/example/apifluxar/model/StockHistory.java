@@ -1,8 +1,6 @@
 package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,75 +11,55 @@ public class StockHistory {
     private Long id;
 
     @Column(name = "data")
-    private LocalDateTime data;
-
+    private LocalDateTime date;
 
     @Column(name = "capacidade_ocupada")
-    private Integer capacidadeOcupada;
+    private Integer occupiedCapacity;
 
     @ManyToOne()
     @JoinColumn(name = "produto_id")
-    private Product produto;
+    private Product product;
 
     @ManyToOne()
     @JoinColumn(name = "unidade_id")
-    private Unit unidade;
+    private Unit unit;
 
     @ManyToOne()
     @JoinColumn(name = "setor_id")
-    private Sector setor;
+    private Sector sector;
 
     @ManyToOne()
     @JoinColumn(name = "lote_id")
-    private Batch lote;
-
-    // Constructor
+    private Batch batch;
 
     public StockHistory() {}
 
-    // Getters e Setters
-
+    // Getters and Setters
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
 
-    public LocalDateTime getData() { return data; }
+    public LocalDateTime getDate() { return date; }
 
-    public void setData(LocalDateTime data) { this.data = data; }
+    public void setDate(LocalDateTime date) { this.date = date; }
 
-    public Integer getCapacidadeOcupada() { return capacidadeOcupada; }
+    public Integer getOccupiedCapacity() { return occupiedCapacity; }
 
-    public void setCapacidadeOcupada(Integer capacidadeOcupada) { this.capacidadeOcupada = capacidadeOcupada; }
+    public void setOccupiedCapacity(Integer occupiedCapacity) { this.occupiedCapacity = occupiedCapacity; }
 
-    public Product getProdutoId() {
-        return produto;
-    }
+    public Product getProduct() { return product; }
 
-    public void setProdutoId(Product produto) {
-        this.produto = produto;
-    }
+    public void setProduct(Product product) { this.product = product; }
 
-    public Unit getUnidadeId() {
-        return unidade;
-    }
+    public Unit getUnit() { return unit; }
 
-    public void setUnidadeId(Unit unidade) {
-        this.unidade = unidade;
-    }
+    public void setUnit(Unit unit) { this.unit = unit; }
 
-    public Sector getSetorId() {
-        return setor;
-    }
+    public Sector getSector() { return sector; }
 
-    public void setSetorId(Sector setor) {
-        this.setor = setor;
-    }
+    public void setSector(Sector sector) { this.sector = sector; }
 
-    public Batch getLoteId() {
-        return lote;
-    }
+    public Batch getBatch() { return batch; }
 
-    public void setLoteId(Batch lote) {
-        this.lote = lote;
-    }
+    public void setBatch(Batch batch) { this.batch = batch; }
 }

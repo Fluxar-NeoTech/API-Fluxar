@@ -1,66 +1,42 @@
 package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
-@Table(name = "industria")
 @Entity
+@Table(name = "industria")
 public class Industry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String name;
     private String cnpj;
     private String email;
 
     @Column(name = "data_cadastro")
-    private LocalDateTime dataCadastro;
-
-    //Constructor
+    private LocalDateTime registrationDate;
 
     public Industry() {}
 
-    //Getters e Setters
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
 
-    public String getNome() {
-        return nome;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getCnpj() { return cnpj; }
 
-    public String getCnpj() {
-        return cnpj;
-    }
+    public void setCnpj(String cnpj) { this.cnpj = cnpj; }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
+    public String getEmail() { return email; }
 
-    public String getEmail() {
-        return email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public LocalDateTime getRegistrationDate() { return registrationDate; }
 
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
+    public void setRegistrationDate(LocalDateTime registrationDate) { this.registrationDate = registrationDate; }
 }

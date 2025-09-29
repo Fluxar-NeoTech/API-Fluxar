@@ -2,7 +2,6 @@ package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
 
-// We only read this table, so no further validations are needed.
 @Entity
 @Table(name = "funcionario")
 public class Employee {
@@ -10,93 +9,59 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-    private String sobrenome;
-    private String email ;
-    private String senha;
-    private Character cargo;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private Character role;
+
     @Column(name = "foto_perfil")
-    private String fotoPerfil;
+    private String profilePicture;
 
     @ManyToOne()
     @JoinColumn(name = "unidade_id")
-    private Unit unidade;
+    private Unit unit;
 
     @ManyToOne()
-    @JoinColumn(name  = "setor_id")
-    private Sector setor;
-
-    //Constructor
+    @JoinColumn(name = "setor_id")
+    private Sector sector;
 
     public Employee() {}
 
-    //Getters e Setters
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getFirstName() { return firstName; }
 
-    public String getNome() {
-        return nome;
-    }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getLastName() { return lastName; }
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
+    public String getEmail() { return email; }
 
-    public String getEmail() {
-        return email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getPassword() { return password; }
 
-    public String getSenha() {
-        return senha;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+    public Character getRole() { return role; }
 
-    public Character getCargo() {
-        return cargo;
-    }
+    public void setRole(Character role) { this.role = role; }
 
-    public void setCargo(Character cargo) {
-        this.cargo = cargo;
-    }
+    public String getProfilePicture() { return profilePicture; }
 
-    public String getFotoPerfil() {return fotoPerfil;}
+    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
 
-    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
+    public Sector getSector() { return sector; }
 
-    public Sector getSetor() {
-        return setor;
-    }
+    public void setSector(Sector sector) { this.sector = sector; }
 
-    public void setSetor(Sector setor) {
-        this.setor = setor;
-    }
+    public Unit getUnit() { return unit; }
 
-    public Unit getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(Unit unidade) {
-        this.unidade = unidade;
-    }
+    public void setUnit(Unit unit) { this.unit = unit; }
 }

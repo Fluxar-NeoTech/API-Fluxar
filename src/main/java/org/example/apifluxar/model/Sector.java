@@ -2,50 +2,34 @@ package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
-@Table(name = "Setor")
 @Entity
+@Table(name = "Setor")
 public class Sector {
     @Id
     @GeneratedValue
-    private long id;
-    private String nome;
-    private String descricao;
+    private Long id;
 
-    public Sector(String descricao, long id, String nome) {
-        this.descricao = descricao;
+    private String name;
+    private String description;
+
+    public Sector(String description, long id, String name) {
+        this.description = description;
         this.id = id;
-        this.nome = nome;
+        this.name = name;
     }
-
-    //Constructor
 
     public Sector() {}
 
-    //Getters e Setters
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
 
-    public String getNome() {
-        return nome;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getDescription() { return description; }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public void setDescription(String description) { this.description = description; }
 }

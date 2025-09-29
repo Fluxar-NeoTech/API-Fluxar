@@ -14,36 +14,38 @@ public class Batch {
     private Long id;
 
     @Column(name = "id_lote")
-    private String idLote;
-    private LocalDate validade;
-    private Double altura;
-    private Double comprimento;
-    private Double largura;
-    @Formula("largura * altura * comprimento")
+    private String batchId;
+
+    private LocalDate expirationDate;
+    private Double height;
+    private Double length;
+    private Double width;
+
+    @Formula("width * height * length")
     private Double volume;
 
-    @ManyToOne()
-    @JoinColumn(name = "produto_id")
-    private Product produto;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @ManyToOne()
-    @JoinColumn(name = "unidade_id")
-    private Unit unidade;
+    @ManyToOne
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
 
-    public Batch(String idLote, LocalDate validade, Double altura, Double comprimento, Double largura, Product produto, Unit unidade) {
-        this.idLote = idLote;
-        this.validade = validade;
-        this.altura = altura;
-        this.comprimento = comprimento;
-        this.largura = largura;
-        this.produto = produto;
-        this.unidade = unidade;
+    public Batch(String batchId, LocalDate expirationDate, Double height, Double length, Double width, Product product, Unit unit) {
+        this.batchId = batchId;
+        this.expirationDate = expirationDate;
+        this.height = height;
+        this.length = length;
+        this.width = width;
+        this.product = product;
+        this.unit = unit;
     }
 
     public Batch() {
     }
 
-    // Getters e Setters
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -52,44 +54,44 @@ public class Batch {
         this.id = id;
     }
 
-    public String getIdLote() {
-        return idLote;
+    public String getBatchId() {
+        return batchId;
     }
 
-    public void setIdLote(String idLote) {
-        this.idLote = idLote;
+    public void setBatchId(String batchCode) {
+        this.batchId = batchCode;
     }
 
-    public LocalDate getValidade() {
-        return validade;
+    public LocalDate getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
-    public Double getAltura() {
-        return altura;
+    public Double getHeight() {
+        return height;
     }
 
-    public void setAltura(Double altura) {
-        this.altura = altura;
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
-    public Double getComprimento() {
-        return comprimento;
+    public Double getLength() {
+        return length;
     }
 
-    public void setComprimento(Double comprimento) {
-        this.comprimento = comprimento;
+    public void setLength(Double length) {
+        this.length = length;
     }
 
-    public Double getLargura() {
-        return largura;
+    public Double getWidth() {
+        return width;
     }
 
-    public void setLargura(Double largura) {
-        this.largura = largura;
+    public void setWidth(Double width) {
+        this.width = width;
     }
 
     public Double getVolume() {
@@ -100,19 +102,19 @@ public class Batch {
         this.volume = volume;
     }
 
-    public Product getProduto() {
-        return produto;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProduto(Product produto) {
-        this.produto = produto;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Unit getUnidade() {
-        return unidade;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setUnidade(Unit unidade) {
-        this.unidade = unidade;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

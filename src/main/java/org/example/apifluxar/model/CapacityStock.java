@@ -3,90 +3,57 @@ package org.example.apifluxar.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
 
-import java.lang.Double;
-
-@Table(name = "capacidadeestoque")
 @Entity
+@Table(name = "capacidadeestoque")
 public class CapacityStock {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double largura;
-    private Double altura;
-    private Double comprimento;
+    private Double width;
+    private Double height;
+    private Double length;
 
     @Formula("largura * altura * comprimento")
-    private Double capacidadeMaxima;
+    private Double maxCapacity;
 
     @ManyToOne()
     @JoinColumn(name = "setor_id", nullable = false)
-    private Sector setor;
+    private Sector sector;
 
     @ManyToOne()
     @JoinColumn(name = "unidade_id", nullable = false)
-    private Unit unidade;
+    private Unit unit;
 
-    //Constructor
+    public CapacityStock() {}
 
-    public CapacityStock() {
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    // Getters e Setters
-    
-    public Long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Double getWidth() { return width; }
 
-    public Double getLargura() {
-        return largura;
-    }
+    public void setWidth(Double width) { this.width = width; }
 
-    public void setLargura(Double largura) {
-        this.largura = largura;
-    }
+    public Double getHeight() { return height; }
 
-    public Double getAltura() {
-        return altura;
-    }
+    public void setHeight(Double height) { this.height = height; }
 
-    public void setAltura(Double altura) {
-        this.altura = altura;
-    }
+    public Double getLength() { return length; }
 
-    public Double getComprimento() {
-        return comprimento;
-    }
+    public void setLength(Double length) { this.length = length; }
 
-    public void setComprimento(Double comprimento) {
-        this.comprimento = comprimento;
-    }
+    public Double getMaxCapacity() { return maxCapacity; }
 
-    public Double getCapacidadeMaxima() {
-        return capacidadeMaxima;
-    }
+    public void setMaxCapacity(Double maxCapacity) { this.maxCapacity = maxCapacity; }
 
-    public void setCapacidadeMaxima(Double capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
-    }
+    public Sector getSector() { return sector; }
 
-    public Sector getSetor() {
-        return setor;
-    }
+    public void setSector(Sector sector) { this.sector = sector; }
 
-    public void setSetor(Sector setor) {
-        this.setor = setor;
-    }
+    public Unit getUnit() { return unit; }
 
-    public Unit getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(Unit unidade) {
-        this.unidade = unidade;
-    }
+    public void setUnit(Unit unit) { this.unit = unit; }
 }
