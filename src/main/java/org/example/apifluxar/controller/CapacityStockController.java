@@ -22,7 +22,7 @@ public class CapacityStockController {
         this.capacityStockService = capacityStockService;
     }
 
-    @PostMapping("/addCapacityStock")
+    @PostMapping("/add")
     @Operation(summary = "Adicionar a capacidade do estoque",
             description = "Adiciona a capacidade do estoque.")
     @ApiResponses({
@@ -35,7 +35,7 @@ public class CapacityStockController {
         return ResponseEntity.ok(capacityStockResposeDTO);
     }
 
-    @GetMapping("/search/unidade/{unitId}/sector/{sectorId}")
+    @GetMapping("/search/by/unit/{unitId}/sector/{sectorId}")
     @Operation(summary = "Buscar capacidade do estoque por ID da unidade",
             description = "Retorna os detalhes da capacidade do estoque específica com base no ID da unidade fornecido.")
     @ApiResponses({

@@ -22,7 +22,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/search/id/{id}")
+    @GetMapping("/search/by/id/{id}")
     @Operation(summary = "Buscar produto por ID",
             description = "Retorna os detalhes de um produto específico com base no ID fornecido.")
     @ApiResponses({
@@ -35,7 +35,7 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/search/name/{name}")
+    @GetMapping("/search/by/name/{name}")
     @Operation(summary = "Buscar produto por nome",
             description = "Retorna os detalhes de um produto específico com base no nome fornecido.")
     @ApiResponses({
@@ -48,7 +48,7 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/search/product")
+    @GetMapping("/search/all")
     @Operation(summary = "Listar todos os produtos",
             description = "Retorna uma lista de todos os produtos cadastrados no sistema.")
     @ApiResponses({
@@ -60,7 +60,7 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/create/product")
+    @PostMapping("/add")
     @Operation(summary = "Criar novo produto",
             description = "Cria um novo produto com base nas informações fornecidas.")
     @ApiResponses({

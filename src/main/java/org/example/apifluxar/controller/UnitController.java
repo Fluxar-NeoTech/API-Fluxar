@@ -20,7 +20,7 @@ public class UnitController {
         this.unitService = unitService;
     }
 
-    @GetMapping("/search/{id}")
+    @GetMapping("/search/by/id/{id}")
     @Operation(summary = "Buscar unidade por ID",
             description = "Retorna os detalhes de uma unidade específica com base no ID fornecido.")
     public ResponseEntity<UnitResponseDTO> getUnitById(@PathVariable Long id) {
@@ -28,7 +28,7 @@ public class UnitController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/searchAll/Unit/Industry/{id}")
+    @GetMapping("/search/all/by/industry/id/{id}")
     @Operation(summary = "Buscar todas as unidades por ID da indústria",
             description = "Retorna uma lista de todas as unidades associadas a uma indústria específica com base no ID da indústria fornecido.")
     @ApiResponses({
