@@ -37,7 +37,7 @@ public class EmployeeService {
 
     public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
-                .findByEmailAndSenha(employeeRequestDTO.getEmail(), employeeRequestDTO.getSenha())
+                .findByEmailAndSenha(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
 
@@ -53,7 +53,7 @@ public class EmployeeService {
         Sector setor = employee.getSector();
         if (setor != null) {
             SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-            dto.setSetor(sectorResponseDTO);
+            dto.setSector(sectorResponseDTO);
         }
 
         Unit unit = employee.getUnit();
@@ -64,8 +64,8 @@ public class EmployeeService {
 
         CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
         if (capacityStockResposeDTO != null) {
-            Double capacidadeMaxima= capacityStockResposeDTO.getCapacidadeMaxima();
-            dto.setCapacidadeMaxima(capacidadeMaxima);
+            Double capacidadeMaxima= capacityStockResposeDTO.getMaxCapacity();
+            dto.setMaxCapacity(capacidadeMaxima);
         }
         return dto;
     }
@@ -74,7 +74,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
 
-        employee.setProfilePicture(updatePhotoRequestDTO.getFotoPerfil());
+        employee.setProfilePicture(updatePhotoRequestDTO.getProfilePhoto());
         employeeRepository.save(employee);
 
         log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
@@ -86,7 +86,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
 
-        employee.setPassword(employeeRequestDTO.getSenha());
+        employee.setPassword(employeeRequestDTO.getPassword());
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());

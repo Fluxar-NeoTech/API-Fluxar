@@ -48,10 +48,10 @@ public class CapacityStockService {
     public CapacityStockResponseDTO addCapacityStock(CapacityStockRequestDTO capacityStockRequestDTO) {
         CapacityStock capacityStock = objectMapper.convertValue(capacityStockRequestDTO, CapacityStock.class);
 
-        Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSetorId())
+        Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSectorId())
                 .orElseThrow(() -> new RuntimeException("Setor não encontrado"));
 
-        Unit unidade = unitRepository.findById(capacityStockRequestDTO.getUnidadeId())
+        Unit unidade = unitRepository.findById(capacityStockRequestDTO.getUnitId())
                 .orElseThrow(() -> new RuntimeException("Unidade não encontrada"));
 
         Optional<CapacityStock> exist = capacityStockRepository.findBySetorAndUnidade(setor, unidade);
@@ -97,13 +97,13 @@ public class CapacityStockService {
         Sector setor = capacityStock.getSector();
         if (setor != null) {
             SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-            dto.setSetor(sectorResponseDTO);
+            dto.setSector(sectorResponseDTO);
         }
 
         Unit unit = capacityStock.getUnit();
         if (unit != null) {
             UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-            dto.setUnidade(unitResponseDTO);
+            dto.setUnit(unitResponseDTO);
         }
         return  dto;
     }

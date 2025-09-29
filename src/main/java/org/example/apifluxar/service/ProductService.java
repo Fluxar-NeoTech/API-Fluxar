@@ -47,7 +47,7 @@ public class ProductService {
         Sector setor = product.getSector();
         if (setor != null) {
             SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-            dto.setSetor(sectorResponseDTO);
+            dto.setSector(sectorResponseDTO);
         }
 
         return dto;
@@ -70,7 +70,7 @@ public class ProductService {
             Sector setor = p.getSector();
             if (setor != null) {
                 SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-                dto.setSetor(sectorResponseDTO);
+                dto.setSector(sectorResponseDTO);
             }
             dtos.add(dto);
         }
@@ -94,7 +94,7 @@ public class ProductService {
     }
 
     public ProductResponseDTO addProduct(ProductRequestDTO productRequestDTO) {
-        Sector setor = sectorRepository.findById(productRequestDTO.getSetor())
+        Sector setor = sectorRepository.findById(productRequestDTO.getSectorId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setor não encontrado"));
 
         Product product = productMapper.mapToProduct(productRequestDTO, setor);
