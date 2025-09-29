@@ -1,10 +1,10 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
-import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.CapacityStock;
@@ -13,9 +13,7 @@ import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.repository.CapacityStockRepository;
 import org.example.apifluxar.repository.SectorRepository;
 import org.example.apifluxar.repository.UnitRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -44,10 +42,10 @@ public class CapacityStockService {
         CapacityStock capacityStock = objectMapper.convertValue(capacityStockRequestDTO, CapacityStock.class);
 
         Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSetorId())
-                .orElseThrow(() -> new RuntimeException("Setor não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
 
         Unit unidade = unitRepository.findById(capacityStockRequestDTO.getUnidadeId())
-                .orElseThrow(() -> new RuntimeException("Unidade não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
         Optional<CapacityStock> exist = capacityStockRepository.findBySetorAndUnidade(setor, unidade);
 
@@ -81,7 +79,7 @@ public class CapacityStockService {
 
 
     public CapacityStockResposeDTO findByUnidadeIdAndSectorId(Long unidadeId, Long sectorId) {
-        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new EntityNotFoundException("Setor ou unidade não encontrado"));
         CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
                 capacityStock.getAltura(),
                 capacityStock.getCapacidadeMaxima(),

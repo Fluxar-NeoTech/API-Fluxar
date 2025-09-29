@@ -1,12 +1,11 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.industry.IndustryResponseDTO;
 import org.example.apifluxar.model.Industry;
 import org.example.apifluxar.repository.IndustryRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class IndustryService {
@@ -19,7 +18,7 @@ public class IndustryService {
     }
 
     public IndustryResponseDTO getIndustryById(Long id) {
-        Industry industry = industryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Industry industry = industryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("indústria não encontrado"));
         return objectMapper.convertValue(industry, IndustryResponseDTO.class);
     }
 }

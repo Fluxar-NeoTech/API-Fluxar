@@ -1,9 +1,8 @@
 package org.example.apifluxar.service;
 
-import org.example.apifluxar.dto.industry.IndustryResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.model.*;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
-import org.example.apifluxar.repository.IndustryRepository;
 import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class UnitService {
     }
 
     public UnitResponseDTO getUnitById(Long id) {
-        Unit unit = unitRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Unit unit = unitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
         UnitResponseDTO dto = new UnitResponseDTO(
                 unit.getId(),
@@ -43,6 +42,9 @@ public class UnitService {
     public List<UnitResponseDTO> getUnitByIndustryId(Long id) {
         List<Unit> unit = unitRepository.findAllByIndustryId(id);
         List<UnitResponseDTO> dtos = new ArrayList<>();
+        if (unit.isEmpty()) {
+            throw new EntityNotFoundException("Unidade não encontrada");
+        }
         for (Unit unitItem : unit) {
             UnitResponseDTO dto = new UnitResponseDTO(
                     unitItem.getId(),

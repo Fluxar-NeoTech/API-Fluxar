@@ -1,5 +1,6 @@
 package org.example.apifluxar.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
@@ -85,7 +86,7 @@ public class EmployeeService {
 
     public MessageResponseDTO updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
         Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
 
         employee.setFotoPerfil(updatePhotoRequestDTO.getFotoPerfil());
         employeeRepository.save(employee);
@@ -97,7 +98,7 @@ public class EmployeeService {
 
     public MessageResponseDTO updateSenha(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
 
         employee.setSenha(employeeRequestDTO.getSenha());
         employeeRepository.save(employee);

@@ -1,6 +1,7 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.products.AllProductsResponseDTO;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
@@ -33,7 +34,7 @@ public class ProductService {
     }
 
     public ProductResponseDTO getProductById(Long id){
-        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Product product = productRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Produto não encontrado"));
 
         ProductResponseDTO dto = new ProductResponseDTO(
                 product.getNome(),
@@ -59,7 +60,7 @@ public class ProductService {
         List<ProductResponseDTO> dtos = new ArrayList<>();
 
         if (product.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+            throw new EntityNotFoundException("Produto não encontrado");
         }
 
         for (Product p : product) {
@@ -101,7 +102,7 @@ public class ProductService {
 
     public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
         Sector setor = sectorRepository.findById(productRequestDTO.getSetor())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setor não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
 
         Product product = productMapper.mapToProduct(productRequestDTO, setor);
         Product savedProduct = productRepository.save(product);
