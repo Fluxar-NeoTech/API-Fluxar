@@ -53,6 +53,7 @@ public class ProductService {
         return dto;
     }
 
+    // Retorna apenas nome e tipo do produto - usado no Mapper de Lote
     public AllProductsResponseDTO getAllProductById(Long id){
         Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -64,7 +65,7 @@ public class ProductService {
     }
 
     public List<ProductResponseDTO> getProductByName(String name) {
-        List<Product> product = productRepository.findByNome(name);
+        List<Product> product = productRepository.findByName(name);
         List<ProductResponseDTO> dtos = new ArrayList<>();
 
         if (product.isEmpty()) {
@@ -88,20 +89,22 @@ public class ProductService {
         return dtos;
     }
 
-    public List<AllProductsResponseDTO> getAllProducts() {
-        List<Product> products = productRepository.findAll();
-        List<AllProductsResponseDTO> productDTOs = new ArrayList<>();
+//    public List<AllProductsResponseDTO> getAllProducts() {
+//        List<Product> products = productRepository.findAll();
+//        List<AllProductsResponseDTO> productDTOs = new ArrayList<>();
+//
+//        for (Product product : products) {
+//            AllProductsResponseDTO dto = new AllProductsResponseDTO(
+//                    product.getName(),
+//                    product.getType()
+//            );
+//            productDTOs.add(dto);
+//        }
+//
+//        return productDTOs;
+//    }
 
-        for (Product product : products) {
-            AllProductsResponseDTO dto = new AllProductsResponseDTO(
-                    product.getName(),
-                    product.getType()
-            );
-            productDTOs.add(dto);
-        }
-
-        return productDTOs;
-    }
+    //vai ser transferido para o método personalizado do mobile - loteService
 
     public ProductResponseDTO addProduct(ProductRequestDTO productRequestDTO) {
         Sector setor = sectorRepository.findById(productRequestDTO.getSectorId())

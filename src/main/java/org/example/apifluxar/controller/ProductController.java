@@ -48,17 +48,17 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/search/all")
-    @Operation(summary = "Listar todos os produtos",
-            description = "Retorna uma lista de todos os produtos cadastrados no sistema.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Lista de produtos retornada com sucesso"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-    })
-    public ResponseEntity<List<AllProductsResponseDTO>> getAllProducts() {
-        List<AllProductsResponseDTO> res = productService.getAllProducts();
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping("/search/all")
+//    @Operation(summary = "Listar todos os produtos",
+//            description = "Retorna uma lista de todos os produtos cadastrados no sistema.")
+//    @ApiResponses({
+//            @ApiResponse( responseCode = "200", description = "Lista de produtos retornada com sucesso"),
+//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+//    })
+//    public ResponseEntity<List<AllProductsResponseDTO>> getAllProducts() {
+//        List<AllProductsResponseDTO> res = productService.getAllProducts();
+//        return ResponseEntity.ok(res);
+//    }
 
     @PostMapping("/add")
     @Operation(summary = "Criar novo produto",

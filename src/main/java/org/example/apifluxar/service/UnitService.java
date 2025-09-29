@@ -58,7 +58,7 @@ public class UnitService {
     }
 
     public List<UnitResponseDTO> getUnitByIndustry(Long id) {
-        List<Unit> unit = unitRepository.findAllByIndustryId(id);
+        List<Unit> unit = unitRepository.findAllByIndustry(id);
         List<UnitResponseDTO> dtos = new ArrayList<>();
         for (Unit unitItem : unit) {
             UnitResponseDTO dto = new UnitResponseDTO(

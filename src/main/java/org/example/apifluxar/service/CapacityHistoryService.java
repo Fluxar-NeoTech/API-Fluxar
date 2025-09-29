@@ -25,8 +25,8 @@ public class CapacityHistoryService {
         this.capacityHistoryRepository = capacityHistoryRepository;
     }
 
-    public List<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(Long setorId, Long unidadeId) {
-        List<CapacityHistory> capacityHistory = capacityHistoryRepository.findBySectorAndAndUnidade(setorId, unidadeId);
+    public List<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
+        List<CapacityHistory> capacityHistory = capacityHistoryRepository.findBySectorAndAndUnit(sectorId, unitId);
 
         if (capacityHistory.isEmpty()) {
             throw new EmptyCapacityHistory("Histórico de capacidade vazio nessa unidade e setor");
@@ -43,8 +43,8 @@ public class CapacityHistoryService {
         return dtos;
     }
 
-    public Integer deleteCapacityHistoryBySectorAndUnit(Long idSetor, Long idUnidade) {
-        Integer deleteQuatidade = capacityHistoryRepository.deleteBySectorAndUnidade(idSetor, idUnidade);
+    public Integer deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
+        Integer deleteQuatidade = capacityHistoryRepository.deleteBySectorAndUnit(sectorId, unitId);
         if (deleteQuatidade == 0) {
             throw new EmptyCapacityHistory("Nenhum histórico de capacidade encontrado para a unidade e setor especificados");
         }

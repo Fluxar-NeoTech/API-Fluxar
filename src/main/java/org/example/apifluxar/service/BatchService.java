@@ -50,8 +50,8 @@ public class BatchService {
         this.objectMapper = objectMapper;
     }
 
-    public BatchResponseDTO getBatchByCode(String loteId){
-        Batch batch = batchRepository.findByIdLote(loteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public BatchResponseDTO getBatchByCode(String batchCode) {
+        Batch batch = batchRepository.findByBatchCode(batchCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         BatchResponseDTO dto = new BatchResponseDTO(
                 batch.getBatchCode(),
@@ -112,6 +112,8 @@ public class BatchService {
 
     //método para o mobile de consulta personalizada de lotes e produtos por unidade e setor (que vem do produto)
 
+
+    //vai virar procedure
     public BatchResponseCreateDTO addBatch(BatchRequestDTO batchRequestDTO) {
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
@@ -127,8 +129,9 @@ public class BatchService {
     }
 
 
-    public BatchResponseDTO deleteBatch(String id){
-        Batch batch = batchRepository.findByIdLote(id)
+    //vai virar procedure
+    public BatchResponseDTO deleteBatch(String batchCode) {
+        Batch batch = batchRepository.findByBatchCode(batchCode)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         stockHistoryService.deleteByBatchCode(batch.getId());
         batchRepository.deleteByIdCustom(batch.getId());

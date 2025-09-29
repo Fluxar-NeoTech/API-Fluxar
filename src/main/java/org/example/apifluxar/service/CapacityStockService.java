@@ -48,13 +48,13 @@ public class CapacityStockService {
     public CapacityStockResponseDTO addCapacityStock(CapacityStockRequestDTO capacityStockRequestDTO) {
         CapacityStock capacityStock = objectMapper.convertValue(capacityStockRequestDTO, CapacityStock.class);
 
-        Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSectorId())
+        Sector sector = sectorRepository.findById(capacityStockRequestDTO.getSectorId())
                 .orElseThrow(() -> new RuntimeException("Setor não encontrado"));
 
-        Unit unidade = unitRepository.findById(capacityStockRequestDTO.getUnitId())
+        Unit unit = unitRepository.findById(capacityStockRequestDTO.getUnitId())
                 .orElseThrow(() -> new RuntimeException("Unidade não encontrada"));
 
-        Optional<CapacityStock> exist = capacityStockRepository.findBySetorAndUnidade(setor, unidade);
+        Optional<CapacityStock> exist = capacityStockRepository.findBySectorAndUnit(sector, unit);
 
         //se ja existir um registro, atualiza
         if (exist.isPresent()) {
@@ -73,8 +73,8 @@ public class CapacityStockService {
 
             //se nao existir, cria novo
         } else {
-            capacityStock.setSector(setor);
-            capacityStock.setUnit(unidade);
+            capacityStock.setSector(sector);
+            capacityStock.setUnit(unit);
             capacityStock.setMaxCapacity(
                     capacityStock.getWidth() * capacityStock.getHeight() * capacityStock.getLength()
             );
@@ -85,8 +85,8 @@ public class CapacityStockService {
     }
 
 
-    public CapacityStockResponseDTO getByUnitAndSector(Long unidadeId, Long sectorId) {
-        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public CapacityStockResponseDTO getByUnitAndSector(Long unitId, Long sectorId) {
+        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnit(unitId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         CapacityStockResponseDTO dto = new CapacityStockResponseDTO(
                 capacityStock.getHeight(),
                 capacityStock.getMaxCapacity(),

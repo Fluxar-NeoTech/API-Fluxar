@@ -37,7 +37,7 @@ public class EmployeeService {
 
     public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
-                .findByEmailAndSenha(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
+                .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
 

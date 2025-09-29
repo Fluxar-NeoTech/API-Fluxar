@@ -23,14 +23,14 @@ public class StockHistoryService {
     }
 
     public StockHistoryResponseDTO getStockHistoryById(Long unitId, Long sectorId) {
-        StockHistory stockHistory = stockHistoryRepository.findByUnidadeIdAndSetorId(unitId, sectorId)
+        StockHistory stockHistory = stockHistoryRepository.findByUnitAndSector(unitId, sectorId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         StockHistoryResponseDTO dto = objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
         return dto;
     }
 
-    public void deleteByBatchCode(Long id) {
-        stockHistoryRepository.deleteAllByLoteId(id);
+    public void deleteByBatchCode(Long batchCode) {
+        stockHistoryRepository.deleteAllByBatchCode(batchCode);
     }
 }

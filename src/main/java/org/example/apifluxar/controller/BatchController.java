@@ -34,17 +34,17 @@ public class BatchController {
         return ResponseEntity.ok(batchService.getBatchByCode(batchCode));
     }
 
-    @GetMapping("/search/by/unit/{unitId}")
-    @Operation(summary = "Listar todos os lotes por ID da unidade",
-            description = "Retorna uma lista de todos os lotes cadastrados no sistema filtrando pelo ID da unidade.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Lista de lotes retornada com sucesso"),
-            @ApiResponse( responseCode = "404", description = "Unidade não encontrada"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-    })
-    public ResponseEntity<List<BatchResponseDTO>> getAllBatchByUnit(@PathVariable Long unitId) {
-        return ResponseEntity.ok(batchService.getAllBatchByUnit(unitId));
-    }
+//    @GetMapping("/search/by/unit/{unitId}")
+//    @Operation(summary = "Listar todos os lotes por ID da unidade",
+//            description = "Retorna uma lista de todos os lotes cadastrados no sistema filtrando pelo ID da unidade.")
+//    @ApiResponses({
+//            @ApiResponse( responseCode = "200", description = "Lista de lotes retornada com sucesso"),
+//            @ApiResponse( responseCode = "404", description = "Unidade não encontrada"),
+//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+//    })
+//    public ResponseEntity<List<BatchResponseDTO>> getAllBatchByUnit(@PathVariable Long unitId) {
+//        return ResponseEntity.ok(batchService.getAllBatchByUnit(unitId));
+//    }
 
     @PostMapping("/add")
     @Operation(summary = "Adicionar um novo lote",
