@@ -22,10 +22,14 @@ public class EmployeeService {
     final EmployeeRepository employeeRepository;
     final IndustryService industryService;
     final CapacityStockService capacityStockService;
+    final SectorService sectorService;
+    final UnitService unitService;
     private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
 
-    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService) {
+    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService, SectorService sectorService, UnitService unitService) {
+        this.unitService = unitService;
+        this.sectorService = sectorService;
         this.industryService = industryService;
         this.employeeRepository = employeeRepository;
         this.capacityStockService = capacityStockService;
@@ -39,47 +43,30 @@ public class EmployeeService {
 
         EmployeeResponseDTO dto = new EmployeeResponseDTO(
                 employee.getId(),
-                employee.getNome(),
-                employee.getSobrenome(),
+                employee.getFirstName(),
+                employee.getLastName(),
                 employee.getEmail(),
-                employee.getCargo(),
-                employee.getFotoPerfil()
+                employee.getRole(),
+                employee.getProfilePicture()
         );
 
-        Sector setor = employee.getSetor();
+        Sector setor = employee.getSector();
         if (setor != null) {
-            SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-
-            dto.setSetor(sectorDTO);
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSetor(sectorResponseDTO);
         }
 
-        Unit unit = employee.getUnidade();
+        Unit unit = employee.getUnit();
         if (unit != null) {
-            UnitResponseDTO unitDTO = new UnitResponseDTO(
-                    unit.getId(),
-                    unit.getNome(),
-                    unit.getCep(),
-                    unit.getRua(),
-                    unit.getCidade(),
-                    unit.getEstado(),
-                    unit.getNumero(),
-                    unit.getBairro(),
-                    industryService.getIndustryById(employee.getUnidade().getIndustry().getId())
-            );
-            unitDTO.setId(unit.getId());
-            dto.setUnit(unitDTO);
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+            dto.setUnit(unitResponseDTO);
         }
-        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findByUnidadeIdAndSectorId(unit.getId(), setor.getId());
+
+        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
         if (capacityStockResposeDTO != null) {
             Double capacidadeMaxima= capacityStockResposeDTO.getCapacidadeMaxima();
             dto.setCapacidadeMaxima(capacidadeMaxima);
         }
-
-
         return dto;
     }
 
@@ -87,7 +74,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
 
-        employee.setFotoPerfil(updatePhotoRequestDTO.getFotoPerfil());
+        employee.setProfilePicture(updatePhotoRequestDTO.getFotoPerfil());
         employeeRepository.save(employee);
 
         log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
@@ -99,7 +86,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
 
-        employee.setSenha(employeeRequestDTO.getSenha());
+        employee.setPassword(employeeRequestDTO.getSenha());
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());

@@ -43,8 +43,8 @@ public class CapacityStockController {
             @ApiResponse( responseCode = "404", description = "Capacidade do estoque não encontrada"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<CapacityStockResposeDTO> findByUnidadeIdAndSectorID(@RequestParam Long unitId, @RequestParam Long sectorId){
-        CapacityStockResposeDTO dto = capacityStockService.findByUnidadeIdAndSectorId(unitId, sectorId);
+    public ResponseEntity<CapacityStockResposeDTO> getByUnitAndSector(@RequestParam Long unitId, @RequestParam Long sectorId){
+        CapacityStockResposeDTO dto = capacityStockService.getByUnitAndSector(unitId, sectorId);
         return ResponseEntity.ok(dto);
     }
 }

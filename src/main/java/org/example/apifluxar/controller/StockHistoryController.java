@@ -26,7 +26,7 @@ public class StockHistoryController {
             @ApiResponse( responseCode = "404", description = "Histórico de estoque não encontrado"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<StockHistoryResponseDTO> selectId(@PathVariable Long unitId, @PathVariable Long sectorId) {
+    public ResponseEntity<StockHistoryResponseDTO> getStockHistoryById(@PathVariable Long unitId, @PathVariable Long sectorId) {
         StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(unitId, sectorId);
         return ResponseEntity.ok(dto);
     }

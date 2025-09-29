@@ -30,19 +30,8 @@ public class BatchController {
             ,@ApiResponse( responseCode = "404", description = "Lote não encontrado")
             ,@ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<BatchResponseDTO> findByIdBatch(@PathVariable String loteId) {
-        return ResponseEntity.ok(batchService.getBatchByIdLote(loteId));
-    }
-
-    @GetMapping("/search/batch")
-    @Operation(summary = "Listar todos os lotes",
-            description = "Retorna uma lista de todos os lotes cadastrados no sistema.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Lista de lotes retornada com sucesso"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-    })
-    public ResponseEntity<List<BatchResponseDTO>> findAllBatch() {
-        return ResponseEntity.ok(batchService.getAllBatch());
+    public ResponseEntity<BatchResponseDTO> getByBatchCode(@PathVariable String loteId) {
+        return ResponseEntity.ok(batchService.getBatchByCode(loteId));
     }
 
     @GetMapping("/search/batch/{idUnit}")
@@ -53,7 +42,7 @@ public class BatchController {
             @ApiResponse( responseCode = "404", description = "Unidade não encontrada"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<List<BatchResponseDTO>> findAllBatchByUnit(@PathVariable Long idUnit) {
+    public ResponseEntity<List<BatchResponseDTO>> getAllBatchByUnit(@PathVariable Long idUnit) {
         return ResponseEntity.ok(batchService.getAllBatchByUnit(idUnit));
     }
 
@@ -66,7 +55,7 @@ public class BatchController {
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
     public ResponseEntity<BatchResponseCreateDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
-        BatchResponseCreateDTO batchRespose = batchService.createBatch(batchRequestDTO);
+        BatchResponseCreateDTO batchRespose = batchService.addBatch(batchRequestDTO);
         return ResponseEntity.ok(batchRespose);
     }
 

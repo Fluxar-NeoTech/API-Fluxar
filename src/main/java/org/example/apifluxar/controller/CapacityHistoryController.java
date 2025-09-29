@@ -32,9 +32,9 @@ public class CapacityHistoryController {
             @ApiResponse( responseCode = "400", description = "Nenhum histórico de capacidade encontrado nessa unidade e setor"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<List<CapacityHistoryResponseDTO>> selectSectorAndUnidade(@RequestParam Long setorId,
+    public ResponseEntity<List<CapacityHistoryResponseDTO>> getCapacityHistoryBySectorAndUnit(@RequestParam Long setorId,
                                                                                           @RequestParam Long unidadeId) {
-        List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryBySectorAndUnidade( setorId, unidadeId);
+        List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryBySectorAndUnit( setorId, unidadeId);
         return ResponseEntity.ok(res);
     }
 
@@ -47,8 +47,8 @@ public class CapacityHistoryController {
             @ApiResponse( responseCode = "400", description = "Nenhum histórico de capacidade encontrado nessa unidade e setor"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<Object> deleteUnitId(@PathVariable Long unitId, @PathVariable Long sectorId) {
-        Integer qnt = capacityHistoryService.deleteCapacityHistoryByIdSetorAndIdUnidade(sectorId, unitId);
+    public ResponseEntity<Object> deleteCapacityHistoryBySectorAndUnit(@PathVariable Long unitId, @PathVariable Long sectorId) {
+        Integer qnt = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
         return ResponseEntity.ok(qnt);
     }
 }

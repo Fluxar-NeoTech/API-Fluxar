@@ -43,7 +43,7 @@ public class ProductController {
             @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<List<ProductResponseDTO>> selectByName(@PathVariable String name) {
+    public ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name) {
         List<ProductResponseDTO> res = productService.getProductByName(name);
         return ResponseEntity.ok(res);
     }
@@ -55,7 +55,7 @@ public class ProductController {
             @ApiResponse( responseCode = "200", description = "Lista de produtos retornada com sucesso"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<List<AllProductsResponseDTO>> selectProduct() {
+    public ResponseEntity<List<AllProductsResponseDTO>> getAllProducts() {
         List<AllProductsResponseDTO> res = productService.getAllProducts();
         return ResponseEntity.ok(res);
     }
@@ -68,8 +68,8 @@ public class ProductController {
             @ApiResponse( responseCode = "400", description = "Requisição inválida"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
-        ProductResponseDTO res = productService.createProduct(productRequestDTO);
+    public ResponseEntity<ProductResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+        ProductResponseDTO res = productService.addProduct(productRequestDTO);
         return ResponseEntity.ok(res);
     }
 }

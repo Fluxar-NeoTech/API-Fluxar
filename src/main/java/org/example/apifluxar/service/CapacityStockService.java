@@ -23,7 +23,9 @@ import java.util.Optional;
 public class CapacityStockService {
     final CapacityStockRepository capacityStockRepository;
     final SectorRepository sectorRepository;
+    final SectorService sectorService;
     final UnitRepository unitRepository;
+    final UnitService unitService;
     final IndustryService industryService;
     final ObjectMapper objectMapper;
 
@@ -31,7 +33,11 @@ public class CapacityStockService {
                                 SectorRepository sectorRepository,
                                 UnitRepository unitRepository,
                                 IndustryService industryService,
-                                ObjectMapper objectMapper) {
+                                ObjectMapper objectMapper,
+                                UnitService unitService,
+                                SectorService sectorService) {
+        this.sectorService = sectorService;
+        this.unitService = unitService;
         this.objectMapper = objectMapper;
         this.capacityStockRepository = capacityStockRepository;
         this.sectorRepository = sectorRepository;
@@ -54,13 +60,13 @@ public class CapacityStockService {
         //se ja existir um registro, atualiza
         if (exist.isPresent()) {
             CapacityStock existingStock = exist.get();
-            existingStock.setAltura(capacityStock.getAltura());
-            existingStock.setLargura(capacityStock.getLargura());
-            existingStock.setComprimento(capacityStock.getComprimento());
+            existingStock.setHeight(capacityStock.getHeight());
+            existingStock.setWidth(capacityStock.getWidth());
+            existingStock.setLength(capacityStock.getLength());
 
 
-            existingStock.setCapacidadeMaxima(
-                    existingStock.getLargura() * existingStock.getAltura() * existingStock.getComprimento()
+            existingStock.setMaxCapacity(
+                    existingStock.getWidth() * existingStock.getHeight() * existingStock.getLength()
             );
 
             CapacityStock updated = capacityStockRepository.save(existingStock);
@@ -68,10 +74,10 @@ public class CapacityStockService {
 
             //se nao existir, cria novo
         } else {
-            capacityStock.setSetor(setor);
-            capacityStock.setUnidade(unidade);
-            capacityStock.setCapacidadeMaxima(
-                    capacityStock.getLargura() * capacityStock.getAltura() * capacityStock.getComprimento()
+            capacityStock.setSector(setor);
+            capacityStock.setUnit(unidade);
+            capacityStock.setMaxCapacity(
+                    capacityStock.getWidth() * capacityStock.getHeight() * capacityStock.getLength()
             );
 
             CapacityStock saved = capacityStockRepository.save(capacityStock);
@@ -80,41 +86,26 @@ public class CapacityStockService {
     }
 
 
-    public CapacityStockResposeDTO findByUnidadeIdAndSectorId(Long unidadeId, Long sectorId) {
+    public CapacityStockResposeDTO getByUnitAndSector(Long unidadeId, Long sectorId) {
         CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
-                capacityStock.getAltura(),
-                capacityStock.getCapacidadeMaxima(),
-                capacityStock.getComprimento(),
-                capacityStock.getLargura()
+                capacityStock.getHeight(),
+                capacityStock.getMaxCapacity(),
+                capacityStock.getLength(),
+                capacityStock.getWidth()
+
         );
-        Sector setor = capacityStock.getSetor();
+        Sector setor = capacityStock.getSector();
         if (setor != null) {
-            SectorResponseDTO sectorResponseDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
             dto.setSetor(sectorResponseDTO);
         }
 
-        Unit unit = capacityStock.getUnidade();
+        Unit unit = capacityStock.getUnit();
         if (unit != null) {
-            UnitResponseDTO unitResponseDTO = new UnitResponseDTO (
-                    unit.getId(),
-                    unit.getNome(),
-                    unit.getCep(),
-                    unit.getRua(),
-                    unit.getCidade(),
-                    unit.getEstado(),
-                    unit.getNumero(),
-                    unit.getBairro(),
-                    industryService.getIndustryById(unit.getIndustry().getId())
-            );
-            unitResponseDTO.setId(unit.getId());
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
             dto.setUnidade(unitResponseDTO);
         }
         return  dto;
     }
-
 }

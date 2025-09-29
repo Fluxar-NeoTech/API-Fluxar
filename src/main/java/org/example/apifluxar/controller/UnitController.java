@@ -23,7 +23,7 @@ public class UnitController {
     @GetMapping("/search/{id}")
     @Operation(summary = "Buscar unidade por ID",
             description = "Retorna os detalhes de uma unidade específica com base no ID fornecido.")
-    public ResponseEntity<UnitResponseDTO> searchUnit(@PathVariable Long id) {
+    public ResponseEntity<UnitResponseDTO> getUnitById(@PathVariable Long id) {
         UnitResponseDTO res = unitService.getUnitById(id);
         return ResponseEntity.ok(res);
     }
@@ -35,8 +35,8 @@ public class UnitController {
             @ApiResponse( responseCode = "200", description = "Lista de unidades retornada com sucesso"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<List<UnitResponseDTO>> searchAllIndustry(@PathVariable Long id) {
-        List<UnitResponseDTO> res = unitService.getUnitByIndustryId(id);
+    public ResponseEntity<List<UnitResponseDTO>> getUnitByIndustry(@PathVariable Long id) {
+        List<UnitResponseDTO> res = unitService.getUnitByIndustry(id);
         return ResponseEntity.ok(res);
     }
 }

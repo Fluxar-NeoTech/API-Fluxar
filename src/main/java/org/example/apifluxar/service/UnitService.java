@@ -27,35 +27,33 @@ public class UnitService {
 
         UnitResponseDTO dto = new UnitResponseDTO(
                 unit.getId(),
-                unit.getNome(),
-                unit.getCep(),
-                unit.getRua(),
-                unit.getCidade(),
-                unit.getEstado(),
-                unit.getNumero(),
-                unit.getBairro(),
+                unit.getName(),
+                unit.getPostalCode(),
+                unit.getStreet(),
+                unit.getCity(),
+                unit.getState(),
+                unit.getNumber(),
+                unit.getNeighborhood(),
                 industryService.getIndustryById(unit.getIndustry().getId())
         );
 
         return dto;
     }
 
-    public List<UnitResponseDTO> getUnitByIndustryId(Long id) {
+    public List<UnitResponseDTO> getUnitByIndustry(Long id) {
         List<Unit> unit = unitRepository.findAllByIndustryId(id);
         List<UnitResponseDTO> dtos = new ArrayList<>();
         for (Unit unitItem : unit) {
             UnitResponseDTO dto = new UnitResponseDTO(
                     unitItem.getId(),
-                    unitItem.getNome(),
-                    unitItem.getCep(),
-                    unitItem.getRua(),
-                    unitItem.getCidade(),
-                    unitItem.getEstado(),
-                    unitItem.getNumero(),
-                    unitItem.getBairro(),
+                    unitItem.getName(),
+                    unitItem.getPostalCode(),
+                    unitItem.getStreet(),
+                    unitItem.getCity(),
+                    unitItem.getState(),
+                    unitItem.getNumber(),
+                    unitItem.getNeighborhood(),
                     industryService.getIndustryById(unitItem.getIndustry().getId())
-
-
             );
             dtos.add(dto);
         }

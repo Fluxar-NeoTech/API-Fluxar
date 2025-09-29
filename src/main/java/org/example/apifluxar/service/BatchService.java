@@ -27,8 +27,8 @@ public class BatchService {
     final UnitService unitService;
     final BatchMapper batchMapper;
     final StockHistoryService stockHistoryService;
-    private final ProductRepository productRepository;
-    private final UnitRepository unitRepository;
+    final ProductRepository productRepository;
+    final UnitRepository unitRepository;
     final ObjectMapper objectMapper;
 
     public BatchService(BatchRepository batchRepository,
@@ -50,25 +50,25 @@ public class BatchService {
         this.objectMapper = objectMapper;
     }
 
-    public BatchResponseDTO getBatchByIdLote(String loteId){
+    public BatchResponseDTO getBatchByCode(String loteId){
         Batch batch = batchRepository.findByIdLote(loteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         BatchResponseDTO dto = new BatchResponseDTO(
                 batch.getBatchId(),
                 batch.getExpirationDate(),
-                batch.getAltura(),
-                batch.getComprimento(),
-                batch.getLargura(),
+                batch.getHeight(),
+                batch.getLength(),
+                batch.getWidth(),
                 batch.getVolume()
         );
 
-        Product product = batch.getProduto();
+        Product product = batch.getProduct();
         if (product != null) {
             ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
             dto.setProduct(productResponseDTO);
         }
 
-        Unit unit = batch.getUnidade();
+        Unit unit = batch.getUnit();
         if (unit != null) {
             UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
             dto.setUnit(unitResponseDTO);
@@ -77,37 +77,6 @@ public class BatchService {
         return dto;
     }
 
-    public List<BatchResponseDTO> getAllBatch(){
-        List<Batch> batchs = batchRepository.findAll();
-        List<BatchResponseDTO> batchDtos = new ArrayList<>();
-
-        for (Batch batch : batchs) {
-            BatchResponseDTO dto = new BatchResponseDTO(
-                    batch.getIdLote(),
-                    batch.getValidade(),
-                    batch.getAltura(),
-                    batch.getComprimento(),
-                    batch.getLargura(),
-                    batch.getVolume()
-            );
-
-            Product product = batch.getProduto();
-            if (product != null) {
-                ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
-                dto.setProduct(productResponseDTO);
-            }
-
-
-            Unit unit = batch.getUnidade();
-            if (unit != null) {
-                UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-                dto.setUnit(unitResponseDTO);
-            }
-            batchDtos.add(dto);
-        }
-
-        return batchDtos;
-    }
 
     public List<BatchResponseDTO> getAllBatchByUnit(Long idUnit){
         List<Batch> batchs = batchRepository.findAllByUnidade(idUnit);
@@ -115,21 +84,21 @@ public class BatchService {
 
         for (Batch batch : batchs) {
             BatchResponseDTO dto = new BatchResponseDTO(
-                    batch.getIdLote(),
-                    batch.getValidade(),
-                    batch.getAltura(),
-                    batch.getComprimento(),
-                    batch.getLargura(),
+                    batch.getBatchId(),
+                    batch.getExpirationDate(),
+                    batch.getHeight(),
+                    batch.getLength(),
+                    batch.getWidth(),
                     batch.getVolume()
             );
 
-            Product product = batch.getProduto();
+            Product product = batch.getProduct();
             if (product != null) {
                 ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
                 dto.setProduct(productResponseDTO);
             }
 
-            Unit unit = batch.getUnidade();
+            Unit unit = batch.getUnit();
             if (unit != null) {
                 UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
                 dto.setUnit(unitResponseDTO);
@@ -141,7 +110,7 @@ public class BatchService {
         return batchDtos;
     }
 
-    public BatchResponseCreateDTO createBatch(BatchRequestDTO batchRequestDTO) {
+    public BatchResponseCreateDTO addBatch(BatchRequestDTO batchRequestDTO) {
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
@@ -159,9 +128,9 @@ public class BatchService {
     public BatchResponseDTO deleteBatch(String id){
         Batch batch = batchRepository.findByIdLote(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        stockHistoryService.deleteByBatchId(batch.getId());
+        stockHistoryService.deleteByBatchCode(batch.getId());
         batchRepository.deleteByIdCustom(batch.getId());
-        BatchResponseDTO res = batchMapper.mapToBatch(batch,batch.getProduto(),batch.getUnidade());
+        BatchResponseDTO res = batchMapper.mapToBatch(batch,batch.getProduct(),batch.getUnit());
         return res;
     }
 }

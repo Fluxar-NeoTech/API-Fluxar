@@ -24,8 +24,12 @@ public class ProductService {
     ProductMapper productMapper;
     final ObjectMapper objectMapper;
     final SectorRepository sectorRepository;
+    final SectorService sectorService;
+    final BatchService batchService;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper, SectorService sectorService, BatchService batchService) {
+        this.sectorService = sectorService;
+        this.batchService = batchService;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.sectorRepository = sectorRepository;
@@ -36,19 +40,14 @@ public class ProductService {
         Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ProductResponseDTO dto = new ProductResponseDTO(
-                product.getNome(),
-                product.getTipo()
+                product.getName(),
+                product.getType()
         );
 
-        Sector setor = product.getSetor();
+        Sector setor = product.getSector();
         if (setor != null) {
-            SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-
-            dto.setSetor(sectorDTO);
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSetor(sectorResponseDTO);
         }
 
         return dto;
@@ -64,19 +63,14 @@ public class ProductService {
 
         for (Product p : product) {
             ProductResponseDTO dto = new ProductResponseDTO(
-                    p.getNome(),
-                    p.getTipo()
+                    p.getName(),
+                    p.getType()
             );
 
-            Sector setor = p.getSetor();
+            Sector setor = p.getSector();
             if (setor != null) {
-                SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                        setor.getId(),
-                        setor.getNome(),
-                        setor.getDescricao()
-                );
-
-                dto.setSetor(sectorDTO);
+                SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+                dto.setSetor(sectorResponseDTO);
             }
             dtos.add(dto);
         }
@@ -90,8 +84,8 @@ public class ProductService {
 
         for (Product product : products) {
             AllProductsResponseDTO dto = new AllProductsResponseDTO(
-                    product.getNome(),
-                    product.getTipo()
+                    product.getName(),
+                    product.getType()
             );
             productDTOs.add(dto);
         }
@@ -99,7 +93,7 @@ public class ProductService {
         return productDTOs;
     }
 
-    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
+    public ProductResponseDTO addProduct(ProductRequestDTO productRequestDTO) {
         Sector setor = sectorRepository.findById(productRequestDTO.getSetor())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setor não encontrado"));
 

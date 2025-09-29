@@ -28,13 +28,9 @@ public class StockHistoryService {
 
         StockHistoryResponseDTO dto = objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
         return dto;
-
     }
 
-
-
-    public void deleteByBatchId(Long id) {
-        int deletedCount = stockHistoryRepository.deleteAllByLoteId(id);
+    public void deleteByBatchCode(Long id) {
+        stockHistoryRepository.deleteAllByLoteId(id);
     }
-
 }
