@@ -1,6 +1,7 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
@@ -34,7 +35,7 @@ public class ProductService {
     }
 
     public ProductResponseDTO getProductById(Long id){
-        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Product product = productRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Produto não encontrado"));
 
         ProductResponseDTO dto = new ProductResponseDTO(
                 product.getName(),
@@ -66,7 +67,7 @@ public class ProductService {
         List<ProductResponseDTO> dtos = new ArrayList<>();
 
         if (product.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+            throw new EntityNotFoundException("Produto não encontrado");
         }
 
         for (Product p : product) {

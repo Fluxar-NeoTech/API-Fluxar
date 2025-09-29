@@ -2,16 +2,10 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.capacityHistory.CapacityHistoryResponseDTO;
-import org.example.apifluxar.dto.industry.IndustryResponseDTO;
-import org.example.apifluxar.dto.sector.SectorResponseDTO;
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.exception.EmptyCapacityHistory;
 import org.example.apifluxar.model.*;
 import org.example.apifluxar.repository.CapacityHistoryRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.ArrayList;
 import java.util.List;
 

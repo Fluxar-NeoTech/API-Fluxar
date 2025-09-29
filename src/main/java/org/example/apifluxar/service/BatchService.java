@@ -1,6 +1,7 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
@@ -47,7 +48,7 @@ public class BatchService {
     }
 
     public BatchResponseDTO getBatchByCode(String batchCode) {
-        Batch batch = batchRepository.findByBatchCode(batchCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Batch batch = batchRepository.findByBatchCode(batchCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lote não encontrado"));
 
         BatchResponseDTO dto = new BatchResponseDTO(
                 batch.getBatchCode(),
@@ -111,11 +112,12 @@ public class BatchService {
 
     //vai virar procedure
     public BatchResponseDTO addBatch(BatchRequestDTO batchRequestDTO) {
+
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unidade não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
         Batch batchEntity = batchMapper.batchToMap(batchRequestDTO, productEntity, unitEntity);
 
@@ -124,11 +126,10 @@ public class BatchService {
         return batchMapper.mapToBatch(savedBatch, savedBatch.getProduct(), savedBatch.getUnit());
     }
 
-
     //vai virar procedure
     public BatchResponseDTO deleteBatch(String batchCode) {
         Batch batch = batchRepository.findByBatchCode(batchCode)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException("Lote não encontrado"));
 
         stockHistoryService.deleteByBatchCode(batch.getId());
 

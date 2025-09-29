@@ -1,6 +1,7 @@
 package org.example.apifluxar.service;
 
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
@@ -24,7 +25,7 @@ public class EmployeeService {
     final CapacityStockService capacityStockService;
     final SectorService sectorService;
     final UnitService unitService;
-    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
+    final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
 
     public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService, SectorService sectorService, UnitService unitService) {
@@ -72,7 +73,7 @@ public class EmployeeService {
 
     public MessageResponseDTO updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
         Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
 
         employee.setProfilePicture(updatePhotoRequestDTO.getProfilePhoto());
         employeeRepository.save(employee);
@@ -84,7 +85,7 @@ public class EmployeeService {
 
     public MessageResponseDTO updateSenha(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado"));
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
 
         employee.setPassword(employeeRequestDTO.getPassword());
         employeeRepository.save(employee);

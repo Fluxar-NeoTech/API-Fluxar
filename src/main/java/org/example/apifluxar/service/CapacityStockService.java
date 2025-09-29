@@ -2,6 +2,7 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
@@ -15,7 +16,6 @@ import org.example.apifluxar.repository.SectorRepository;
 import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -51,10 +51,10 @@ public class CapacityStockService {
     @Transactional
     public CapacityStockResponseDTO addOrUpdateCapacityStock(CapacityStockRequestDTO dto) {
         Sector sector = sectorRepository.findById(dto.getSectorId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setor não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
 
         Unit unit = unitRepository.findById(dto.getUnitId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unidade não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
         Optional<CapacityStock> existingOpt = capacityStockRepository.findBySectorAndUnit(sector, unit);
 
@@ -87,14 +87,14 @@ public class CapacityStockService {
     }
 
     public CapacityStockResponseDTO getByUnitAndSector(Long unitId, Long sectorId) {
-        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnit(unitId, sectorId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnit(unitId, sectorId).orElseThrow(() -> new EntityNotFoundException(
+                "Capacidade de estoque não encontrada para a unidade e setor informados"));
         CapacityStockResponseDTO dto = new CapacityStockResponseDTO(
                 capacityStock.getHeight(),
                 capacityStock.getMaxCapacity(),
                 capacityStock.getLength(),
-                capacityStock.getWidth()
+                capacityStock.getWidth());
 
-        );
         Sector setor = capacityStock.getSector();
         if (setor != null) {
             SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
