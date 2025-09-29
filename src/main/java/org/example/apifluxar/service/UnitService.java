@@ -1,6 +1,7 @@
 package org.example.apifluxar.service;
 
 import org.example.apifluxar.dto.industry.IndustryResponseDTO;
+import org.example.apifluxar.dto.unit.UnitBatchResponseDTO;
 import org.example.apifluxar.model.*;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.repository.IndustryRepository;
@@ -35,6 +36,22 @@ public class UnitService {
                 unit.getNumber(),
                 unit.getNeighborhood(),
                 industryService.getIndustryById(unit.getIndustry().getId())
+        );
+
+        return dto;
+    }
+
+    public UnitBatchResponseDTO getUnitBatchById(Long id) {
+        Unit unit = unitRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        UnitBatchResponseDTO dto = new UnitBatchResponseDTO(
+                unit.getName(),
+                unit.getPostalCode(),
+                unit.getStreet(),
+                unit.getCity(),
+                unit.getState(),
+                unit.getNumber(),
+                unit.getNeighborhood()
         );
 
         return dto;

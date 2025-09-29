@@ -6,38 +6,38 @@ import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.model.Employee;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.service.SectorService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
+    final SectorService sectorService;
+
+    public ProductMapper(SectorService sectorService) {
+        this.sectorService = sectorService;
+    }
 
     public Product mapToProduct(ProductRequestDTO productRequestDTO, Sector sector) {
-        Employee employee = new Employee();
-
         Product product = new Product(
-                productRequestDTO.getNome(),
-                productRequestDTO.getTipo(),
+                productRequestDTO.getName(),
+                productRequestDTO.getType(),
                 sector);
 
         return product;
     }
 
     public ProductResponseDTO mapToProductResponseDTO(Product product) {
-        Sector setor = product.getSetor();
+        Sector setor = product.getSector();
+        SectorResponseDTO sectorResponseDTO = null;
 
-        SectorResponseDTO setorDTO = null;
         if (setor != null) {
-            setorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
+            sectorResponseDTO = sectorService.getSectorById(setor.getId());
         }
 
         return new ProductResponseDTO(
-                product.getNome(),
-                product.getTipo(),
-                setorDTO
+                product.getName(),
+                product.getType(),
+                sectorResponseDTO
         );
     }
 }

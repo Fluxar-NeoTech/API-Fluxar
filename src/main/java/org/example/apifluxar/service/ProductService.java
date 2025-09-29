@@ -53,6 +53,16 @@ public class ProductService {
         return dto;
     }
 
+    public AllProductsResponseDTO getAllProductById(Long id){
+        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        AllProductsResponseDTO dto = new AllProductsResponseDTO(
+                product.getName(),
+                product.getType()
+        );
+        return dto;
+    }
+
     public List<ProductResponseDTO> getProductByName(String name) {
         List<Product> product = productRepository.findByNome(name);
         List<ProductResponseDTO> dtos = new ArrayList<>();
