@@ -1,17 +1,11 @@
 package org.example.apifluxar.mapper;
 
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
-import org.example.apifluxar.dto.batch.BatchResponseCreateDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
-import org.example.apifluxar.dto.industry.IndustryResponseDTO;
-import org.example.apifluxar.dto.products.AllProductsResponseDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
-import org.example.apifluxar.dto.sector.SectorResponseDTO;
-import org.example.apifluxar.dto.unit.UnitBatchResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.Batch;
 import org.example.apifluxar.model.Product;
-import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.service.IndustryService;
 import org.example.apifluxar.service.ProductService;
@@ -46,31 +40,31 @@ public class BatchMapper {
         );
     }
 
-    // Entity -> ResponseCreateDTO
-    public BatchResponseCreateDTO mapToBatchCreate(Batch batch) {
-        Product product = batch.getProduct();
-        AllProductsResponseDTO allProductsResponseDTO = null;
-
-        if (product != null) {
-            allProductsResponseDTO = productService.getAllProductById(product.getId());
-        }
-
-        Unit unit = batch.getUnit();
-        UnitBatchResponseDTO unitBatchResponseDTO = null;
-        if (unit != null) {
-            unitBatchResponseDTO = unitService.getUnitBatchById(unit.getId());
-        }
-
-        return new BatchResponseCreateDTO(
-                batch.getHeight(),
-                batch.getLength(),
-                batch.getBatchCode(),
-                batch.getWidth(),
-                allProductsResponseDTO,
-                unitBatchResponseDTO,
-                batch.getExpirationDate()
-        );
-    }
+//    // Entity -> ResponseCreateDTO
+//    public BatchResponseCreateDTO mapToBatchCreate(Batch batch) {
+//        Product product = batch.getProduct();
+//        AllProductsResponseDTO allProductsResponseDTO = null;
+//
+//        if (product != null) {
+//            allProductsResponseDTO = productService.getAllProductById(product.getId());
+//        }
+//
+//        Unit unit = batch.getUnit();
+//        UnitBatchResponseDTO unitBatchResponseDTO = null;
+//        if (unit != null) {
+//            unitBatchResponseDTO = unitService.getUnitBatchById(unit.getId());
+//        }
+//
+//        return new BatchResponseCreateDTO(
+//                batch.getHeight(),
+//                batch.getLength(),
+//                batch.getBatchCode(),
+//                batch.getWidth(),
+//                allProductsResponseDTO,
+//                unitBatchResponseDTO,
+//                batch.getExpirationDate()
+//        );
+//    }
 
     //Entity -> ResponseDTO
     public BatchResponseDTO mapToBatch(Batch batch, Product product, Unit unit) {

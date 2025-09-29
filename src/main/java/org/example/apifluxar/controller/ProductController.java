@@ -3,7 +3,6 @@ package org.example.apifluxar.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.example.apifluxar.dto.products.AllProductsResponseDTO;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.service.ProductService;

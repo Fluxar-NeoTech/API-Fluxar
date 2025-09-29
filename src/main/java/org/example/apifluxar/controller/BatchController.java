@@ -4,13 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
-import org.example.apifluxar.dto.batch.BatchResponseCreateDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.service.BatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -54,8 +51,8 @@ public class BatchController {
             @ApiResponse( responseCode = "400", description = "Dados inválidos fornecidos"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<BatchResponseCreateDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
-        BatchResponseCreateDTO batchRespose = batchService.addBatch(batchRequestDTO);
+    public ResponseEntity<BatchResponseDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
+        BatchResponseDTO batchRespose = batchService.addBatch(batchRequestDTO);
         return ResponseEntity.ok(batchRespose);
     }
 

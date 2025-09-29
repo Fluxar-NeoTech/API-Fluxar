@@ -48,7 +48,7 @@ public class CapacityHistoryController {
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
     public ResponseEntity<Object> deleteCapacityHistoryBySectorAndUnit(@RequestParam Long unitId, @RequestParam Long sectorId) {
-        Integer qnt = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
-        return ResponseEntity.ok(qnt);
+        String message = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
+        return ResponseEntity.ok(message);
     }
 }

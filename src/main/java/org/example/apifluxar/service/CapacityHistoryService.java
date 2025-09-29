@@ -43,11 +43,11 @@ public class CapacityHistoryService {
         return dtos;
     }
 
-    public Integer deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
+    public String deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
         Integer deleteQuatidade = capacityHistoryRepository.deleteBySectorAndUnit(sectorId, unitId);
         if (deleteQuatidade == 0) {
             throw new EmptyCapacityHistory("Nenhum histórico de capacidade encontrado para a unidade e setor especificados");
         }
-        return deleteQuatidade;
+        return "Histórico de capacidade deletado com sucesso: " + deleteQuatidade + " registros." ;
     }
 }

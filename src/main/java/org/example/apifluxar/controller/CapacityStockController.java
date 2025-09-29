@@ -31,7 +31,7 @@ public class CapacityStockController {
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
     public ResponseEntity<CapacityStockResponseDTO> addCapacityStock(@RequestBody @Validated CapacityStockRequestDTO capacityStockRequestDTO){
-        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.addCapacityStock(capacityStockRequestDTO);
+        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.addOrUpdateCapacityStock(capacityStockRequestDTO);
         return ResponseEntity.ok(capacityStockResposeDTO);
     }
 

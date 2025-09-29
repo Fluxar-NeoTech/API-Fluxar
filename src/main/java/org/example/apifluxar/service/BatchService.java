@@ -2,7 +2,6 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
-import org.example.apifluxar.dto.batch.BatchResponseCreateDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
@@ -16,9 +15,6 @@ import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class BatchService {
@@ -114,7 +110,7 @@ public class BatchService {
 
 
     //vai virar procedure
-    public BatchResponseCreateDTO addBatch(BatchRequestDTO batchRequestDTO) {
+    public BatchResponseDTO addBatch(BatchRequestDTO batchRequestDTO) {
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
@@ -125,7 +121,7 @@ public class BatchService {
 
         Batch savedBatch = batchRepository.save(batchEntity);
 
-        return batchMapper.mapToBatchCreate(savedBatch);
+        return batchMapper.mapToBatch(savedBatch, savedBatch.getProduct(), savedBatch.getUnit());
     }
 
 
@@ -133,9 +129,11 @@ public class BatchService {
     public BatchResponseDTO deleteBatch(String batchCode) {
         Batch batch = batchRepository.findByBatchCode(batchCode)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         stockHistoryService.deleteByBatchCode(batch.getId());
+
         batchRepository.deleteByIdCustom(batch.getId());
-        BatchResponseDTO res = batchMapper.mapToBatch(batch,batch.getProduct(),batch.getUnit());
-        return res;
+
+        return batchMapper.mapToBatch(batch,batch.getProduct(),batch.getUnit());
     }
 }

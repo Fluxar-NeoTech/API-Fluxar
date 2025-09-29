@@ -28,7 +28,7 @@ public class Batch {
     @Column(name = "largura")
     private Double width;
 
-    @Formula("width * height * length")
+    @Formula("largura * altura * comprimento")
     private Double volume;
 
     @ManyToOne

@@ -21,7 +21,6 @@ public class CapacityStock {
     private Double length;
 
     @Formula("largura * altura * comprimento")
-    @Column(name = "capacidade_maxima")
     private Double maxCapacity;
 
     @ManyToOne()

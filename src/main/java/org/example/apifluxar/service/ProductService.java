@@ -1,7 +1,6 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.apifluxar.dto.products.AllProductsResponseDTO;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
@@ -25,11 +24,9 @@ public class ProductService {
     final ObjectMapper objectMapper;
     final SectorRepository sectorRepository;
     final SectorService sectorService;
-    final BatchService batchService;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper, SectorService sectorService, BatchService batchService) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper, SectorService sectorService) {
         this.sectorService = sectorService;
-        this.batchService = batchService;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.sectorRepository = sectorRepository;
@@ -53,16 +50,16 @@ public class ProductService {
         return dto;
     }
 
-    // Retorna apenas nome e tipo do produto - usado no Mapper de Lote
-    public AllProductsResponseDTO getAllProductById(Long id){
-        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        AllProductsResponseDTO dto = new AllProductsResponseDTO(
-                product.getName(),
-                product.getType()
-        );
-        return dto;
-    }
+//    // Retorna apenas nome e tipo do produto - usado no Mapper de Lote
+//    public AllProductsResponseDTO getAllProductById(Long id){
+//        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+//
+//        AllProductsResponseDTO dto = new AllProductsResponseDTO(
+//                product.getName(),
+//                product.getType()
+//        );
+//        return dto;
+//    }
 
     public List<ProductResponseDTO> getProductByName(String name) {
         List<Product> product = productRepository.findByName(name);

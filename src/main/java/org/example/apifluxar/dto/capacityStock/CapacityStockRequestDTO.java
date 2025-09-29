@@ -8,17 +8,14 @@ public class CapacityStockRequestDTO {
 
     @NotNull(message = "Largura não pode ser nula")
     @DecimalMin(value = "1.00", message = "Largura deve ser maior ou igual a 1")
-    @NotBlank(message = "Largura não pode ser em branco")
     private Double width;
 
     @NotNull(message = "Altura não pode ser nula")
     @DecimalMin(value = "1.00", message = "Altura deve ser maior ou igual a 1")
-    @NotBlank(message = "Altura não pode ser em branco")
     private Double height;
 
     @NotNull(message = "Comprimento não pode ser nulo")
     @DecimalMin(value = "1.00", message = "Comprimento deve ser maior ou igual a 1")
-    @NotBlank(message = "Comprimento não pode ser em branco")
     private Double length;
 
     @NotNull(message = "Id do setor não pode ser nulo")
