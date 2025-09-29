@@ -14,11 +14,11 @@ public interface StockHistoryRepository extends JpaRepository<StockHistory, Long
 //    Long deleteByIdLote(String loteId);
     @Modifying
     @Transactional
-    @Query("DELETE FROM StockHistory sh WHERE sh.lote.id = :loteId")
-    Integer deleteAllByLoteId(@Param("loteId") Long loteId);
+    @Query("DELETE FROM StockHistory sh WHERE sh.batch.id = :batchCode")
+    Integer deleteAllByBatchCode(@Param("batchCode") Long batchCode);
 
-    @Query("SELECT sh FROM StockHistory sh WHERE sh.unidade.id = :unidadeId and sh.setor.id = :setorId")
-    Optional<StockHistory> findByUnidadeIdAndSetorId(@Param("unidadeId") Long unidadeId, @Param("setorId") Long setorId);
+    @Query("SELECT sh FROM StockHistory sh WHERE sh.unit.id = :unitId and sh.sector.id = :sectorId")
+    Optional<StockHistory> findByUnitAndSector(@Param("unitId") Long unitId, @Param("sectorId") Long sectorId);
 
 
 }

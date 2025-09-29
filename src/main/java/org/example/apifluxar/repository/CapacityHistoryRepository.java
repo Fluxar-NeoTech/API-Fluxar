@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CapacityHistoryRepository extends JpaRepository<CapacityHistory, Long> {
-    @Query("SELECT c FROM CapacityHistory c WHERE c.sector.id = :idsector and c.unidade.id = :idunidade")
-    List<CapacityHistory> findBySectorAndAndUnidade(@Param("idsector") Long idSector,
-                                                              @Param("idunidade") Long idUnidade);
+    @Query("SELECT c FROM CapacityHistory c WHERE c.sector.id = :sectorId and c.unit.id = :unitId")
+    List<CapacityHistory> findBySectorAndAndUnit(@Param("sectorId") Long sectorId,
+                                                              @Param("unitId") Long unitId);
     @Modifying
     @Transactional
-    @Query("DELETE FROM CapacityHistory c WHERE c.sector.id = :id and c.unidade.id = :idunidade")
-    Integer deleteBySectorAndUnidade(@Param("idsector") Long id,@Param("idunidade") Long idunidade);
+    @Query("DELETE FROM CapacityHistory c WHERE c.sector.id = :sectorId and c.unit.id = :unitId")
+    Integer deleteBySectorAndUnit(@Param("sectorId") Long sectorId, @Param("unitId") Long unitId);
 }

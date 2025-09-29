@@ -78,37 +78,39 @@ public class BatchService {
     }
 
 
-    public List<BatchResponseDTO> getAllBatchByUnit(Long idUnit){
-        List<Batch> batchs = batchRepository.findAllByUnidade(idUnit);
-        List<BatchResponseDTO> batchDtos = new ArrayList<>();
+//    public List<BatchResponseDTO> getAllBatchByUnit(Long idUnit){
+//        List<Batch> batchs = batchRepository.findAllByUnidade(idUnit);
+//        List<BatchResponseDTO> batchDtos = new ArrayList<>();
+//
+//        for (Batch batch : batchs) {
+//            BatchResponseDTO dto = new BatchResponseDTO(
+//                    batch.getBatchCode(),
+//                    batch.getExpirationDate(),
+//                    batch.getHeight(),
+//                    batch.getLength(),
+//                    batch.getWidth(),
+//                    batch.getVolume()
+//            );
+//
+//            Product product = batch.getProduct();
+//            if (product != null) {
+//                ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
+//                dto.setProduct(productResponseDTO);
+//            }
+//
+//            Unit unit = batch.getUnit();
+//            if (unit != null) {
+//                UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+//                dto.setUnit(unitResponseDTO);
+//            }
+//
+//            batchDtos.add(dto);
+//        }
+//
+//        return batchDtos;
+//    }
 
-        for (Batch batch : batchs) {
-            BatchResponseDTO dto = new BatchResponseDTO(
-                    batch.getBatchCode(),
-                    batch.getExpirationDate(),
-                    batch.getHeight(),
-                    batch.getLength(),
-                    batch.getWidth(),
-                    batch.getVolume()
-            );
-
-            Product product = batch.getProduct();
-            if (product != null) {
-                ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
-                dto.setProduct(productResponseDTO);
-            }
-
-            Unit unit = batch.getUnit();
-            if (unit != null) {
-                UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-                dto.setUnit(unitResponseDTO);
-            }
-
-            batchDtos.add(dto);
-        }
-
-        return batchDtos;
-    }
+    //método para o mobile de consulta personalizada de lotes e produtos por unidade e setor (que vem do produto)
 
     public BatchResponseCreateDTO addBatch(BatchRequestDTO batchRequestDTO) {
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
