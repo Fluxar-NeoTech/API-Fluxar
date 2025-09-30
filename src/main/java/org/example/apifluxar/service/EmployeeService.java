@@ -9,6 +9,7 @@ import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
+import org.example.apifluxar.exception.NotAuthorizedEmployee;
 import org.example.apifluxar.model.Employee;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;
@@ -40,7 +41,8 @@ public class EmployeeService {
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
                 .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+                .orElseThrow(() -> new NotAuthorizedEmployee("Você não está autorizado a acessar o sistema. " +
+                        "Verifique suas credenciais e tente novamente."));
 
 
         LoginEmployeeResponseDTO dto = new LoginEmployeeResponseDTO(

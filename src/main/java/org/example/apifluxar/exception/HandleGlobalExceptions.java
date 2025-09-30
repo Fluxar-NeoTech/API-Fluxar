@@ -52,4 +52,9 @@ public class HandleGlobalExceptions {
     public ResponseEntity<String> HandlerEmptyCapacityHistory (EmptyCapacityHistory ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
+    @ExceptionHandler(NotAuthorizedEmployee.class)
+    public ResponseEntity<String> HandlerNotAuthorizedEmployee (NotAuthorizedEmployee ex){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
 }
