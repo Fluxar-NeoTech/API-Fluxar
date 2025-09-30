@@ -4,52 +4,52 @@ import java.time.LocalDate;
 
 public class BatchRequestDTO {
 
-    private String idLote;
-    private LocalDate validade;
-    private Double altura;
-    private Double comprimento;
-    private Double largura;
+    private String batchCode;
+    private LocalDate expirationDate;
+    private Double height;
+    private Double length;
+    private Double width;
     private Long unitId;
     private Long productId;
 
-    public String getIdLote() {
-        return idLote;
+    public String getBatchCode() {
+        return batchCode;
     }
 
-    public LocalDate getValidade() {
-        return validade;
+    public LocalDate getExpirationDate() {
+        return expirationDate;
     }
 
-    public Double getAltura() {
-        return altura;
+    public Double getHeight() {
+        return height;
     }
 
-    public Double getComprimento() {
-        return comprimento;
+    public Double getLength() {
+        return length;
     }
 
-    public Double getLargura() {
-        return largura;
+    public Double getWidth() {
+        return width;
     }
 
-    public void setIdLote(String idLote) {
-        this.idLote = idLote;
+    public void setBatchCode(String batchId) {
+        this.batchCode = batchId;
     }
 
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
-    public void setAltura(Double altura) {
-        this.altura = altura;
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
-    public void setComprimento(Double comprimento) {
-        this.comprimento = comprimento;
+    public void setLength(Double length) {
+        this.length = length;
     }
 
-    public void setLargura(Double largura) {
-        this.largura = largura;
+    public void setWidth(Double width) {
+        this.width = width;
     }
 
     public Long getUnitId() {

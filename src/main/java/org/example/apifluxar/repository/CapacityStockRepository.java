@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CapacityStockRepository extends JpaRepository<CapacityStock, Long> {
-    @Query("SELECT c FROM CapacityStock c WHERE c.unidade.id = :idunidade and c.setor.id = :idsector")
-    Optional<CapacityStock> findBySectorAndUnidade(@Param("idunidade") Long id,
-                                                   @Param("idsector") Long idSector);
+    @Query("SELECT c FROM CapacityStock c WHERE c.unit.id = :unitId and c.sector.id = :sectorId")
+    Optional<CapacityStock> findBySectorAndUnit(@Param("unitId") Long id,
+                                                   @Param("sectorId") Long idSector);
 
-    Optional<CapacityStock> findBySetorAndUnidade(Sector setor, Unit unidade);
+    Optional<CapacityStock> findBySectorAndUnit(Sector sector, Unit unit);
 }

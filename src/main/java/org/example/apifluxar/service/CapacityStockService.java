@@ -1,10 +1,11 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
-import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
+import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.CapacityStock;
@@ -13,6 +14,7 @@ import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.repository.CapacityStockRepository;
 import org.example.apifluxar.repository.SectorRepository;
 import org.example.apifluxar.repository.UnitRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,98 +23,89 @@ import java.util.Optional;
 public class CapacityStockService {
     final CapacityStockRepository capacityStockRepository;
     final SectorRepository sectorRepository;
+    final SectorService sectorService;
     final UnitRepository unitRepository;
+    final UnitService unitService;
     final IndustryService industryService;
     final ObjectMapper objectMapper;
+    final EntityManager entityManager;
 
     public CapacityStockService(CapacityStockRepository capacityStockRepository,
                                 SectorRepository sectorRepository,
                                 UnitRepository unitRepository,
                                 IndustryService industryService,
-                                ObjectMapper objectMapper) {
+                                ObjectMapper objectMapper,
+                                UnitService unitService,
+                                SectorService sectorService,
+                                EntityManager entityManager) {
+        this.sectorService = sectorService;
+        this.unitService = unitService;
         this.objectMapper = objectMapper;
         this.capacityStockRepository = capacityStockRepository;
         this.sectorRepository = sectorRepository;
         this.unitRepository = unitRepository;
         this.industryService = industryService;
+        this.entityManager = entityManager;
     }
 
     @Transactional
-    public CapacityStockResposeDTO addCapacityStock(CapacityStockRequestDTO capacityStockRequestDTO) {
-        CapacityStock capacityStock = objectMapper.convertValue(capacityStockRequestDTO, CapacityStock.class);
-
-        Sector setor = sectorRepository.findById(capacityStockRequestDTO.getSetorId())
+    public CapacityStockResponseDTO addOrUpdateCapacityStock(CapacityStockRequestDTO dto) {
+        Sector sector = sectorRepository.findById(dto.getSectorId())
                 .orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
 
-        Unit unidade = unitRepository.findById(capacityStockRequestDTO.getUnidadeId())
+        Unit unit = unitRepository.findById(dto.getUnitId())
                 .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
-        Optional<CapacityStock> exist = capacityStockRepository.findBySetorAndUnidade(setor, unidade);
+        Optional<CapacityStock> existingOpt = capacityStockRepository.findBySectorAndUnit(sector, unit);
 
-        //se ja existir um registro, atualiza
-        if (exist.isPresent()) {
-            CapacityStock existingStock = exist.get();
-            existingStock.setAltura(capacityStock.getAltura());
-            existingStock.setLargura(capacityStock.getLargura());
-            existingStock.setComprimento(capacityStock.getComprimento());
+        CapacityStock capacityStock;
 
+        if (existingOpt.isPresent()) {
+            // Atualiza registro existente
+            capacityStock = existingOpt.get();
+            capacityStock.setHeight(dto.getHeight());
+            capacityStock.setWidth(dto.getWidth());
+            capacityStock.setLength(dto.getLength());
 
-            existingStock.setCapacidadeMaxima(
-                    existingStock.getLargura() * existingStock.getAltura() * existingStock.getComprimento()
-            );
-
-            CapacityStock updated = capacityStockRepository.save(existingStock);
-            return objectMapper.convertValue(updated, CapacityStockResposeDTO.class);
-
-            //se nao existir, cria novo
+            capacityStock = capacityStockRepository.saveAndFlush(capacityStock);
         } else {
-            capacityStock.setSetor(setor);
-            capacityStock.setUnidade(unidade);
-            capacityStock.setCapacidadeMaxima(
-                    capacityStock.getLargura() * capacityStock.getAltura() * capacityStock.getComprimento()
-            );
+            // Cria novo registro
+            capacityStock = new CapacityStock();
+            capacityStock.setHeight(dto.getHeight());
+            capacityStock.setWidth(dto.getWidth());
+            capacityStock.setLength(dto.getLength());
+            capacityStock.setSector(sector);
+            capacityStock.setUnit(unit);
 
-            CapacityStock saved = capacityStockRepository.save(capacityStock);
-            return objectMapper.convertValue(saved, CapacityStockResposeDTO.class);
+            capacityStock = capacityStockRepository.saveAndFlush(capacityStock);
         }
+
+        // Força Hibernate a recalcular campos com @Formula
+        entityManager.refresh(capacityStock);
+
+        return objectMapper.convertValue(capacityStock, CapacityStockResponseDTO.class);
     }
 
+    public CapacityStockResponseDTO getByUnitAndSector(Long unitId, Long sectorId) {
+        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnit(unitId, sectorId).orElseThrow(() -> new EntityNotFoundException(
+                "Capacidade de estoque não encontrada para a unidade e setor informados"));
+        CapacityStockResponseDTO dto = new CapacityStockResponseDTO(
+                capacityStock.getHeight(),
+                capacityStock.getMaxCapacity(),
+                capacityStock.getLength(),
+                capacityStock.getWidth());
 
-    public CapacityStockResposeDTO findByUnidadeIdAndSectorId(Long unidadeId, Long sectorId) {
-        CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnidade(unidadeId, sectorId).orElseThrow(() -> new EntityNotFoundException("Setor ou unidade não encontrado"));
-        CapacityStockResposeDTO dto = new CapacityStockResposeDTO(
-                capacityStock.getAltura(),
-                capacityStock.getCapacidadeMaxima(),
-                capacityStock.getComprimento(),
-                capacityStock.getLargura()
-        );
-        Sector setor = capacityStock.getSetor();
+        Sector setor = capacityStock.getSector();
         if (setor != null) {
-            SectorResponseDTO sectorResponseDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-            dto.setSetor(sectorResponseDTO);
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSector(sectorResponseDTO);
         }
 
-        Unit unit = capacityStock.getUnidade();
+        Unit unit = capacityStock.getUnit();
         if (unit != null) {
-            UnitResponseDTO unitResponseDTO = new UnitResponseDTO (
-                    unit.getId(),
-                    unit.getNome(),
-                    unit.getCep(),
-                    unit.getRua(),
-                    unit.getCidade(),
-                    unit.getEstado(),
-                    unit.getNumero(),
-                    unit.getBairro(),
-                    industryService.getIndustryById(unit.getIndustry().getId())
-            );
-            unitResponseDTO.setId(unit.getId());
-            dto.setUnidade(unitResponseDTO);
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+            dto.setUnit(unitResponseDTO);
         }
         return  dto;
     }
-
 }

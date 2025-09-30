@@ -18,7 +18,7 @@ public class IndustryService {
     }
 
     public IndustryResponseDTO getIndustryById(Long id) {
-        Industry industry = industryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("indústria não encontrado"));
+        Industry industry = industryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Indústria não encontrada"));
         return objectMapper.convertValue(industry, IndustryResponseDTO.class);
     }
 }

@@ -1,38 +1,33 @@
 package org.example.apifluxar.dto.capacityHistory;
 
-import org.example.apifluxar.dto.sector.SectorResponseDTO;
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
-
 import java.time.LocalDate;
 
 public class CapacityHistoryResponseDTO {
 
-    private LocalDate dataCompleta;
-    private Integer capacidadeTotal;
+    private LocalDate fullDate;
+    private Integer totalCapacity;
 
-    public CapacityHistoryResponseDTO(Integer capacidadeTotal, LocalDate dataCompleta) {
-        this.capacidadeTotal = capacidadeTotal;
-        this.dataCompleta = dataCompleta;
-
+    public CapacityHistoryResponseDTO(Integer totalCapacity, LocalDate fullDate) {
+        this.totalCapacity = totalCapacity;
+        this.fullDate = fullDate;
     }
 
     public CapacityHistoryResponseDTO() {
     }
 
-    public LocalDate getDataCompleta() {
-        return dataCompleta;
+    public LocalDate getFullDate() {
+        return fullDate;
     }
 
-    public void setDataCompleta(LocalDate dataCompleta) {
-        this.dataCompleta = dataCompleta;
+    public void setFullDate(LocalDate fullDate) {
+        this.fullDate = fullDate;
     }
 
-    public Integer getCapacidadeTotal() {
-        return capacidadeTotal;
+    public Integer getTotalCapacity() {
+        return totalCapacity;
     }
 
-    public void setCapacidadeTotal(Integer capacidadeTotal) {
-        this.capacidadeTotal = capacidadeTotal;
+    public void setTotalCapacity(Integer totalCapacity) {
+        this.totalCapacity = totalCapacity;
     }
-
 }

@@ -1,65 +1,66 @@
 package org.example.apifluxar.dto.capacityStock;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class CapacityStockRequestDTO {
 
-    @NotNull(message = "A largura não pode ser nula")
-    @DecimalMin(value = "1.00", message = "A largura deve ser maior ou igual a 1")
-    private Double largura;
+    @NotNull(message = "Largura não pode ser nula")
+    @DecimalMin(value = "1.00", message = "Largura deve ser maior ou igual a 1")
+    private Double width;
 
-    @NotNull(message = "A altura não pode ser nula")
-    @DecimalMin(value = "1.00", message = "A altura deve ser maior ou igual a 1")
-    private Double altura;
+    @NotNull(message = "Altura não pode ser nula")
+    @DecimalMin(value = "1.00", message = "Altura deve ser maior ou igual a 1")
+    private Double height;
 
-    @NotNull(message = "O comprimento não pode ser nulo")
-    @DecimalMin(value = "1.00", message = "O comprimento deve ser maior ou igual a 1")
-    private Double comprimento;
+    @NotNull(message = "Comprimento não pode ser nulo")
+    @DecimalMin(value = "1.00", message = "Comprimento deve ser maior ou igual a 1")
+    private Double length;
 
-    @NotNull(message = "o id do setor não pode ser nulo")
-    private Long setorId;
-    @NotNull(message = "o id da unidade não pode ser nulo")
-    private Long unidadeId;
+    @NotNull(message = "Id do setor não pode ser nulo")
+    private Long sectorId;
 
+    @NotNull(message = "Id da unidade não pode ser nulo")
+    private Long unitId;
 
-    public Double getLargura() {
-        return largura;
+    public Double getWidth() {
+        return width;
     }
 
-    public void setLargura(Double largura) {
-        this.largura = largura;
+    public void setWidth(Double width) {
+        this.width = width;
     }
 
-    public Double getAltura() {
-        return altura;
+    public Double getHeight() {
+        return height;
     }
 
-    public void setAltura(Double altura) {
-        this.altura = altura;
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
-    public Double getComprimento() {
-        return comprimento;
+    public Double getLength() {
+        return length;
     }
 
-    public void setComprimento(Double comprimento) {
-        this.comprimento = comprimento;
+    public void setLength(Double length) {
+        this.length = length;
     }
 
-    public  Long getSetorId() {
-        return setorId;
+    public Long getSectorId() {
+        return sectorId;
     }
 
-    public void setSetorId( Long setorId) {
-        this.setorId = setorId;
+    public void setSectorId(Long sectorId) {
+        this.sectorId = sectorId;
     }
 
-    public @NotNull(message = "o id da unidade não pode ser nulo") Long getUnidadeId() {
-        return unidadeId;
+    public Long getUnitId() {
+        return unitId;
     }
 
-    public void setUnidadeId(@NotNull(message = "o id da unidade não pode ser nulo") Long unidadeId) {
-        this.unidadeId = unidadeId;
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
     }
 }

@@ -2,61 +2,45 @@ package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
 
-@Table(name = "Produto")
 @Entity
+@Table(name = "produto")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-    private String tipo;
+    @Column(name = "nome")
+    private String name;
+
+    @Column(name = "tipo")
+    private String type;
 
     @ManyToOne()
     @JoinColumn(name = "setor_id")
-    private Sector setor;
-
-    // Constructor
+    private Sector sector;
 
     public Product() {}
 
-    public Product(String nome, String tipo, Sector setor) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.setor = setor;
+    public Product(String name, String type, Sector sector) {
+        this.name = name;
+        this.type = type;
+        this.sector = sector;
     }
 
-    // Getters e Setters
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
 
-    public String getNome() {
-        return nome;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getType() { return type; }
 
-    public String getTipo() {
-        return tipo;
-    }
+    public void setType(String type) { this.type = type; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public Sector getSector() { return sector; }
 
-    public Sector getSetor() {
-        return setor;
-    }
-
-    public void setSetor(Sector setor) {
-        this.setor = setor;
-    }
+    public void setSector(Sector sector) { this.sector = sector; }
 }

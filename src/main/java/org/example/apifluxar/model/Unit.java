@@ -2,100 +2,74 @@ package org.example.apifluxar.model;
 
 import jakarta.persistence.*;
 
-@Table(name = "Unidade")
 @Entity
+@Table(name = "Unidade")
 public class Unit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-    private String cep;
-    private String rua;
-    private String cidade;
-    private String estado;
-    private String numero;
-    private String bairro;
+    @Column(name = "nome")
+    private String name;
+
+    @Column(name = "cep")
+    private String postalCode;
+
+    @Column(name = "rua")
+    private String street;
+
+    @Column(name = "cidade")
+    private String city;
+
+    @Column(name = "estado")
+    private String state;
+
+    @Column(name = "numero")
+    private String number;
+
+    @Column(name = "bairro")
+    private String neighborhood;
 
     @ManyToOne()
     @JoinColumn(name = "industria_id")
     private Industry industry;
 
-    //Contructor
-
     public Unit() {}
 
-    //Getters e Setters
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
 
-    public String getNome() {
-        return nome;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getPostalCode() { return postalCode; }
 
-    public String getCep() {
-        return cep;
-    }
+    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
+    public String getStreet() { return street; }
 
-    public String getRua() {
-        return rua;
-    }
+    public void setStreet(String street) { this.street = street; }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
+    public String getCity() { return city; }
 
-    public String getCidade() {
-        return cidade;
-    }
+    public void setCity(String city) { this.city = city; }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
+    public String getState() { return state; }
 
-    public String getEstado() {
-        return estado;
-    }
+    public void setState(String state) { this.state = state; }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public String getNumber() { return number; }
 
-    public String getNumero() {
-        return numero;
-    }
+    public void setNumber(String number) { this.number = number; }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
+    public String getNeighborhood() { return neighborhood; }
 
-    public String getBairro() {
-        return bairro;
-    }
+    public void setNeighborhood(String neighborhood) { this.neighborhood = neighborhood; }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
+    public Industry getIndustry() { return industry; }
 
-    public Industry getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
-    }
+    public void setIndustry(Industry industry) { this.industry = industry; }
 }

@@ -26,21 +26,37 @@ public class UnitService {
 
         UnitResponseDTO dto = new UnitResponseDTO(
                 unit.getId(),
-                unit.getNome(),
-                unit.getCep(),
-                unit.getRua(),
-                unit.getCidade(),
-                unit.getEstado(),
-                unit.getNumero(),
-                unit.getBairro(),
+                unit.getName(),
+                unit.getPostalCode(),
+                unit.getStreet(),
+                unit.getCity(),
+                unit.getState(),
+                unit.getNumber(),
+                unit.getNeighborhood(),
                 industryService.getIndustryById(unit.getIndustry().getId())
         );
 
         return dto;
     }
 
-    public List<UnitResponseDTO> getUnitByIndustryId(Long id) {
-        List<Unit> unit = unitRepository.findAllByIndustryId(id);
+//    public UnitBatchResponseDTO getUnitBatchById(Long id) {
+//        Unit unit = unitRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//
+//        UnitBatchResponseDTO dto = new UnitBatchResponseDTO(
+//                unit.getName(),
+//                unit.getPostalCode(),
+//                unit.getStreet(),
+//                unit.getCity(),
+//                unit.getState(),
+//                unit.getNumber(),
+//                unit.getNeighborhood()
+//        );
+//
+//        return dto;
+//    }
+
+    public List<UnitResponseDTO> getUnitByIndustry(Long id) {
+        List<Unit> unit = unitRepository.findAllByIndustry(id);
         List<UnitResponseDTO> dtos = new ArrayList<>();
         if (unit.isEmpty()) {
             throw new EntityNotFoundException("Unidade não encontrada");
@@ -48,16 +64,14 @@ public class UnitService {
         for (Unit unitItem : unit) {
             UnitResponseDTO dto = new UnitResponseDTO(
                     unitItem.getId(),
-                    unitItem.getNome(),
-                    unitItem.getCep(),
-                    unitItem.getRua(),
-                    unitItem.getCidade(),
-                    unitItem.getEstado(),
-                    unitItem.getNumero(),
-                    unitItem.getBairro(),
+                    unitItem.getName(),
+                    unitItem.getPostalCode(),
+                    unitItem.getStreet(),
+                    unitItem.getCity(),
+                    unitItem.getState(),
+                    unitItem.getNumber(),
+                    unitItem.getNeighborhood(),
                     industryService.getIndustryById(unitItem.getIndustry().getId())
-
-
             );
             dtos.add(dto);
         }

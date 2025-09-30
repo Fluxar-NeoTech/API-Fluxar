@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BatchRepository extends JpaRepository<Batch, Long> {
-    Optional<Batch> findByIdLote(String idLote);
+    Optional<Batch> findByBatchCode(String batchCode);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Batch b WHERE b.id = :id")
     void deleteByIdCustom(@Param("id") Long id);
-    @Query("SELECT b FROM Batch b WHERE b.unidade.id = :idUnidade")
-    List<Batch> findAllByUnidade( @Param("idUnidade") Long idUnidade);
+    @Query("SELECT b FROM Batch b WHERE b.unit.id = :idUnidade")
+    List<Batch> findAllByUnit( @Param("idUnidade") Long unitId);
 }

@@ -2,7 +2,6 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
-import org.example.apifluxar.dto.products.AllProductsResponseDTO;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
@@ -25,8 +24,10 @@ public class ProductService {
     ProductMapper productMapper;
     final ObjectMapper objectMapper;
     final SectorRepository sectorRepository;
+    final SectorService sectorService;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper,SectorRepository sectorRepository,ObjectMapper objectMapper, SectorService sectorService) {
+        this.sectorService = sectorService;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.sectorRepository = sectorRepository;
@@ -37,26 +38,32 @@ public class ProductService {
         Product product = productRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Produto não encontrado"));
 
         ProductResponseDTO dto = new ProductResponseDTO(
-                product.getNome(),
-                product.getTipo()
+                product.getName(),
+                product.getType()
         );
 
-        Sector setor = product.getSetor();
+        Sector setor = product.getSector();
         if (setor != null) {
-            SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-
-            dto.setSetor(sectorDTO);
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSector(sectorResponseDTO);
         }
 
         return dto;
     }
 
+//    // Retorna apenas nome e tipo do produto - usado no Mapper de Lote
+//    public AllProductsResponseDTO getAllProductById(Long id){
+//        Product product = productRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+//
+//        AllProductsResponseDTO dto = new AllProductsResponseDTO(
+//                product.getName(),
+//                product.getType()
+//        );
+//        return dto;
+//    }
+
     public List<ProductResponseDTO> getProductByName(String name) {
-        List<Product> product = productRepository.findByNome(name);
+        List<Product> product = productRepository.findByName(name);
         List<ProductResponseDTO> dtos = new ArrayList<>();
 
         if (product.isEmpty()) {
@@ -65,19 +72,14 @@ public class ProductService {
 
         for (Product p : product) {
             ProductResponseDTO dto = new ProductResponseDTO(
-                    p.getNome(),
-                    p.getTipo()
+                    p.getName(),
+                    p.getType()
             );
 
-            Sector setor = p.getSetor();
+            Sector setor = p.getSector();
             if (setor != null) {
-                SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                        setor.getId(),
-                        setor.getNome(),
-                        setor.getDescricao()
-                );
-
-                dto.setSetor(sectorDTO);
+                SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+                dto.setSector(sectorResponseDTO);
             }
             dtos.add(dto);
         }
@@ -85,24 +87,26 @@ public class ProductService {
         return dtos;
     }
 
-    public List<AllProductsResponseDTO> getAllProducts() {
-        List<Product> products = productRepository.findAll();
-        List<AllProductsResponseDTO> productDTOs = new ArrayList<>();
+//    public List<AllProductsResponseDTO> getAllProducts() {
+//        List<Product> products = productRepository.findAll();
+//        List<AllProductsResponseDTO> productDTOs = new ArrayList<>();
+//
+//        for (Product product : products) {
+//            AllProductsResponseDTO dto = new AllProductsResponseDTO(
+//                    product.getName(),
+//                    product.getType()
+//            );
+//            productDTOs.add(dto);
+//        }
+//
+//        return productDTOs;
+//    }
 
-        for (Product product : products) {
-            AllProductsResponseDTO dto = new AllProductsResponseDTO(
-                    product.getNome(),
-                    product.getTipo()
-            );
-            productDTOs.add(dto);
-        }
+    //vai ser transferido para o método personalizado do mobile - loteService
 
-        return productDTOs;
-    }
-
-    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
-        Sector setor = sectorRepository.findById(productRequestDTO.getSetor())
-                .orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
+    public ProductResponseDTO addProduct(ProductRequestDTO productRequestDTO) {
+        Sector setor = sectorRepository.findById(productRequestDTO.getSectorId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setor não encontrado"));
 
         Product product = productMapper.mapToProduct(productRequestDTO, setor);
         Product savedProduct = productRepository.save(product);

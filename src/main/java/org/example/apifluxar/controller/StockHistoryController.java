@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/stockhistory")
+@RequestMapping("/api/stockHistory")
 public class StockHistoryController {
     final StockHistoryService stockHistoryService;
 
@@ -18,7 +18,7 @@ public class StockHistoryController {
         this.stockHistoryService = stockHistoryService;
     }
 
-    @GetMapping("search/id/{id}")
+    @GetMapping("search/by/id/{id}")
     @Operation(summary = "Buscar histórico de estoque por ID",
             description = "Retorna os detalhes de um histórico de estoque específico com base no ID fornecido.")
     @ApiResponses({
@@ -26,7 +26,7 @@ public class StockHistoryController {
             @ApiResponse( responseCode = "404", description = "Histórico de estoque não encontrado"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<StockHistoryResponseDTO> selectId(@PathVariable Long unitId, @PathVariable Long sectorId) {
+    public ResponseEntity<StockHistoryResponseDTO> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId) {
         StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(unitId, sectorId);
         return ResponseEntity.ok(dto);
     }

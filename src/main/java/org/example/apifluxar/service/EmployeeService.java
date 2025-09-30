@@ -1,7 +1,7 @@
 package org.example.apifluxar.service;
 
+import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
-import org.example.apifluxar.dto.capacityStock.CapacityStockResposeDTO;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
@@ -23,10 +23,14 @@ public class EmployeeService {
     final EmployeeRepository employeeRepository;
     final IndustryService industryService;
     final CapacityStockService capacityStockService;
-    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
+    final SectorService sectorService;
+    final UnitService unitService;
+    final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
 
-    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService) {
+    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService, SectorService sectorService, UnitService unitService) {
+        this.unitService = unitService;
+        this.sectorService = sectorService;
         this.industryService = industryService;
         this.employeeRepository = employeeRepository;
         this.capacityStockService = capacityStockService;
@@ -34,53 +38,36 @@ public class EmployeeService {
 
     public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
-                .findByEmailAndSenha(employeeRequestDTO.getEmail(), employeeRequestDTO.getSenha())
+                .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
 
         EmployeeResponseDTO dto = new EmployeeResponseDTO(
                 employee.getId(),
-                employee.getNome(),
-                employee.getSobrenome(),
+                employee.getFirstName(),
+                employee.getLastName(),
                 employee.getEmail(),
-                employee.getCargo(),
-                employee.getFotoPerfil()
+                employee.getRole(),
+                employee.getProfilePicture()
         );
 
-        Sector setor = employee.getSetor();
+        Sector setor = employee.getSector();
         if (setor != null) {
-            SectorResponseDTO sectorDTO = new SectorResponseDTO(
-                    setor.getId(),
-                    setor.getNome(),
-                    setor.getDescricao()
-            );
-
-            dto.setSetor(sectorDTO);
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSector(sectorResponseDTO);
         }
 
-        Unit unit = employee.getUnidade();
+        Unit unit = employee.getUnit();
         if (unit != null) {
-            UnitResponseDTO unitDTO = new UnitResponseDTO(
-                    unit.getId(),
-                    unit.getNome(),
-                    unit.getCep(),
-                    unit.getRua(),
-                    unit.getCidade(),
-                    unit.getEstado(),
-                    unit.getNumero(),
-                    unit.getBairro(),
-                    industryService.getIndustryById(employee.getUnidade().getIndustry().getId())
-            );
-            unitDTO.setId(unit.getId());
-            dto.setUnit(unitDTO);
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+            dto.setUnit(unitResponseDTO);
         }
-        CapacityStockResposeDTO capacityStockResposeDTO = capacityStockService.findByUnidadeIdAndSectorId(unit.getId(), setor.getId());
+
+        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
         if (capacityStockResposeDTO != null) {
-            Double capacidadeMaxima= capacityStockResposeDTO.getCapacidadeMaxima();
-            dto.setCapacidadeMaxima(capacidadeMaxima);
+            Double capacidadeMaxima= capacityStockResposeDTO.getMaxCapacity();
+            dto.setMaxCapacity(capacidadeMaxima);
         }
-
-
         return dto;
     }
 
@@ -88,7 +75,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(updatePhotoRequestDTO.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
 
-        employee.setFotoPerfil(updatePhotoRequestDTO.getFotoPerfil());
+        employee.setProfilePicture(updatePhotoRequestDTO.getProfilePhoto());
         employeeRepository.save(employee);
 
         log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
@@ -100,7 +87,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
 
-        employee.setSenha(employeeRequestDTO.getSenha());
+        employee.setPassword(employeeRequestDTO.getPassword());
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
