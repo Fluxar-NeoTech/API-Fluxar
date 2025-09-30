@@ -4,6 +4,7 @@ import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
+import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
@@ -36,38 +37,18 @@ public class EmployeeService {
         this.capacityStockService = capacityStockService;
     }
 
-    public EmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
+    public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
                 .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
 
-        EmployeeResponseDTO dto = new EmployeeResponseDTO(
+        LoginEmployeeResponseDTO dto = new LoginEmployeeResponseDTO(
                 employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getEmail(),
                 employee.getRole(),
-                employee.getProfilePicture()
+                employee.getEmail()
         );
 
-        Sector setor = employee.getSector();
-        if (setor != null) {
-            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-            dto.setSector(sectorResponseDTO);
-        }
-
-        Unit unit = employee.getUnit();
-        if (unit != null) {
-            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-            dto.setUnit(unitResponseDTO);
-        }
-
-        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
-        if (capacityStockResposeDTO != null) {
-            Double capacidadeMaxima= capacityStockResposeDTO.getMaxCapacity();
-            dto.setMaxCapacity(capacidadeMaxima);
-        }
         return dto;
     }
 
@@ -93,6 +74,35 @@ public class EmployeeService {
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
 
         return new MessageResponseDTO("Senha atualizada com sucesso!");
+    }
+
+    public EmployeeResponseDTO profile(Long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Funcionario não encontrado"));
+        EmployeeResponseDTO dto = new EmployeeResponseDTO(
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getProfilePicture()
+        );
+
+        Sector setor = employee.getSector();
+        if (setor != null) {
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSector(sectorResponseDTO);
+        }
+
+        Unit unit = employee.getUnit();
+        if (unit != null) {
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+            dto.setUnit(unitResponseDTO);
+        }
+
+        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
+        if (capacityStockResposeDTO != null) {
+            Double capacidadeMaxima= capacityStockResposeDTO.getMaxCapacity();
+            dto.setMaxCapacity(capacidadeMaxima);
+        }
+        return dto;
     }
 
 }

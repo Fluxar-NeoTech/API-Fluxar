@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.groups.Default;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
+import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.service.EmployeeService;
@@ -39,8 +40,14 @@ public class EmployeeController {
             @ApiResponse( responseCode = "401", description = "Credenciais inválidas"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
-        EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
+    public ResponseEntity<LoginEmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
+        LoginEmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<EmployeeResponseDTO> profile(@PathVariable Long id){
+        EmployeeResponseDTO res = employeeService.profile(id);
         return ResponseEntity.ok(res);
     }
 
