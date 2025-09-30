@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.groups.Default;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
+import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.openapi.EmployeeOpenAPI;
@@ -35,6 +36,10 @@ public class EmployeeController implements EmployeeOpenAPI {
     @PostMapping("/login")
     public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
         EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<EmployeeResponseDTO> profile(@PathVariable Long id){
+        EmployeeResponseDTO res = employeeService.profile(id);
         return ResponseEntity.ok(res);
     }
 
@@ -50,5 +55,4 @@ public class EmployeeController implements EmployeeOpenAPI {
         MessageResponseDTO response = employeeService.updateSenha(employeeRequestDTO);
         return ResponseEntity.ok(response);
     }
-
 }
