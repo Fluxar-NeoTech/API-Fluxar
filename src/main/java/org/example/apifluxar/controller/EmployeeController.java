@@ -57,5 +57,4 @@ public class EmployeeController implements EmployeeOpenAPI {
         MessageResponseDTO response = employeeService.updateSenha(employeeRequestDTO);
         return ResponseEntity.ok(response);
     }
-
 }
