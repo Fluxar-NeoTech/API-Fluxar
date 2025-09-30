@@ -36,6 +36,7 @@ public class EmployeeController implements EmployeeOpenAPI {
     @PostMapping("/login")
     public ResponseEntity<EmployeeResponseDTO> login(@RequestBody @Validated({OnCreate.class, Default.class}) EmployeeRequestDTO employeeRequestDTO) {
         EmployeeResponseDTO res = employeeService.login(employeeRequestDTO);
+    }
 
     @GetMapping("/profile/{id}")
     public ResponseEntity<EmployeeResponseDTO> profile(@PathVariable Long id){
