@@ -3,6 +3,7 @@ package org.example.apifluxar.controller;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.dto.batch.ProductBatchResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.openapi.BatchOpenAPI;
 import org.example.apifluxar.service.BatchService;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,9 @@ public class BatchController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<BatchResponseDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
-        BatchResponseDTO batchRespose = batchService.addBatch(batchRequestDTO);
-        return ResponseEntity.ok(batchRespose);
+    public ResponseEntity<MessageResponseDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
+        MessageResponseDTO batchResponse = batchService.addBatch(batchRequestDTO);
+        return ResponseEntity.ok(batchResponse);
     }
 
 //    @GetMapping("/getAllBatchAndProduct")
@@ -56,8 +57,8 @@ public class BatchController {
 //    }
 
     @DeleteMapping("/delete/{batchCode}")
-    public ResponseEntity<BatchResponseDTO> deleteBatch(@PathVariable String batchCode){
-        BatchResponseDTO batchResposeDTO = batchService.deleteBatch(batchCode);
-        return ResponseEntity.ok(batchResposeDTO);
+    public ResponseEntity<MessageResponseDTO> deleteBatch(@PathVariable String batchCode){
+        MessageResponseDTO batchResponseDTO = batchService.deleteBatch(batchCode);
+        return ResponseEntity.ok(batchResponseDTO);
     }
 }
