@@ -74,26 +74,9 @@ public class BatchMapper {
                 batch.getHeight(),
                 batch.getLength(),
                 batch.getWidth(),
-                batch.getVolume()
+                batch.getVolume(),
+                productService.getProductById(product.getId())
         );
-
-        unit = batch.getUnit();
-        UnitResponseDTO unitResponseDTO = null;
-        if (unit != null) {
-            unitResponseDTO = unitService.getUnitById(unit.getId());
-            unitResponseDTO.setIndustry(industryService.getIndustryById(unit.getIndustry().getId()));
-        }
-        responseDTO.setUnit(unitResponseDTO);
-
-        product = batch.getProduct();
-        ProductResponseDTO productResponseDTO = null;
-        if (product != null) {
-            productResponseDTO = productService.getProductById(product.getId());
-            productResponseDTO.setSector(sectorService.getSectorById(product.getSector().getId()));
-        }
-        responseDTO.setProduct(productResponseDTO);
-
         return responseDTO;
     }
-
 }

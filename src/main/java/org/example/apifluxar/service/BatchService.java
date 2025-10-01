@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
-import org.example.apifluxar.dto.products.ProductResponseDTO;
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
+import org.example.apifluxar.dto.batch.ProductBatchResponseDTO;
+import org.example.apifluxar.exception.EmptyProducts;
 import org.example.apifluxar.mapper.BatchMapper;
 import org.example.apifluxar.model.Batch;
 import org.example.apifluxar.model.Product;
@@ -16,6 +16,9 @@ import org.example.apifluxar.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BatchService {
@@ -49,6 +52,7 @@ public class BatchService {
 
     public BatchResponseDTO getBatchByCode(String batchCode) {
         Batch batch = batchRepository.findByBatchCode(batchCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lote não encontrado"));
+        Product product = batch.getProduct();
 
         BatchResponseDTO dto = new BatchResponseDTO(
                 batch.getBatchCode(),
@@ -56,20 +60,21 @@ public class BatchService {
                 batch.getHeight(),
                 batch.getLength(),
                 batch.getWidth(),
-                batch.getVolume()
+                batch.getVolume(),
+                productService.getProductById(product.getId())
         );
 
-        Product product = batch.getProduct();
-        if (product != null) {
-            ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
-            dto.setProduct(productResponseDTO);
-        }
+//        Product product = batch.getProduct();
+//        if (product != null) {
+//            ProductResponseDTO productResponseDTO = productService.getProductById(product.getId());
+//            dto.setProduct(productResponseDTO);
+//        }
 
-        Unit unit = batch.getUnit();
-        if (unit != null) {
-            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-            dto.setUnit(unitResponseDTO);
-        }
+//        Unit unit = batch.getUnit();
+//        if (unit != null) {
+//            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+//            dto.setUnit(unitResponseDTO);
+//        }
 
         return dto;
     }
@@ -107,7 +112,31 @@ public class BatchService {
 //        return batchDtos;
 //    }
 
+
     //método para o mobile de consulta personalizada de lotes e produtos por unidade e setor (que vem do produto)
+    public List<ProductBatchResponseDTO> getAllProductBatch(Long unitId, Long sectorId) {
+        List<Batch> productBatchList = batchRepository.findAllBatchesInUnitAndSector(unitId, sectorId);
+        List<ProductBatchResponseDTO> batchResponseDTO = new ArrayList<>();
+
+        for (Batch batch : productBatchList) {
+            ProductBatchResponseDTO dto = new ProductBatchResponseDTO(
+                    batch.getBatchCode(),
+                    batch.getExpirationDate(),
+                    batch.getHeight(),
+                    batch.getLength(),
+                    batch.getWidth(),
+                    batch.getProduct().getName()
+            );
+
+            batchResponseDTO.add(dto);
+        }
+
+        if (batchResponseDTO.isEmpty()){
+            throw new EmptyProducts("Não existem produtos cadastrados");
+        }
+
+        return batchResponseDTO;
+    }
 
 
     //vai virar procedure

@@ -1,18 +1,16 @@
 package org.example.apifluxar.dto.batch;
 
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 
 import java.time.LocalDate;
 
-public class BatchResponseDTO {
+public class ProductBatchResponseDTO {
     private String batchCode;
     private LocalDate expirationDate;
     private Double height;
     private Double length;
     private Double width;
-    private Double volume;
-    private ProductResponseDTO product;
+    private String productName;
 //    private UnitResponseDTO unit;
 
 //    public BatchResponseDTO(Double height, Double length, String batchCode, Double width, ProductResponseDTO product, UnitResponseDTO unit, LocalDate expirationDate) {
@@ -25,14 +23,13 @@ public class BatchResponseDTO {
 //        this.expirationDate = expirationDate;
 //    }
 
-    public BatchResponseDTO(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, Double volume, ProductResponseDTO productResponseDTO) {
-        this.product = productResponseDTO;
+    public ProductBatchResponseDTO(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, String productName) {
+        this.productName = productName;
         this.batchCode = batchCode;
         this.expirationDate = expirationDate;
         this.height = height;
         this.length = length;
         this.width = width;
-        this.volume = volume;
     }
 
     public String getBatchCode() {
@@ -63,14 +60,6 @@ public class BatchResponseDTO {
         return length;
     }
 
-    public Double getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Double volume) {
-        this.volume = volume;
-    }
-
     public void setLength(Double length) {
         this.length = length;
     }
@@ -83,19 +72,20 @@ public class BatchResponseDTO {
         this.width = width;
     }
 
-    public ProductResponseDTO getProduct() {
-        return product;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct(ProductResponseDTO product) {
-        this.product = product;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-//    public UnitResponseDTO getUnit() {
+    //    public UnitResponseDTO getUnit() {
 //        return unit;
 //    }
 //
 //    public void setUnit(UnitResponseDTO unit) {
 //        this.unit = unit;
 //    }
+
 }
