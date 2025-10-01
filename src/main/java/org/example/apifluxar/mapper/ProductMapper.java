@@ -26,18 +26,18 @@ public class ProductMapper {
         return product;
     }
 
-    public ProductResponseDTO mapToProductResponseDTO(Product product) {
-        Sector setor = product.getSector();
-        SectorResponseDTO sectorResponseDTO = null;
-
-        if (setor != null) {
-            sectorResponseDTO = sectorService.getSectorById(setor.getId());
-        }
-
-        return new ProductResponseDTO(
-                product.getName(),
-                product.getType(),
-                sectorResponseDTO
-        );
-    }
+//    public ProductResponseDTO mapToProductResponseDTO(Product product) {
+//        Sector setor = product.getSector();
+//        SectorResponseDTO sectorResponseDTO = null;
+//
+//        if (setor != null) {
+//            sectorResponseDTO = sectorService.getSectorById(setor.getId());
+//        }
+//
+//        return new ProductResponseDTO(
+//                product.getName(),
+//                product.getType(),
+//                sectorResponseDTO
+//        );
+//    }
 }

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.capacityHistory.CapacityHistoryResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.openapi.CapacityHistoryOpenAPI;
 import org.example.apifluxar.service.CapacityHistoryService;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +26,14 @@ public class CapacityHistoryController implements CapacityHistoryOpenAPI {
     }
 
     @GetMapping("/search/by/sector/unit")
-    public ResponseEntity<List<CapacityHistoryResponseDTO>> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId,
-                                                                                          @RequestParam Long unitId) {
+    public ResponseEntity<List<CapacityHistoryResponseDTO>> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId) {
         List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryBySectorAndUnit( sectorId, unitId);
         return ResponseEntity.ok(res);
     }
 
     @DeleteMapping("/delete/by/sector/unit")
     public ResponseEntity<Object> deleteCapacityHistoryBySectorAndUnit(@RequestParam Long unitId, @RequestParam Long sectorId) {
-        String message = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
+        MessageResponseDTO message = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
         return ResponseEntity.ok(message);
     }
 }

@@ -3,6 +3,7 @@ package org.example.apifluxar.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.openapi.ProductOpenAPI;
@@ -15,24 +16,24 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/product")
-public class ProductController implements ProductOpenAPI {
+public class ProductController {
     final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    @GetMapping("/search/by/id/{id}")
-    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
-        ProductResponseDTO res = productService.getProductById(id);
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping("/search/by/id/{id}")
+//    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
+//        ProductResponseDTO res = productService.getProductById(id);
+//        return ResponseEntity.ok(res);
+//    }
 
-    @GetMapping("/search/by/name/{name}")
-    public ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name) {
-        List<ProductResponseDTO> res = productService.getProductByName(name);
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping("/search/by/name/{name}")
+//    public ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name) {
+//        List<ProductResponseDTO> res = productService.getProductByName(name);
+//        return ResponseEntity.ok(res);
+//    }
 
 //    @GetMapping("/search/all")
 //    @Operation(summary = "Listar todos os produtos",
@@ -47,8 +48,8 @@ public class ProductController implements ProductOpenAPI {
 //    }
 
     @PostMapping("/add")
-    public ResponseEntity<ProductResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO) {
-        ProductResponseDTO res = productService.addProduct(productRequestDTO);
-        return ResponseEntity.ok(res);
+    public ResponseEntity<MessageResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+        MessageResponseDTO messageResponseDTO = productService.addProduct(productRequestDTO);
+        return ResponseEntity.ok(messageResponseDTO);
     }
 }

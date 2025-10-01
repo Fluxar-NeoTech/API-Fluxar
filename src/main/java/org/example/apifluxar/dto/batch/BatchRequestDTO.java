@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class BatchRequestDTO {
 
+    //validações de entrada
     private String batchCode;
     private LocalDate expirationDate;
     private Double height;

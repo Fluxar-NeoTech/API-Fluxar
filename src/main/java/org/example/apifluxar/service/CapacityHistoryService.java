@@ -2,6 +2,7 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.apifluxar.dto.capacityHistory.CapacityHistoryResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.exception.EmptyCapacityHistory;
 import org.example.apifluxar.model.*;
 import org.example.apifluxar.repository.CapacityHistoryRepository;
@@ -37,11 +38,12 @@ public class CapacityHistoryService {
         return dtos;
     }
 
-    public String deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
+    // não sei se vai usar
+    public MessageResponseDTO deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
         Integer deleteQuatidade = capacityHistoryRepository.deleteBySectorAndUnit(sectorId, unitId);
         if (deleteQuatidade == 0) {
             throw new EmptyCapacityHistory("Nenhum histórico de capacidade encontrado para a unidade e setor especificados");
         }
-        return "Histórico de capacidade deletado com sucesso: " + deleteQuatidade + " registros." ;
+        return new MessageResponseDTO("Histórico de capacidade deletado com sucesso: " + deleteQuatidade + " registros." );
     }
 }

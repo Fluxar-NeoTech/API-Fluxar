@@ -13,17 +13,17 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/batch")
-public class BatchController implements BatchOpenAPI {
+public class BatchController {
     final BatchService batchService;
 
     public BatchController(BatchService batchService) {
         this.batchService = batchService;
     }
 
-    @GetMapping("/search/by/code/{batchCode}")
-    public ResponseEntity<BatchResponseDTO> getByBatchCode(@PathVariable String batchCode) {
-        return ResponseEntity.ok(batchService.getBatchByCode(batchCode));
-    }
+//    @GetMapping("/search/by/code/{batchCode}")
+//    public ResponseEntity<BatchResponseDTO> getByBatchCode(@PathVariable String batchCode) {
+//        return ResponseEntity.ok(batchService.getBatchByCode(batchCode));
+//    }
 
 //    @GetMapping("/search/by/unit/{unitId}")
 //    @Operation(summary = "Listar todos os lotes por ID da unidade",
