@@ -13,19 +13,20 @@ public class BatchResponseDTO {
     private Double width;
     private Double volume;
     private ProductResponseDTO product;
-    private UnitResponseDTO unit;
+//    private UnitResponseDTO unit;
 
-    public BatchResponseDTO(Double height, Double length, String batchCode, Double width, ProductResponseDTO product, UnitResponseDTO unit, LocalDate expirationDate) {
-        this.height = height;
-        this.length = length;
-        this.batchCode = batchCode;
-        this.width = width;
-        this.product = product;
-        this.unit = unit;
-        this.expirationDate = expirationDate;
-    }
+//    public BatchResponseDTO(Double height, Double length, String batchCode, Double width, ProductResponseDTO product, UnitResponseDTO unit, LocalDate expirationDate) {
+//        this.height = height;
+//        this.length = length;
+//        this.batchCode = batchCode;
+//        this.width = width;
+//        this.product = product;
+////        this.unit = unit;
+//        this.expirationDate = expirationDate;
+//    }
 
-    public BatchResponseDTO(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, Double volume) {
+    public BatchResponseDTO(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, Double volume, ProductResponseDTO productResponseDTO) {
+        this.product = productResponseDTO;
         this.batchCode = batchCode;
         this.expirationDate = expirationDate;
         this.height = height;
@@ -90,11 +91,11 @@ public class BatchResponseDTO {
         this.product = product;
     }
 
-    public UnitResponseDTO getUnit() {
-        return unit;
-    }
-
-    public void setUnit(UnitResponseDTO unit) {
-        this.unit = unit;
-    }
+//    public UnitResponseDTO getUnit() {
+//        return unit;
+//    }
+//
+//    public void setUnit(UnitResponseDTO unit) {
+//        this.unit = unit;
+//    }
 }

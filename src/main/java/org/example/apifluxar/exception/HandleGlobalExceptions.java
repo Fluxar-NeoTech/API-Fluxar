@@ -57,4 +57,9 @@ public class HandleGlobalExceptions {
     public ResponseEntity<String> HandlerNotAuthorizedEmployee (NotAuthorizedEmployee ex){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
+
+    @ExceptionHandler(EmptyProducts.class)
+    public ResponseEntity<String> HandlerEmptyProducts (EmptyProducts ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

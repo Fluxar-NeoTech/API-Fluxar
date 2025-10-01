@@ -1,14 +1,14 @@
 package org.example.apifluxar.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
+import org.example.apifluxar.dto.batch.ProductBatchResponseDTO;
 import org.example.apifluxar.openapi.BatchOpenAPI;
 import org.example.apifluxar.service.BatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -36,6 +36,12 @@ public class BatchController implements BatchOpenAPI {
 //    public ResponseEntity<List<BatchResponseDTO>> getAllBatchByUnit(@PathVariable Long unitId) {
 //        return ResponseEntity.ok(batchService.getAllBatchByUnit(unitId));
 //    }
+
+    @GetMapping("search/all/product/by/unit/sector")
+    public ResponseEntity<List<ProductBatchResponseDTO>> getAllBatchByUnitAndSector(@RequestParam Long unitId, @RequestParam Long sectorId) {
+        List<ProductBatchResponseDTO> productBatchResponseDTO = batchService.getAllProductBatch(unitId, sectorId);
+        return ResponseEntity.ok(productBatchResponseDTO);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<BatchResponseDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
