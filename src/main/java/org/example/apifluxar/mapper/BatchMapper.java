@@ -1,12 +1,5 @@
 package org.example.apifluxar.mapper;
 
-import org.example.apifluxar.dto.batch.BatchRequestDTO;
-import org.example.apifluxar.dto.batch.BatchResponseDTO;
-import org.example.apifluxar.dto.products.ProductResponseDTO;
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
-import org.example.apifluxar.model.Batch;
-import org.example.apifluxar.model.Product;
-import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.service.IndustryService;
 import org.example.apifluxar.service.ProductService;
 import org.example.apifluxar.service.SectorService;

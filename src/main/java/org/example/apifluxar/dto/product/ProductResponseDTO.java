@@ -1,17 +1,17 @@
-package org.example.apifluxar.dto.products;
-
-import org.example.apifluxar.dto.sector.SectorResponseDTO;
+package org.example.apifluxar.dto.product;
 
 public class ProductResponseDTO {
     private Long id;
     private String name;
+    private String type;
 
     public ProductResponseDTO() {
     }
 
-    public ProductResponseDTO(Long id, String name) {
+    public ProductResponseDTO(Long id, String name, String type) {
         this.id = id;
         this.name = name;
+        this.type = type;
     }
 
 //    public ProductResponseDTO(String name, String type, SectorResponseDTO sector) {
@@ -38,10 +38,10 @@ public class ProductResponseDTO {
 //        this.name = name;
 //    }
 //
-//    public String getType() {
-//        return type;
-//    }
-//
+    public String getType() {
+        return type;
+    }
+
 //    public void setType(String type) {
 //        this.type = type;
 //    }

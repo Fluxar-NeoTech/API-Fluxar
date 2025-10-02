@@ -1,11 +1,9 @@
 package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
-import org.example.apifluxar.dto.products.ProductRequestDTO;
-import org.example.apifluxar.dto.products.ProductResponseDTO;
-import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.dto.product.ProductRequestDTO;
+import org.example.apifluxar.dto.product.ProductResponseDTO;
 import org.example.apifluxar.exception.EmptyProducts;
 import org.example.apifluxar.mapper.ProductMapper;
 import org.example.apifluxar.model.Product;
@@ -41,7 +39,7 @@ public class ProductService {
 
         List<ProductResponseDTO> productResponse = new ArrayList<>();
         for (Product product : products) {
-            productResponse.add(new ProductResponseDTO(product.getId(), product.getName()));
+            productResponse.add(new ProductResponseDTO(product.getId(), product.getName(), product.getType()));
         }
 
         if (productResponse.isEmpty()) {

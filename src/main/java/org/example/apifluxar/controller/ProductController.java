@@ -1,12 +1,8 @@
 package org.example.apifluxar.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
-import org.example.apifluxar.dto.products.ProductRequestDTO;
-import org.example.apifluxar.dto.products.ProductResponseDTO;
-import org.example.apifluxar.openapi.ProductOpenAPI;
+import org.example.apifluxar.dto.product.ProductRequestDTO;
+import org.example.apifluxar.dto.product.ProductResponseDTO;
 import org.example.apifluxar.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
