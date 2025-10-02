@@ -23,6 +23,18 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("search/all/product/by/unit/{employeeId}")
+    public ResponseEntity<List<ProductResponseDTO>> getAllProductRegistered(@PathVariable Long employeeId){
+        List<ProductResponseDTO> productResponseDTO = productService.getAllProductRegistered(employeeId);
+        return ResponseEntity.ok(productResponseDTO);
+    }
+
+    @GetMapping("search/batch/by/product/{productId}")
+    public ResponseEntity<List<String>> getBatchByProduct(@PathVariable Long productId){
+        List<String> batchCode = productService.getBatchByProduct(productId);
+        return ResponseEntity.ok(batchCode);
+    }
+
 //    @GetMapping("/search/by/id/{id}")
 //    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
 //        ProductResponseDTO res = productService.getProductById(id);

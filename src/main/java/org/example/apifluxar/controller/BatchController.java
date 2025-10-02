@@ -58,7 +58,7 @@ public class BatchController {
 
     @DeleteMapping("/delete/{batchCode}")
     public ResponseEntity<MessageResponseDTO> deleteBatch(@PathVariable String batchCode){
-        MessageResponseDTO batchResponseDTO = batchService.deleteBatch(batchCode);
-        return ResponseEntity.ok(batchResponseDTO);
+        MessageResponseDTO batchResponse = batchService.deleteBatch(batchCode);
+        return ResponseEntity.ok(batchResponse);
     }
 }

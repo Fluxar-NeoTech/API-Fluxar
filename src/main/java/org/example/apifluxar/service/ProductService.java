@@ -6,6 +6,7 @@ import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.products.ProductRequestDTO;
 import org.example.apifluxar.dto.products.ProductResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
+import org.example.apifluxar.exception.EmptyProducts;
 import org.example.apifluxar.mapper.ProductMapper;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Sector;
@@ -33,6 +34,25 @@ public class ProductService {
         this.productMapper = productMapper;
         this.sectorRepository = sectorRepository;
         this.objectMapper = objectMapper;
+    }
+
+    public List<ProductResponseDTO> getAllProductRegistered(Long employeeId) {
+        List<Product> products = productRepository.findAllProductRegistered(employeeId);
+
+        List<ProductResponseDTO> productResponse = new ArrayList<>();
+        for (Product product : products) {
+            productResponse.add(new ProductResponseDTO(product.getId(), product.getName()));
+        }
+
+        if (productResponse.isEmpty()) {
+            throw new EmptyProducts("Não existem produtos cadastrados");
+        }
+
+        return productResponse;
+    }
+
+    public List<String> getBatchByProduct(Long productId){
+        return productRepository.findBatchByProduct(productId);
     }
 
 //    public ProductResponseDTO getProductById(Long id){
