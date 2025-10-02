@@ -7,12 +7,15 @@ import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
+import org.example.apifluxar.dto.plan.PlanResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.exception.NotAuthorizedEmployee;
 import org.example.apifluxar.model.Employee;
+import org.example.apifluxar.model.Plan;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;
+import org.example.apifluxar.projection.PlanProjection;
 import org.example.apifluxar.repository.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,9 +102,18 @@ public class EmployeeService {
             dto.setUnit(unitResponseDTO);
         }
 
-        CapacityStockResponseDTO capacityStockResposeDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
-        if (capacityStockResposeDTO != null) {
-            Double capacidadeMaxima= capacityStockResposeDTO.getMaxCapacity();
+        PlanProjection planProjection = employeeRepository.findByIndustryPlan(employee.getId(), employee.getUnit().getIndustry().getId());
+        if (planProjection != null) {
+            PlanResponseDTO planDto = new PlanResponseDTO(
+                    planProjection.getNomeDoPlano(),
+                    planProjection.getDuracaoMeses()
+            );
+            dto.setPlan(planDto);
+        }
+
+        CapacityStockResponseDTO capacityStockResponseDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
+        if (capacityStockResponseDTO != null) {
+            Double capacidadeMaxima= capacityStockResponseDTO.getMaxCapacity();
             dto.setMaxCapacity(capacidadeMaxima);
         }
         return dto;
