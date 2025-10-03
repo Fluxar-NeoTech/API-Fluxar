@@ -14,18 +14,18 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("api/unit")
-public class UnitController implements UnitOpenAPI {
+public class UnitController{
     final UnitService unitService;
 
     public UnitController(UnitService unitService) {
         this.unitService = unitService;
     }
 
-    @GetMapping("/search/by/id/{id}")
-    public ResponseEntity<UnitResponseDTO> getUnitById(@PathVariable Long id) {
-        UnitResponseDTO res = unitService.getUnitById(id);
-        return ResponseEntity.ok(res);
-    }
+//    @GetMapping("/search/by/id/{id}")
+//    public ResponseEntity<UnitResponseDTO> getUnitById(@PathVariable Long id) {
+//        UnitResponseDTO res = unitService.getUnitById(id);
+//        return ResponseEntity.ok(res);
+//    }
 
     @GetMapping("/search/all/by/industry/{id}")
     public ResponseEntity<List<UnitResponseDTO>> getUnitByIndustry(@PathVariable Long id) {

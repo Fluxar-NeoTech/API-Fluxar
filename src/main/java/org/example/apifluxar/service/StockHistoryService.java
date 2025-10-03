@@ -25,8 +25,4 @@ public class StockHistoryService {
         StockHistoryResponseDTO dto = objectMapper.convertValue(stockHistory, StockHistoryResponseDTO.class);
         return dto;
     }
-
-    public void deleteByBatchCode(Long batchCode) {
-        stockHistoryRepository.deleteAllByBatchCode(batchCode);
-    }
 }

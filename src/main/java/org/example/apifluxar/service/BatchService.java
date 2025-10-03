@@ -5,6 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.dto.batch.ProductBatchResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.exception.EmptyProducts;
 import org.example.apifluxar.mapper.BatchMapper;
 import org.example.apifluxar.model.Batch;
@@ -50,19 +51,19 @@ public class BatchService {
         this.objectMapper = objectMapper;
     }
 
-    public BatchResponseDTO getBatchByCode(String batchCode) {
-        Batch batch = batchRepository.findByBatchCode(batchCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lote não encontrado"));
-        Product product = batch.getProduct();
-
-        BatchResponseDTO dto = new BatchResponseDTO(
-                batch.getBatchCode(),
-                batch.getExpirationDate(),
-                batch.getHeight(),
-                batch.getLength(),
-                batch.getWidth(),
-                batch.getVolume(),
-                productService.getProductById(product.getId())
-        );
+//    public BatchResponseDTO getBatchByCode(String batchCode) {
+//        Batch batch = batchRepository.findByBatchCode(batchCode).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lote não encontrado"));
+//        Product product = batch.getProduct();
+//
+//        BatchResponseDTO dto = new BatchResponseDTO(
+//                batch.getBatchCode(),
+//                batch.getExpirationDate(),
+//                batch.getHeight(),
+//                batch.getLength(),
+//                batch.getWidth(),
+//                batch.getVolume(),
+//                productService.getProductById(product.getId())
+//        );
 
 //        Product product = batch.getProduct();
 //        if (product != null) {
@@ -75,9 +76,9 @@ public class BatchService {
 //            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
 //            dto.setUnit(unitResponseDTO);
 //        }
-
-        return dto;
-    }
+//
+//        return dto;
+//    }
 
 
 //    public List<BatchResponseDTO> getAllBatchByUnit(Long idUnit){
@@ -113,7 +114,6 @@ public class BatchService {
 //    }
 
 
-    //método para o mobile de consulta personalizada de lotes e produtos por unidade e setor (que vem do produto)
     public List<ProductBatchResponseDTO> getAllProductBatch(Long unitId, Long sectorId) {
         List<Batch> productBatchList = batchRepository.findAllBatchesInUnitAndSector(unitId, sectorId);
         List<ProductBatchResponseDTO> batchResponseDTO = new ArrayList<>();
@@ -139,8 +139,7 @@ public class BatchService {
     }
 
 
-    //vai virar procedure
-    public BatchResponseDTO addBatch(BatchRequestDTO batchRequestDTO) {
+    public MessageResponseDTO addBatch(BatchRequestDTO batchRequestDTO) {
 
         Product productEntity = productRepository.findById(batchRequestDTO.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
@@ -148,22 +147,30 @@ public class BatchService {
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
                 .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
-        Batch batchEntity = batchMapper.batchToMap(batchRequestDTO, productEntity, unitEntity);
+        //Método repository que consome a procedure
+        batchRepository.addBatch(
+                productEntity.getName(),
+                productEntity.getType(),
+                productEntity.getSector().getId(),
+                batchRequestDTO.getHeight(),
+                batchRequestDTO.getWidth(),
+                batchRequestDTO.getLength(),
+                batchRequestDTO.getExpirationDate(),
+                batchRequestDTO.getBatchCode(),
+                unitEntity.getId());
 
-        Batch savedBatch = batchRepository.save(batchEntity);
-
-        return batchMapper.mapToBatch(savedBatch, savedBatch.getProduct(), savedBatch.getUnit());
+        return new MessageResponseDTO("Lote inserido com sucesso!");
     }
 
-    //vai virar procedure
-    public BatchResponseDTO deleteBatch(String batchCode) {
+    public MessageResponseDTO deleteBatch(String batchCode) {
         Batch batch = batchRepository.findByBatchCode(batchCode)
                 .orElseThrow(() -> new EntityNotFoundException("Lote não encontrado"));
 
-        stockHistoryService.deleteByBatchCode(batch.getId());
+        Product productEntity = productRepository.findById(batch.getProduct().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
-        batchRepository.deleteByIdCustom(batch.getId());
+        batchRepository.deleteBatch(productEntity.getName(), batchCode);
 
-        return batchMapper.mapToBatch(batch,batch.getProduct(),batch.getUnit());
+        return new MessageResponseDTO("Lote removido com sucesso!");
     }
 }

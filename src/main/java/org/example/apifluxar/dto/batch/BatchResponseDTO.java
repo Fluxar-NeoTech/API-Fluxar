@@ -1,7 +1,6 @@
 package org.example.apifluxar.dto.batch;
 
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
-import org.example.apifluxar.dto.products.ProductResponseDTO;
+import org.example.apifluxar.dto.product.ProductResponseDTO;
 
 import java.time.LocalDate;
 

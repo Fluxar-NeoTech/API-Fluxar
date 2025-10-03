@@ -3,6 +3,7 @@ package org.example.apifluxar.controller;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.dto.batch.ProductBatchResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.openapi.BatchOpenAPI;
 import org.example.apifluxar.service.BatchService;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,17 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/batch")
-public class BatchController implements BatchOpenAPI {
+public class BatchController {
     final BatchService batchService;
 
     public BatchController(BatchService batchService) {
         this.batchService = batchService;
     }
 
-    @GetMapping("/search/by/code/{batchCode}")
-    public ResponseEntity<BatchResponseDTO> getByBatchCode(@PathVariable String batchCode) {
-        return ResponseEntity.ok(batchService.getBatchByCode(batchCode));
-    }
+//    @GetMapping("/search/by/code/{batchCode}")
+//    public ResponseEntity<BatchResponseDTO> getByBatchCode(@PathVariable String batchCode) {
+//        return ResponseEntity.ok(batchService.getBatchByCode(batchCode));
+//    }
 
 //    @GetMapping("/search/by/unit/{unitId}")
 //    @Operation(summary = "Listar todos os lotes por ID da unidade",
@@ -44,9 +45,9 @@ public class BatchController implements BatchOpenAPI {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<BatchResponseDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
-        BatchResponseDTO batchRespose = batchService.addBatch(batchRequestDTO);
-        return ResponseEntity.ok(batchRespose);
+    public ResponseEntity<MessageResponseDTO> addBatch(@RequestBody BatchRequestDTO batchRequestDTO){
+        MessageResponseDTO batchResponse = batchService.addBatch(batchRequestDTO);
+        return ResponseEntity.ok(batchResponse);
     }
 
 //    @GetMapping("/getAllBatchAndProduct")
@@ -56,8 +57,8 @@ public class BatchController implements BatchOpenAPI {
 //    }
 
     @DeleteMapping("/delete/{batchCode}")
-    public ResponseEntity<BatchResponseDTO> deleteBatch(@PathVariable String batchCode){
-        BatchResponseDTO batchResposeDTO = batchService.deleteBatch(batchCode);
-        return ResponseEntity.ok(batchResposeDTO);
+    public ResponseEntity<MessageResponseDTO> deleteBatch(@PathVariable String batchCode){
+        MessageResponseDTO batchResponse = batchService.deleteBatch(batchCode);
+        return ResponseEntity.ok(batchResponse);
     }
 }

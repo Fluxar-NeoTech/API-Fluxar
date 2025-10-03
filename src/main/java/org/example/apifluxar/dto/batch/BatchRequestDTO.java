@@ -1,15 +1,36 @@
 package org.example.apifluxar.dto.batch;
 
+import jakarta.validation.constraints.*;
+import org.example.apifluxar.validation.OnCreate;
+
 import java.time.LocalDate;
 
 public class BatchRequestDTO {
 
+    @NotBlank(message = "O código do lote é obrigatório", groups = OnCreate.class)
+    @Size(min = 1, max = 30, message = "O código do lote deve ter entre {min} e {max} caracteres")
     private String batchCode;
+
+    @NotNull(message = "A data de validade é obrigatória", groups = OnCreate.class)
+    @Future(message = "A data de validade deve ser posterior à data atual")
     private LocalDate expirationDate;
+
+    @NotNull(message = "A altura do produto é obrigatória", groups = OnCreate.class)
+    @DecimalMin(value = "1.00", message = "Altura deve ser maior ou igual a 1")
     private Double height;
+
+    @NotNull(message = "O comprimento do produto é obrigatório", groups = OnCreate.class)
+    @DecimalMin(value = "1.00", message = "Comprimentro deve ser maior ou igual a 1")
     private Double length;
+
+    @NotNull(message = "A largura do produto é obrigatória", groups = OnCreate.class)
+    @DecimalMin(value = "1.00", message = "Largura deve ser maior ou igual a 1")
     private Double width;
+
+    @NotNull(message = "O ID da unidade é obrigatório", groups = OnCreate.class)
     private Long unitId;
+
+    @NotNull(message = "O ID do produto é obrigatório", groups = OnCreate.class)
     private Long productId;
 
     public String getBatchCode() {

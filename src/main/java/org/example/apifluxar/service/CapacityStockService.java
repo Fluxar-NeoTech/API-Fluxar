@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.model.CapacityStock;
@@ -49,7 +50,7 @@ public class CapacityStockService {
     }
 
     @Transactional
-    public CapacityStockResponseDTO addOrUpdateCapacityStock(CapacityStockRequestDTO dto) {
+    public MessageResponseDTO addOrUpdateCapacityStock(CapacityStockRequestDTO dto) {
         Sector sector = sectorRepository.findById(dto.getSectorId())
                 .orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
 
@@ -80,12 +81,12 @@ public class CapacityStockService {
             capacityStock = capacityStockRepository.saveAndFlush(capacityStock);
         }
 
-        // Força Hibernate a recalcular campos com @Formula
         entityManager.refresh(capacityStock);
 
-        return objectMapper.convertValue(capacityStock, CapacityStockResponseDTO.class);
+        return new MessageResponseDTO("Capacidade do estoque registrada com sucesso!");
     }
 
+    //não sei se vai usar
     public CapacityStockResponseDTO getByUnitAndSector(Long unitId, Long sectorId) {
         CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnit(unitId, sectorId).orElseThrow(() -> new EntityNotFoundException(
                 "Capacidade de estoque não encontrada para a unidade e setor informados"));
@@ -95,17 +96,17 @@ public class CapacityStockService {
                 capacityStock.getLength(),
                 capacityStock.getWidth());
 
-        Sector setor = capacityStock.getSector();
-        if (setor != null) {
-            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-            dto.setSector(sectorResponseDTO);
-        }
-
-        Unit unit = capacityStock.getUnit();
-        if (unit != null) {
-            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-            dto.setUnit(unitResponseDTO);
-        }
+//        Sector setor = capacityStock.getSector();
+//        if (setor != null) {
+//            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+//            dto.setSector(sectorResponseDTO);
+//        }
+//
+//        Unit unit = capacityStock.getUnit();
+//        if (unit != null) {
+//            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+//            dto.setUnit(unitResponseDTO);
+//        }
         return  dto;
     }
 }

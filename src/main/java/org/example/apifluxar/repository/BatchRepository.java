@@ -1,27 +1,49 @@
 package org.example.apifluxar.repository;
 
 import jakarta.transaction.Transactional;
+import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.model.Batch;
+import org.example.apifluxar.model.Product;
+import org.example.apifluxar.model.Unit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface BatchRepository extends JpaRepository<Batch, Long> {
     Optional<Batch> findByBatchCode(String batchCode);
 
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM Batch b WHERE b.id = :id")
-    void deleteByIdCustom(@Param("id") Long id);
+//    @Modifying
+//    @Transactional
+//    @Query("DELETE FROM Batch b WHERE b.id = :id")
+//    void deleteByIdCustom(@Param("id") Long id);
 
     @Query("SELECT l FROM Batch l " +
             "JOIN l.product p " +
             "WHERE l.unit.id = :unitId AND p.sector.id = :sectorId")
     List<Batch> findAllBatchesInUnitAndSector(@Param("unitId") Long unitId,
                                               @Param("sectorId") Long sectorId);
+
+    //Métodos com procedures
+    @Procedure(name = "adicionar_lote")
+    MessageResponseDTO addBatch(String productName,
+                                                String productType,
+                                                Long idSector,
+                                                Double height,
+                                                Double width,
+                                                Double length,
+                                                LocalDate expirationDate,
+                                                String batchCode,
+                                                Long idUnit);
+
+    @Procedure(name = "remover_lote")
+    MessageResponseDTO deleteBatch(String productName, String batchCode);
 }

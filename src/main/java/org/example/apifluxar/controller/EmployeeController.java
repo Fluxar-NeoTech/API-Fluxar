@@ -50,8 +50,8 @@ public class EmployeeController implements EmployeeOpenAPI {
     @PutMapping("/update/photo")
     public ResponseEntity<MessageResponseDTO> updatePhoto(
             @RequestBody @Validated({OnPatch.class, Default.class}) UpdatePhotoRequestDTO updatePhotoRequestDTO) {
-        MessageResponseDTO response = employeeService.updatePhoto(updatePhotoRequestDTO);
-        return ResponseEntity.ok(response);
+        MessageResponseDTO messageResponseDTO = employeeService.updatePhoto(updatePhotoRequestDTO);
+        return ResponseEntity.ok(messageResponseDTO);
     }
 
     @PutMapping(value = "/update-photo-site", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -65,7 +65,7 @@ public class EmployeeController implements EmployeeOpenAPI {
 
     @PutMapping("/update/senha")
     public ResponseEntity<MessageResponseDTO> updateSenha( @RequestBody @Validated EmployeeRequestDTO employeeRequestDTO) {
-        MessageResponseDTO response = employeeService.updateSenha(employeeRequestDTO);
-        return ResponseEntity.ok(response);
+        MessageResponseDTO messageResponseDTO = employeeService.updateSenha(employeeRequestDTO);
+        return ResponseEntity.ok(messageResponseDTO);
     }
 }

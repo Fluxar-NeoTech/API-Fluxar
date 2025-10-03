@@ -1,18 +1,13 @@
 package org.example.apifluxar.mapper;
 
-import org.example.apifluxar.dto.batch.BatchRequestDTO;
-import org.example.apifluxar.dto.batch.BatchResponseDTO;
-import org.example.apifluxar.dto.products.ProductResponseDTO;
-import org.example.apifluxar.dto.unit.UnitResponseDTO;
-import org.example.apifluxar.model.Batch;
-import org.example.apifluxar.model.Product;
-import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.service.IndustryService;
 import org.example.apifluxar.service.ProductService;
 import org.example.apifluxar.service.SectorService;
 import org.example.apifluxar.service.UnitService;
 import org.springframework.stereotype.Component;
 
+
+//Provavelmente vou tirar dps
 @Component
 public class BatchMapper {
     final ProductService productService;
@@ -27,18 +22,18 @@ public class BatchMapper {
         this.productService = productService;
     }
 
-    // RequestDTO -> Entity
-    public Batch batchToMap(BatchRequestDTO dto, Product product, Unit unit) {
-        return new Batch(
-                dto.getBatchCode(),
-                dto.getExpirationDate(),
-                dto.getHeight(),
-                dto.getLength(),
-                dto.getWidth(),
-                product,
-                unit
-        );
-    }
+//    // RequestDTO -> Entity
+//    public Batch batchToMap(BatchRequestDTO dto, Product product, Unit unit) {
+//        return new Batch(
+//                dto.getBatchCode(),
+//                dto.getExpirationDate(),
+//                dto.getHeight(),
+//                dto.getLength(),
+//                dto.getWidth(),
+//                product,
+//                unit
+//        );
+//    }
 
 //    // Entity -> ResponseCreateDTO
 //    public BatchResponseCreateDTO mapToBatchCreate(Batch batch) {
@@ -66,17 +61,17 @@ public class BatchMapper {
 //        );
 //    }
 
-    //Entity -> ResponseDTO
-    public BatchResponseDTO mapToBatch(Batch batch, Product product, Unit unit) {
-        BatchResponseDTO responseDTO =  new BatchResponseDTO(
-                batch.getBatchCode(),
-                batch.getExpirationDate(),
-                batch.getHeight(),
-                batch.getLength(),
-                batch.getWidth(),
-                batch.getVolume(),
-                productService.getProductById(product.getId())
-        );
-        return responseDTO;
-    }
+//    //Entity -> ResponseDTO
+//    public BatchResponseDTO mapToBatch(Batch batch, Product product, Unit unit) {
+//        BatchResponseDTO responseDTO =  new BatchResponseDTO(
+//                batch.getBatchCode(),
+//                batch.getExpirationDate(),
+//                batch.getHeight(),
+//                batch.getLength(),
+//                batch.getWidth(),
+//                batch.getVolume(),
+//                productService.getProductById(product.getId())
+//        );
+//        return responseDTO;
+//    }
 }

@@ -1,5 +1,6 @@
 package org.example.apifluxar.dto.employee;
 
+import org.example.apifluxar.dto.plan.PlanResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 
@@ -11,6 +12,7 @@ public class EmployeeResponseDTO {
     private SectorResponseDTO sector;
     private UnitResponseDTO unit;
     private Double maxCapacity;
+    private PlanResponseDTO plan;
 
     public EmployeeResponseDTO(String firstName, String lastName, String email, String profilePhoto) {
         this.firstName = firstName;
@@ -72,5 +74,13 @@ public class EmployeeResponseDTO {
 
     public void setMaxCapacity(Double maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    public void setPlan(PlanResponseDTO plan) {
+        this.plan = plan;
+    }
+
+    public PlanResponseDTO getPlan() {
+        return plan;
     }
 }
