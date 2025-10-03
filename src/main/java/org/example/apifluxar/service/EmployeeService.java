@@ -2,6 +2,7 @@ package org.example.apifluxar.service;
 
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import org.example.apifluxar.dto.cloud.CloudinayUploadResponse;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -28,14 +30,16 @@ public class EmployeeService {
     final SectorService sectorService;
     final UnitService unitService;
     final Logger log = LoggerFactory.getLogger(EmployeeService.class);
+    final CloudinaryService cloudinaryService;
 
 
-    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService, SectorService sectorService, UnitService unitService) {
+    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService, SectorService sectorService, UnitService unitService,CloudinaryService cloudinaryService) {
         this.unitService = unitService;
         this.sectorService = sectorService;
         this.industryService = industryService;
         this.employeeRepository = employeeRepository;
         this.capacityStockService = capacityStockService;
+        this.cloudinaryService =cloudinaryService;
     }
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
@@ -65,6 +69,25 @@ public class EmployeeService {
 
         return new MessageResponseDTO("Foto de perfil atualizada com sucesso!");
     }
+
+    public MessageResponseDTO updatePhotoSite(String email, MultipartFile file) {
+        Employee employee = employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
+
+        // Faz upload no Cloudinary
+        CloudinayUploadResponse uploadResponse = cloudinaryService.upload(file, "user_profile_photos");
+
+        // Atualiza no banco a URL retornada
+        employee.setProfilePicture(uploadResponse.getUrl());
+        employeeRepository.save(employee);
+
+        log.info("Foto de perfil do funcionário ID={} | Email={} atualizada com sucesso! (via site)",
+                employee.getId(), employee.getEmail());
+
+        return new MessageResponseDTO("Foto de perfil atualizada com sucesso!");
+    }
+
+
 
     public MessageResponseDTO updateSenha(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
