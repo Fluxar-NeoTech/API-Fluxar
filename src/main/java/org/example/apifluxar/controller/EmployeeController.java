@@ -14,9 +14,11 @@ import org.example.apifluxar.service.EmployeeService;
 import org.example.apifluxar.validation.OnCreate;
 import org.example.apifluxar.validation.OnPatch;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -50,6 +52,15 @@ public class EmployeeController implements EmployeeOpenAPI {
             @RequestBody @Validated({OnPatch.class, Default.class}) UpdatePhotoRequestDTO updatePhotoRequestDTO) {
         MessageResponseDTO messageResponseDTO = employeeService.updatePhoto(updatePhotoRequestDTO);
         return ResponseEntity.ok(messageResponseDTO);
+    }
+
+    @PutMapping(value = "/update-photo-site", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MessageResponseDTO> updatePhotoSite(
+            @RequestParam("email") String email,
+            @RequestPart("file") MultipartFile file) {
+
+        MessageResponseDTO response = employeeService.updatePhotoSite(email, file);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update/senha")
