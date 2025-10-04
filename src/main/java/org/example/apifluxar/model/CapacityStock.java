@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
 
 @Entity
-@Table(name = "capacidadeestoque")
+@Table(name = "capacidade_estoque")
 public class CapacityStock {
 
     @Id

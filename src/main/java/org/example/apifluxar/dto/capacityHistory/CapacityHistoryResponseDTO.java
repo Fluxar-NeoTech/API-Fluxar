@@ -5,9 +5,9 @@ import java.time.LocalDate;
 public class CapacityHistoryResponseDTO {
 
     private LocalDate fullDate;
-    private Integer totalCapacity;
+    private Double totalCapacity;
 
-    public CapacityHistoryResponseDTO(Integer totalCapacity, LocalDate fullDate) {
+    public CapacityHistoryResponseDTO(Double totalCapacity, LocalDate fullDate) {
         this.totalCapacity = totalCapacity;
         this.fullDate = fullDate;
     }
@@ -23,11 +23,11 @@ public class CapacityHistoryResponseDTO {
         this.fullDate = fullDate;
     }
 
-    public Integer getTotalCapacity() {
+    public Double getTotalCapacity() {
         return totalCapacity;
     }
 
-    public void setTotalCapacity(Integer totalCapacity) {
+    public void setTotalCapacity(Double totalCapacity) {
         this.totalCapacity = totalCapacity;
     }
 }
