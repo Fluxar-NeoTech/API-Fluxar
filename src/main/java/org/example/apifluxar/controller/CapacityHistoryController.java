@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/capacityHistory")
-public class CapacityHistoryController implements CapacityHistoryOpenAPI {
+public class CapacityHistoryController {
     final CapacityHistoryService capacityHistoryService;
     final ObjectMapper objectMapper;
 
@@ -31,9 +31,9 @@ public class CapacityHistoryController implements CapacityHistoryOpenAPI {
         return ResponseEntity.ok(res);
     }
 
-    @DeleteMapping("/delete/by/sector/unit")
-    public ResponseEntity<Object> deleteCapacityHistoryBySectorAndUnit(@RequestParam Long unitId, @RequestParam Long sectorId) {
-        MessageResponseDTO message = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
-        return ResponseEntity.ok(message);
-    }
+//    @DeleteMapping("/delete/by/sector/unit")
+//    public ResponseEntity<Object> deleteCapacityHistoryBySectorAndUnit(@RequestParam Long unitId, @RequestParam Long sectorId) {
+//        MessageResponseDTO message = capacityHistoryService.deleteCapacityHistoryBySectorAndUnit(sectorId, unitId);
+//        return ResponseEntity.ok(message);
+//    }
 }

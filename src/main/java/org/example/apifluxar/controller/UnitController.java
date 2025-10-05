@@ -3,6 +3,8 @@ package org.example.apifluxar.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.example.apifluxar.dto.unit.UnitDimensionsResponseDTO;
+import org.example.apifluxar.dto.unit.UnitIndustryResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.openapi.UnitOpenAPI;
 import org.example.apifluxar.service.UnitService;
@@ -28,8 +30,14 @@ public class UnitController{
 //    }
 
     @GetMapping("/search/all/by/industry/{id}")
-    public ResponseEntity<List<UnitResponseDTO>> getUnitByIndustry(@PathVariable Long id) {
-        List<UnitResponseDTO> res = unitService.getUnitByIndustry(id);
+    public ResponseEntity<List<UnitIndustryResponseDTO>> getUnitByIndustry(@PathVariable Long id) {
+        List<UnitIndustryResponseDTO> res = unitService.getUnitByIndustry(id);
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/dimensions")
+    public ResponseEntity<UnitDimensionsResponseDTO> getUnitByDimensions(@RequestParam Long id) {
+        UnitDimensionsResponseDTO dimensions = unitService.getUnitDimensions(id);
+        return ResponseEntity.ok(dimensions);
     }
 }

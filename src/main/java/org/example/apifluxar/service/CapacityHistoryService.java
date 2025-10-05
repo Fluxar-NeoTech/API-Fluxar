@@ -31,19 +31,20 @@ public class CapacityHistoryService {
         for (CapacityHistory item : capacityHistory) {
             dtos.add(new CapacityHistoryResponseDTO(
                     item.getTotalCapacity(),
-                    item.getFullDate()
+                    item.getFullDate(),
+                    item.getOccupancyPercentage()
             ));
         }
 
         return dtos;
     }
 
-    // não sei se vai usar
-    public MessageResponseDTO deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
-        Integer deleteQuatidade = capacityHistoryRepository.deleteBySectorAndUnit(sectorId, unitId);
-        if (deleteQuatidade == 0) {
-            throw new EmptyCapacityHistory("Nenhum histórico de capacidade encontrado para a unidade e setor especificados");
-        }
-        return new MessageResponseDTO("Histórico de capacidade deletado com sucesso: " + deleteQuatidade + " registros." );
-    }
+//    // não sei se vai usar
+//    public MessageResponseDTO deleteCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
+//        Integer deleteQuatidade = capacityHistoryRepository.deleteBySectorAndUnit(sectorId, unitId);
+//        if (deleteQuatidade == 0) {
+//            throw new EmptyCapacityHistory("Nenhum histórico de capacidade encontrado para a unidade e setor especificados");
+//        }
+//        return new MessageResponseDTO("Histórico de capacidade deletado com sucesso: " + deleteQuatidade + " registros." );
+//    }
 }
