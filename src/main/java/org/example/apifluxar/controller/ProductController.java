@@ -1,5 +1,8 @@
 package org.example.apifluxar.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.product.ProductRequestDTO;
 import org.example.apifluxar.dto.product.ProductResponseDTO;

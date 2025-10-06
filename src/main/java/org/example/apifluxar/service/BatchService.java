@@ -149,7 +149,7 @@ public class BatchService {
 
         batchRepository.addBatch(
                 batchRequestDTO.getBatchCode(),
-                java.sql.Date.valueOf(batchRequestDTO.getExpirationDate()), // deve ser java.sql.Date
+                java.sql.Date.valueOf(batchRequestDTO.getExpirationDate()),
                 batchRequestDTO.getHeight(),
                 batchRequestDTO.getLength(),
                 batchRequestDTO.getWidth(),

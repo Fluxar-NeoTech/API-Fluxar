@@ -12,23 +12,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface ProductOpenAPI {
-    @Operation(summary = "Buscar produto por ID",
-            description = "Retorna os detalhes de um produto específico com base no ID fornecido.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Produto encontrado com sucesso"),
-            @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-    })
-    ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id);
 
-    @Operation(summary = "Buscar produto por nome",
-            description = "Retorna os detalhes de um produto específico com base no nome fornecido.")
+    @Operation(summary = "Busca todos os produtos registrados na unidade do gestor")
     @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Produto encontrado com sucesso"),
-            @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "200", description = "Produtos encontrados com sucesso"),
+            @ApiResponse(responseCode = "", description = ""),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name);
+    ResponseEntity<List<ProductResponseDTO>> getAllProductRegistered(@PathVariable Long employeeId);
+//    @Operation(summary = "Buscar produto por ID",
+//            description = "Retorna os detalhes de um produto específico com base no ID fornecido.")
+//    @ApiResponses({
+//            @ApiResponse( responseCode = "200", description = "Produto encontrado com sucesso"),
+//            @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
+//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+//    })
+//    ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id);
+
+//    @Operation(summary = "Buscar produto por nome",
+//            description = "Retorna os detalhes de um produto específico com base no nome fornecido.")
+//    @ApiResponses({
+//            @ApiResponse( responseCode = "200", description = "Produto encontrado com sucesso"),
+//            @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
+//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+//    })
+//    ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name);
 
     @Operation(summary = "Criar novo produto",
             description = "Cria um novo produto com base nas informações fornecidas.")
