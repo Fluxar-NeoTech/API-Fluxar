@@ -25,6 +25,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Service
 public class EmployeeService {
     final EmployeeRepository employeeRepository;
@@ -34,15 +37,23 @@ public class EmployeeService {
     final UnitService unitService;
     final Logger log = LoggerFactory.getLogger(EmployeeService.class);
     final CloudinaryService cloudinaryService;
+    final DailyActiveUsersService dailyActiveUsersService;
 
 
-    public EmployeeService(EmployeeRepository employeeRepository, IndustryService industryService, CapacityStockService capacityStockService, SectorService sectorService, UnitService unitService,CloudinaryService cloudinaryService) {
+    public EmployeeService(EmployeeRepository employeeRepository,
+                           IndustryService industryService,
+                           CapacityStockService capacityStockService,
+                           SectorService sectorService,
+                           UnitService unitService,
+                           CloudinaryService cloudinaryService,
+                           DailyActiveUsersService dailyActiveUsersService) {
         this.unitService = unitService;
         this.sectorService = sectorService;
         this.industryService = industryService;
         this.employeeRepository = employeeRepository;
         this.capacityStockService = capacityStockService;
         this.cloudinaryService =cloudinaryService;
+        this.dailyActiveUsersService = dailyActiveUsersService;
     }
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
@@ -57,6 +68,8 @@ public class EmployeeService {
                 employee.getRole(),
                 employee.getEmail()
         );
+
+        dailyActiveUsersService.insertAccess(employee.getId(),employeeRequestDTO.getOrigin());
 
         return dto;
     }

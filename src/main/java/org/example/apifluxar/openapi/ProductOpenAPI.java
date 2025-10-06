@@ -16,7 +16,7 @@ public interface ProductOpenAPI {
     @Operation(summary = "Busca todos os produtos registrados na unidade do gestor")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Produtos encontrados com sucesso"),
-            @ApiResponse(responseCode = "", description = ""),
+            @ApiResponse(responseCode = "404", description = "Indústria não encontrada"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     ResponseEntity<List<ProductResponseDTO>> getAllProductRegistered(@PathVariable Long employeeId);
