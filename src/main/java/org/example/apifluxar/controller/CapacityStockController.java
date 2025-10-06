@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/capacityStock")
-public class CapacityStockController {
+public class CapacityStockController implements CapacityStockOpenAPI {
     private final CapacityStockService capacityStockService;
 
     @Autowired

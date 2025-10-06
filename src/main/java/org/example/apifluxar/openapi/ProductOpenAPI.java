@@ -3,6 +3,7 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.product.ProductRequestDTO;
 import org.example.apifluxar.dto.product.ProductResponseDTO;
 import org.springframework.http.ResponseEntity;
@@ -13,30 +14,23 @@ import java.util.List;
 
 public interface ProductOpenAPI {
 
-    @Operation(summary = "Busca todos os produtos registrados na unidade do gestor")
+    @Operation(summary = "Busca todos os produtos registrados na unidade do gestor",
+    description = "Retorna uma lista de todos os produtos registrados na unidade associada ao gestor especificado pelo ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Produtos encontrados com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Indústria não encontrada"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     ResponseEntity<List<ProductResponseDTO>> getAllProductRegistered(@PathVariable Long employeeId);
-//    @Operation(summary = "Buscar produto por ID",
-//            description = "Retorna os detalhes de um produto específico com base no ID fornecido.")
-//    @ApiResponses({
-//            @ApiResponse( responseCode = "200", description = "Produto encontrado com sucesso"),
-//            @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
-//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-//    })
-//    ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id);
 
-//    @Operation(summary = "Buscar produto por nome",
-//            description = "Retorna os detalhes de um produto específico com base no nome fornecido.")
-//    @ApiResponses({
-//            @ApiResponse( responseCode = "200", description = "Produto encontrado com sucesso"),
-//            @ApiResponse( responseCode = "404", description = "Produto não encontrado"),
-//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-//    })
-//    ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name);
+    @Operation(summary = "Busca lotes por ID do produto",
+            description = "Retorna uma lista de skus associados ao produto especificado pelo ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lotes encontrados com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    ResponseEntity<List<String>> getBatchByProduct(@PathVariable Long productId);
 
     @Operation(summary = "Criar novo produto",
             description = "Cria um novo produto com base nas informações fornecidas.")
@@ -45,5 +39,5 @@ public interface ProductOpenAPI {
             @ApiResponse( responseCode = "400", description = "Requisição inválida"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<ProductResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO);
+    ResponseEntity<MessageResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO);
 }
