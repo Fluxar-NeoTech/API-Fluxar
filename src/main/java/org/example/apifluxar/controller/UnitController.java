@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("api/unit")
-public class UnitController{
+public class UnitController implements UnitOpenAPI {
     final UnitService unitService;
 
     public UnitController(UnitService unitService) {
