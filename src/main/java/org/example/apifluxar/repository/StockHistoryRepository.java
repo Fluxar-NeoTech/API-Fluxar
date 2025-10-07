@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StockHistoryRepository extends JpaRepository<StockHistory, Long> {
@@ -18,7 +19,6 @@ public interface StockHistoryRepository extends JpaRepository<StockHistory, Long
 //    Integer deleteAllByBatchCode(@Param("batchCode") Long batchCode);
 
     @Query("SELECT sh FROM StockHistory sh WHERE sh.unit.id = :unitId and sh.sector.id = :sectorId")
-    Optional<StockHistory> findByUnitAndSector(@Param("unitId") Long unitId, @Param("sectorId") Long sectorId);
-
+    List<StockHistory> findByUnitAndSector(@Param("unitId") Long unitId, @Param("sectorId") Long sectorId);
 
 }

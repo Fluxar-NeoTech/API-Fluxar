@@ -9,6 +9,8 @@ import org.example.apifluxar.service.StockHistoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/stockHistory")
@@ -19,9 +21,11 @@ public class StockHistoryController implements StockHistoryOpenAPI {
         this.stockHistoryService = stockHistoryService;
     }
 
-    @GetMapping("search/by/unit/sector")
-    public ResponseEntity<StockHistoryResponseDTO> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId) {
-        StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(unitId, sectorId);
-        return ResponseEntity.ok(dto);
+    @GetMapping("/search/by/unit/sector")
+    public ResponseEntity<List<StockHistoryResponseDTO>> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId) {
+
+        List<StockHistoryResponseDTO> dtoList = stockHistoryService.getStockHistoryById(unitId, sectorId);
+        return ResponseEntity.ok(dtoList);
     }
+
 }
