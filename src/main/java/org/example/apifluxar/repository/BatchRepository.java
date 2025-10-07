@@ -33,11 +33,24 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
     List<Batch> findAllBatchesInUnitAndSector(@Param("unitId") Long unitId,
                                               @Param("sectorId") Long sectorId);
 
-
-    @Procedure(procedureName = "adicionar_lote")
-    void addBatch(
+    @Transactional
+    @Modifying
+    @Query(value = """
+    CALL adicionar_lote(
+        :sku_param,
+        CAST(:val AS timestamp),
+        CAST(:alt AS numeric),
+        CAST(:comp AS numeric),
+        CAST(:larg AS numeric),
+        :nome_prod,
+        :tipo_prod,
+        :id_unidade_param,
+        :id_setor
+    )
+""", nativeQuery = true)
+    void adicionarLote(
             @Param("sku_param") String sku_param,
-            @Param("val") java.sql.Date val,
+            @Param("val") java.sql.Timestamp val,
             @Param("alt") Double alt,
             @Param("comp") Double comp,
             @Param("larg") Double larg,
@@ -47,10 +60,11 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
             @Param("id_setor") Long id_setor
     );
 
-    @Procedure(procedureName = "remover_do_estoque")
-    void deleteBatch(
-            @Param("nome_prod") String nomeProd,
-            @Param("sku_param") String skuParam
-    );
+
+    @Transactional
+    @Modifying
+    @Query(value = "CALL remover_do_estoque(:sku_param)", nativeQuery = true)
+    void deleteBatch(@Param("sku_param") String sku_param);
+
 
 }

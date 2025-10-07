@@ -147,9 +147,10 @@ public class BatchService {
         Unit unitEntity = unitRepository.findById(batchRequestDTO.getUnitId())
                 .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
-        batchRepository.addBatch(
+
+        batchRepository.adicionarLote(
                 batchRequestDTO.getBatchCode(),
-                java.sql.Date.valueOf(batchRequestDTO.getExpirationDate()),
+                java.sql.Timestamp.valueOf(batchRequestDTO.getExpirationDate().atStartOfDay()),
                 batchRequestDTO.getHeight(),
                 batchRequestDTO.getLength(),
                 batchRequestDTO.getWidth(),
@@ -169,7 +170,7 @@ public class BatchService {
         Product productEntity = productRepository.findById(batch.getProduct().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
-        batchRepository.deleteBatch(productEntity.getName(), batchCode);
+        batchRepository.deleteBatch(batchCode);
 
         return new MessageResponseDTO("Lote removido com sucesso!");
     }
