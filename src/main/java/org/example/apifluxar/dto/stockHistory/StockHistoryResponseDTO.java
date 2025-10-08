@@ -1,12 +1,15 @@
 package org.example.apifluxar.dto.stockHistory;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class StockHistoryResponseDTO {
 
     private Character movement;
     private Double volumeHandled;
-    private String date;
+    private LocalDateTime date;
 
-    public StockHistoryResponseDTO(Character movement, Double volumeHandled, String date) {
+    public StockHistoryResponseDTO(Character movement, Double volumeHandled, LocalDateTime date) {
         this.movement = movement;
         this.volumeHandled = volumeHandled;
         this.date = date;
@@ -28,11 +31,11 @@ public class StockHistoryResponseDTO {
         this.volumeHandled = volumeHandled;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }

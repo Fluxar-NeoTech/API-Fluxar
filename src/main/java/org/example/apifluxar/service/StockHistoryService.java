@@ -28,7 +28,7 @@ public class StockHistoryService {
         }
 
         for (StockHistory sh : stockHistory) {
-            dto.add(new StockHistoryResponseDTO(sh.getMovement(), sh.getVolumeHandled(), sh.getDate().toString()));
+            dto.add(new StockHistoryResponseDTO(sh.getMovement(), sh.getVolumeHandled(), sh.getDate()));
         }
 
         return dto.getLast();
