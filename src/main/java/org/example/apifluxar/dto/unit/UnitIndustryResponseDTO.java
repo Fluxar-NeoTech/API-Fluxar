@@ -1,8 +1,7 @@
 package org.example.apifluxar.dto.unit;
 
-import org.example.apifluxar.dto.industry.IndustryResponseDTO;
-
-public class UnitBatchResponseDTO {
+public class UnitIndustryResponseDTO {
+    private Long id;
     private String name;
     private String postalCode;
     private String street;
@@ -10,8 +9,11 @@ public class UnitBatchResponseDTO {
     private String state;
     private String number;
     private String neighborhood;
+    private String email;
+    private Integer availability;
 
-    public UnitBatchResponseDTO(String name, String postalCode, String street, String city, String state, String number, String neighborhood) {
+    public UnitIndustryResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Integer availability) {
+        this.id = id;
         this.name = name;
         this.postalCode = postalCode;
         this.street = street;
@@ -19,6 +21,8 @@ public class UnitBatchResponseDTO {
         this.state = state;
         this.number = number;
         this.neighborhood = neighborhood;
+        this.email = email;
+        this.availability = availability;
     }
 
     // Getters and Setters
@@ -76,5 +80,29 @@ public class UnitBatchResponseDTO {
 
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Integer availability) {
+        this.availability = availability;
     }
 }

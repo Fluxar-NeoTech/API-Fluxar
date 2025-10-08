@@ -17,6 +17,10 @@ public class EmployeeRequestDTO {
     @NotBlank(message = "A senha não pode ser em branco", groups = OnCreate.class)
     private String password;
 
+    @NotNull(message = "A informação de origem do login é obrigatória", groups = OnCreate.class)
+    @NotBlank(message = "A informação de origem do login não pode ser vazia")
+    private String origin;
+
     // Getters and Setters
     public String getEmail() {
         return email;
@@ -32,5 +36,13 @@ public class EmployeeRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

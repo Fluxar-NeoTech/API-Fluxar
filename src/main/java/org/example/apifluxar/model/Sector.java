@@ -3,7 +3,7 @@ package org.example.apifluxar.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Setor")
+@Table(name = "setor")
 public class Sector {
     @Id
     @GeneratedValue

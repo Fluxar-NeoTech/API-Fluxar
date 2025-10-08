@@ -13,7 +13,7 @@ public class Batch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_lote")
+    @Column(name = "sku")
     private String batchCode;
 
     @Column(name = "validade")

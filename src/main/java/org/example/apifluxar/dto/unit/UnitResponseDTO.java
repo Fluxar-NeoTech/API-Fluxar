@@ -11,12 +11,14 @@ public class UnitResponseDTO {
     private String state;
     private String number;
     private String neighborhood;
+    private String email;
+    private Integer availabilityUnit;
     private IndustryResponseDTO industry;
 
     public UnitResponseDTO() {
     }
 
-    public UnitResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, IndustryResponseDTO industry) {
+    public UnitResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Integer avaliabilityUnit, IndustryResponseDTO industry) {
         this.id = id;
         this.name = name;
         this.postalCode = postalCode;
@@ -25,6 +27,8 @@ public class UnitResponseDTO {
         this.state = state;
         this.number = number;
         this.neighborhood = neighborhood;
+        this.email = email;
+        this.availabilityUnit = avaliabilityUnit;
         this.industry = industry;
     }
 
@@ -99,5 +103,21 @@ public class UnitResponseDTO {
 
     public void setIndustry(IndustryResponseDTO industry) {
         this.industry = industry;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getAvailabilityUnit() {
+        return availabilityUnit;
+    }
+
+    public void setAvailabilityUnit(Integer availabilityUnit) {
+        this.availabilityUnit = availabilityUnit;
     }
 }

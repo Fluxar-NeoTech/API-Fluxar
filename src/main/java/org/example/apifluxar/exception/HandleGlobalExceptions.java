@@ -62,4 +62,9 @@ public class HandleGlobalExceptions {
     public ResponseEntity<String> HandlerEmptyProducts (EmptyProducts ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
+    @ExceptionHandler(EmptyAvailability.class)
+    public ResponseEntity<String> HandlerEmptyAvailability (EmptyAvailability ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
