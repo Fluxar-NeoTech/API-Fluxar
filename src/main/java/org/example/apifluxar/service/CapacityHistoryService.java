@@ -20,22 +20,22 @@ public class CapacityHistoryService {
         this.capacityHistoryRepository = capacityHistoryRepository;
     }
 
-    public List<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
+    public CapacityHistoryResponseDTO getCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
         List<CapacityHistory> capacityHistory = capacityHistoryRepository.findBySectorAndAndUnit(sectorId, unitId);
 
         if (capacityHistory.isEmpty()) {
             throw new EmptyCapacityHistory("Histórico de capacidade vazio nessa unidade e setor");
         }
 
-        List<CapacityHistoryResponseDTO> dtos = new ArrayList<>();
+        List<CapacityHistoryResponseDTO> dto = new ArrayList<>();
         for (CapacityHistory item : capacityHistory) {
-            dtos.add(new CapacityHistoryResponseDTO(
+            dto.add(new CapacityHistoryResponseDTO(
                     item.getTotalCapacity(),
                     item.getFullDate(),
                     item.getOccupancyPercentage()
             ));
         }
 
-        return dtos;
+        return dto.getLast();
     }
 }

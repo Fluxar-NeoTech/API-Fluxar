@@ -22,10 +22,10 @@ public class StockHistoryController implements StockHistoryOpenAPI {
     }
 
     @GetMapping("/search/by/unit/sector")
-    public ResponseEntity<List<StockHistoryResponseDTO>> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId) {
+    public ResponseEntity<StockHistoryResponseDTO> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId) {
 
-        List<StockHistoryResponseDTO> dtoList = stockHistoryService.getStockHistoryById(unitId, sectorId);
-        return ResponseEntity.ok(dtoList);
+        StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(unitId, sectorId);
+        return ResponseEntity.ok(dto);
     }
 
 }

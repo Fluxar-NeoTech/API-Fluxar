@@ -17,5 +17,5 @@ public interface CapacityHistoryOpenAPI {
             @ApiResponse(responseCode = "404", description = "Histórico de capacidade não encontrado para o setor e unidade fornecidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<List<CapacityHistoryResponseDTO>> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId);
+    ResponseEntity<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId);
 }

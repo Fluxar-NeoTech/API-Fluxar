@@ -26,8 +26,8 @@ public class CapacityHistoryController implements CapacityHistoryOpenAPI {
     }
 
     @GetMapping("/search/by/sector/unit")
-    public ResponseEntity<List<CapacityHistoryResponseDTO>> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId) {
-        List<CapacityHistoryResponseDTO> res = capacityHistoryService.getCapacityHistoryBySectorAndUnit( sectorId, unitId);
+    public ResponseEntity<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId) {
+        CapacityHistoryResponseDTO res = capacityHistoryService.getCapacityHistoryBySectorAndUnit( sectorId, unitId);
         return ResponseEntity.ok(res);
     }
 }

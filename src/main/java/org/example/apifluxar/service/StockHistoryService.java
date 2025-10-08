@@ -19,7 +19,7 @@ public class StockHistoryService {
         this.stockHistoryRepository = stockHistoryRepository;
     }
 
-    public List<StockHistoryResponseDTO> getStockHistoryById(Long unitId, Long sectorId) {
+    public StockHistoryResponseDTO getStockHistoryById(Long unitId, Long sectorId) {
         List<StockHistory> stockHistory = stockHistoryRepository.findByUnitAndSector(unitId, sectorId);
         List<StockHistoryResponseDTO> dto = new ArrayList<>();
 
@@ -31,6 +31,6 @@ public class StockHistoryService {
             dto.add(new StockHistoryResponseDTO(sh.getMovement(), sh.getVolumeHandled(), sh.getDate().toString()));
         }
 
-        return dto;
+        return dto.getLast();
     }
 }

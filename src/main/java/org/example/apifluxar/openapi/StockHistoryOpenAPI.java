@@ -17,5 +17,5 @@ public interface StockHistoryOpenAPI {
             @ApiResponse(responseCode = "404", description = "Histórico de estoque não encontrado para a unidade e setor fornecidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<List<StockHistoryResponseDTO>> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId);
+    ResponseEntity<StockHistoryResponseDTO> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId);
 }
