@@ -51,22 +51,6 @@ public class UnitService {
         return dto;
     }
 
-//    public UnitBatchResponseDTO getUnitBatchById(Long id) {
-//        Unit unit = unitRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        UnitBatchResponseDTO dto = new UnitBatchResponseDTO(
-//                unit.getName(),
-//                unit.getPostalCode(),
-//                unit.getStreet(),
-//                unit.getCity(),
-//                unit.getState(),
-//                unit.getNumber(),
-//                unit.getNeighborhood()
-//        );
-//
-//        return dto;
-//    }
-
     public List<UnitIndustryResponseDTO> getUnitByIndustry(Long id) {
         List<Unit> units = unitRepository.findAllByIndustry(id);
         List<UnitIndustryResponseDTO> dtos = new ArrayList<>();

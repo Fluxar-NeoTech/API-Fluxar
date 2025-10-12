@@ -15,9 +15,6 @@ public class UnitResponseDTO {
     private Integer availabilityUnit;
     private IndustryResponseDTO industry;
 
-    public UnitResponseDTO() {
-    }
-
     public UnitResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Integer avaliabilityUnit, IndustryResponseDTO industry) {
         this.id = id;
         this.name = name;

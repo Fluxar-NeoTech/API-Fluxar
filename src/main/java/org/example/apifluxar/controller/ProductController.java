@@ -35,30 +35,6 @@ public class ProductController implements ProductOpenAPI {
         return ResponseEntity.ok(batchCode);
     }
 
-//    @GetMapping("/search/by/id/{id}")
-//    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
-//        ProductResponseDTO res = productService.getProductById(id);
-//        return ResponseEntity.ok(res);
-//    }
-
-//    @GetMapping("/search/by/name/{name}")
-//    public ResponseEntity<List<ProductResponseDTO>> getProductByName(@PathVariable String name) {
-//        List<ProductResponseDTO> res = productService.getProductByName(name);
-//        return ResponseEntity.ok(res);
-//    }
-
-//    @GetMapping("/search/all")
-//    @Operation(summary = "Listar todos os produtos",
-//            description = "Retorna uma lista de todos os produtos cadastrados no sistema.")
-//    @ApiResponses({
-//            @ApiResponse( responseCode = "200", description = "Lista de produtos retornada com sucesso"),
-//            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-//    })
-//    public ResponseEntity<List<AllProductsResponseDTO>> getAllProducts() {
-//        List<AllProductsResponseDTO> res = productService.getAllProducts();
-//        return ResponseEntity.ok(res);
-//    }
-
     @PostMapping("/add")
     public ResponseEntity<MessageResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO) {
         MessageResponseDTO messageResponseDTO = productService.addProduct(productRequestDTO);

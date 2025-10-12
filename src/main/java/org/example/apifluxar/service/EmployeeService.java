@@ -103,8 +103,6 @@ public class EmployeeService {
         return new MessageResponseDTO("Foto de perfil atualizada com sucesso!");
     }
 
-
-
     public MessageResponseDTO updateSenha(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));

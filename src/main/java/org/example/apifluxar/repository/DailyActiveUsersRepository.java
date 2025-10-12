@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 public interface DailyActiveUsersRepository extends JpaRepository<DailyActiveUsers, Long> {
     @Modifying
     @Transactional

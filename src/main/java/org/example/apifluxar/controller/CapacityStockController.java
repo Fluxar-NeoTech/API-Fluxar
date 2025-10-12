@@ -29,10 +29,4 @@ public class CapacityStockController implements CapacityStockOpenAPI {
         MessageResponseDTO messageResponseDTO = capacityStockService.addOrUpdateCapacityStock(capacityStockRequestDTO);
         return ResponseEntity.ok(messageResponseDTO);
     }
-
-//    @GetMapping("/search/by/unit/sector")
-//    public ResponseEntity<CapacityStockResponseDTO> getByUnitAndSector(@RequestParam Long unitId, @RequestParam Long sectorId){
-//        CapacityStockResponseDTO dto = capacityStockService.getByUnitAndSector(unitId, sectorId);
-//        return ResponseEntity.ok(dto);
-//    }
 }

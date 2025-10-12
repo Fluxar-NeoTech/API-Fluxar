@@ -22,11 +22,6 @@ import java.util.Optional;
 public interface BatchRepository extends JpaRepository<Batch, Long> {
     Optional<Batch> findByBatchCode(String batchCode);
 
-//    @Modifying
-//    @Transactional
-//    @Query("DELETE FROM Batch b WHERE b.id = :id")
-//    void deleteByIdCustom(@Param("id") Long id);
-
     @Query("SELECT l FROM Batch l " +
             "JOIN l.product p " +
             "WHERE l.unit.id = :unitId AND p.sector.id = :sectorId")

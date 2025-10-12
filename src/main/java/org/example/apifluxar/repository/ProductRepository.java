@@ -8,9 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-//   List<Product> findByName(String name);
 
-   //seleciona todos os produtos pela unidade e pelo setor do usuário
    @Query("SELECT DISTINCT p FROM Batch b " +
            "JOIN Product p ON p.id = b.product.id " +
            "JOIN Unit u ON u.id = b.unit.id " +
@@ -19,7 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    List<Product> findAllProductRegistered(@Param("employeeId") Long id);
 
 
-   //seleciona sku do lote e id do produto
    @Query("SELECT b.batchCode FROM Batch b\n" +
            "JOIN Product p ON p.id = b.product.id\n" +
            "JOIN Unit u ON u.id = b.unit.id\n" +

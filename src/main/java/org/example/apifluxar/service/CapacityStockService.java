@@ -96,17 +96,6 @@ public class CapacityStockService {
                 capacityStock.getLength(),
                 capacityStock.getWidth());
 
-//        Sector setor = capacityStock.getSector();
-//        if (setor != null) {
-//            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
-//            dto.setSector(sectorResponseDTO);
-//        }
-//
-//        Unit unit = capacityStock.getUnit();
-//        if (unit != null) {
-//            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
-//            dto.setUnit(unitResponseDTO);
-//        }
         return  dto;
     }
 }

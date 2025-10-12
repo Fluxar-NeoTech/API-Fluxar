@@ -23,12 +23,6 @@ public class UnitController implements UnitOpenAPI {
         this.unitService = unitService;
     }
 
-//    @GetMapping("/search/by/id/{id}")
-//    public ResponseEntity<UnitResponseDTO> getUnitById(@PathVariable Long id) {
-//        UnitResponseDTO res = unitService.getUnitById(id);
-//        return ResponseEntity.ok(res);
-//    }
-
     @GetMapping("/search/all/by/industry/{id}")
     public ResponseEntity<List<UnitIndustryResponseDTO>> getUnitByIndustry(@PathVariable Long id) {
         List<UnitIndustryResponseDTO> res = unitService.getUnitByIndustry(id);
