@@ -1,7 +1,6 @@
 package org.example.apifluxar.repository;
 
 import org.example.apifluxar.model.Unit;
-import org.example.apifluxar.projection.UnitDimensionsProjection;
 import org.example.apifluxar.projection.UnitIndustryProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,8 +19,4 @@ public interface UnitRepository extends JpaRepository<Unit,Long> {
     @Query(value = "SELECT * FROM " +
             "disponibilidade_ocupacao_unidade(:unitId)", nativeQuery = true)
     Integer findAvailabilityByUnitId(@Param("unitId")Long unitId);
-
-    @Query(value = "SELECT comprimento_disponivel, altura_disponivel, largura_disponivel " +
-            "FROM retornar_disponibilidade_dimensoes_por_unidade(:unitId)", nativeQuery = true)
-    UnitDimensionsProjection findDimensionsByUnitId(@Param("unitId")Long unitId);
 }

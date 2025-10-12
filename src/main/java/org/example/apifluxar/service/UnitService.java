@@ -2,17 +2,13 @@ package org.example.apifluxar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
-import org.example.apifluxar.dto.unit.UnitDimensionsResponseDTO;
 import org.example.apifluxar.dto.unit.UnitIndustryResponseDTO;
 import org.example.apifluxar.exception.EmptyAvailability;
 import org.example.apifluxar.model.*;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
-import org.example.apifluxar.projection.UnitDimensionsProjection;
 import org.example.apifluxar.projection.UnitIndustryProjection;
 import org.example.apifluxar.repository.UnitRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,17 +86,5 @@ public class UnitService {
             dtos.add(dto);
         }
         return dtos;
-    }
-
-    public UnitDimensionsResponseDTO getUnitDimensions(Long id) {
-        UnitDimensionsProjection dimensions = unitRepository.findDimensionsByUnitId(id);
-
-        UnitDimensionsResponseDTO dto = new UnitDimensionsResponseDTO(
-                dimensions.getLarguraDisponivel(),
-                dimensions.getAlturaDisponivel(),
-                dimensions.getComprimentoDisponivel()
-        );
-
-        return dto;
     }
 }
