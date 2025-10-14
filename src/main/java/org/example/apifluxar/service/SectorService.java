@@ -19,7 +19,17 @@ public class SectorService {
     }
 
     public SectorResponseDTO getSectorById(Long id) {
-        Sector setor = sectorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
-        return objectMapper.convertValue(setor, SectorResponseDTO.class);
+        Sector sector = sectorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Setor não encontrado"));
+        return objectMapper.convertValue(sector, SectorResponseDTO.class);
+    }
+
+    public Double getRemainingVolumeInSector(Long sectorId) {
+        return sectorRepository.getRemainingVolumeInSector(sectorId).orElseThrow(
+                () -> new EntityNotFoundException("Setor não encontrado ou sem capacidade definida"));
+    }
+
+    public Double getUsedVolumeInSector(Long sectorId) {
+        return sectorRepository.getUsedVolumeInSector(sectorId).orElseThrow(() ->
+                new EntityNotFoundException("Setor não encontrado ou sem produtos cadastrados"));
     }
 }
