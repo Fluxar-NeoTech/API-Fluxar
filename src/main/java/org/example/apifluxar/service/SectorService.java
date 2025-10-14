@@ -4,11 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.openapi.SectorOpenAPI;
 import org.example.apifluxar.repository.SectorRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SectorService {
+public class SectorService implements SectorOpenAPI {
 
     final private SectorRepository sectorRepository;
     final private ObjectMapper objectMapper;
