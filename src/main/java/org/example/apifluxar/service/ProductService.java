@@ -8,6 +8,7 @@ import org.example.apifluxar.exception.EmptyProducts;
 import org.example.apifluxar.mapper.ProductMapper;
 import org.example.apifluxar.model.Product;
 import org.example.apifluxar.model.Sector;
+import org.example.apifluxar.projection.ProductProjection;
 import org.example.apifluxar.repository.ProductRepository;
 import org.example.apifluxar.repository.SectorRepository;
 import org.springframework.http.HttpStatus;
@@ -35,10 +36,10 @@ public class ProductService {
     }
 
     public List<ProductResponseDTO> getAllProductRegistered(Long employeeId) {
-        List<Product> products = productRepository.findAllProductRegistered(employeeId);
+        List<ProductProjection> products = productRepository.findAllProductRegistered(employeeId);
 
         List<ProductResponseDTO> productResponse = new ArrayList<>();
-        for (Product product : products) {
+        for (ProductProjection product : products) {
             productResponse.add(new ProductResponseDTO(product.getId(), product.getName(), product.getType()));
         }
 
