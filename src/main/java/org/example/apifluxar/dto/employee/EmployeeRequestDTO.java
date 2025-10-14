@@ -13,7 +13,7 @@ public class EmployeeRequestDTO {
     private String email;
 
     @NotNull(message = "A senha não pode ser nula", groups = OnCreate.class)
-    @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres", groups = OnCreate.class)
+    @Size(min = 8, max = 20, message = "A senha deve ter entre 6 à 20 caracteres", groups = OnCreate.class)
     @NotBlank(message = "A senha não pode ser em branco", groups = OnCreate.class)
     private String password;
 
