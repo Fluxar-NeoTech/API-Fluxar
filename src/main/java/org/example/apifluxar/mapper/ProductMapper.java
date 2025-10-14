@@ -22,12 +22,4 @@ public class ProductMapper {
 
         return product;
     }
-
-//    public ProductAddResponseDTO mapToProductResponseDTO(Product product) {
-//        return new ProductAddResponseDTO(
-//                product.getId(),
-//                product.getName(),
-//                product.getType()
-//        );
-//    }
 }

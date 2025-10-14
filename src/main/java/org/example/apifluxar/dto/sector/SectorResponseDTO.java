@@ -5,15 +5,6 @@ public class SectorResponseDTO {
     private String name;
     private String description;
 
-    public SectorResponseDTO() {
-    }
-
-    public SectorResponseDTO(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
     // Getters and Setters
     public Long getId() {
         return id;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/capacityStock")
-public class CapacityStockController {
+public class CapacityStockController implements CapacityStockOpenAPI {
     private final CapacityStockService capacityStockService;
 
     @Autowired
@@ -29,10 +29,4 @@ public class CapacityStockController {
         MessageResponseDTO messageResponseDTO = capacityStockService.addOrUpdateCapacityStock(capacityStockRequestDTO);
         return ResponseEntity.ok(messageResponseDTO);
     }
-
-//    @GetMapping("/search/by/unit/sector")
-//    public ResponseEntity<CapacityStockResponseDTO> getByUnitAndSector(@RequestParam Long unitId, @RequestParam Long sectorId){
-//        CapacityStockResponseDTO dto = capacityStockService.getByUnitAndSector(unitId, sectorId);
-//        return ResponseEntity.ok(dto);
-//    }
 }

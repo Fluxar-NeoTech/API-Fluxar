@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "historicoestoque")
+@Table(name = "historico_estoque")
 public class StockHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +13,11 @@ public class StockHistory {
     @Column(name = "data")
     private LocalDateTime date;
 
-    @Column(name = "capacidade_ocupada")
-    private Integer occupiedCapacity;
+    @Column(name = "movimentacao")
+    private Character movement;
+
+    @Column(name = "volume_movimentado")
+    private Double volumeHandled;
 
     @ManyToOne()
     @JoinColumn(name = "produto_id")
@@ -29,8 +32,8 @@ public class StockHistory {
     private Sector sector;
 
     @ManyToOne()
-    @JoinColumn(name = "lote_id")
-    private Batch batch;
+    @JoinColumn(name = "industria_id")
+    private Industry industry;
 
     public StockHistory() {}
 
@@ -42,10 +45,6 @@ public class StockHistory {
     public LocalDateTime getDate() { return date; }
 
     public void setDate(LocalDateTime date) { this.date = date; }
-
-    public Integer getOccupiedCapacity() { return occupiedCapacity; }
-
-    public void setOccupiedCapacity(Integer occupiedCapacity) { this.occupiedCapacity = occupiedCapacity; }
 
     public Product getProduct() { return product; }
 
@@ -59,7 +58,27 @@ public class StockHistory {
 
     public void setSector(Sector sector) { this.sector = sector; }
 
-    public Batch getBatch() { return batch; }
+    public Character getMovement() {
+        return movement;
+    }
 
-    public void setBatch(Batch batch) { this.batch = batch; }
+    public void setMovement(Character movement) {
+        this.movement = movement;
+    }
+
+    public Double getVolumeHandled() {
+        return volumeHandled;
+    }
+
+    public void setVolumeHandled(Double volumeHandled) {
+        this.volumeHandled = volumeHandled;
+    }
+
+    public Industry getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
+    }
 }

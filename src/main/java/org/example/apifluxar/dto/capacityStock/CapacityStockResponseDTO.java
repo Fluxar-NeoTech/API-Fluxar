@@ -9,8 +9,6 @@ public class CapacityStockResponseDTO {
     private Double height;
     private Double length;
     private Double maxCapacity;
-//    private SectorResponseDTO sector;
-//    private UnitResponseDTO unit;
 
     public CapacityStockResponseDTO(Double height, Double maxCapacity, Double length, Double width) {
         this.height = height;
@@ -50,20 +48,4 @@ public class CapacityStockResponseDTO {
     public void setLength(Double length) {
         this.length = length;
     }
-
-//    public SectorResponseDTO getSector() {
-//        return sector;
-//    }
-//
-//    public void setSector(SectorResponseDTO sector) {
-//        this.sector = sector;
-//    }
-//
-//    public UnitResponseDTO getUnit() {
-//        return unit;
-//    }
-//
-//    public void setUnit(UnitResponseDTO unit) {
-//        this.unit = unit;
-//    }
 }

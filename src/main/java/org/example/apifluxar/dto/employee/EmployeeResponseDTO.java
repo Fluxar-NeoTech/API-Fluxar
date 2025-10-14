@@ -21,7 +21,6 @@ public class EmployeeResponseDTO {
         this.profilePhoto = profilePhoto;
     }
 
-
     public String getFirstName() {
         return firstName;
     }

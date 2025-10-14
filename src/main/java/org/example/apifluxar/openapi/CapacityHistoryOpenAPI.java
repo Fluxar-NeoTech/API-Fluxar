@@ -10,24 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface CapacityHistoryOpenAPI {
-    @Operation(summary = "Listar histórico de capacidade por setor e unidade",
-            description = "Retorna uma lista de históricos de capacidade filtrados por setor e unidade.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Lista de históricos de capacidade retornada com sucesso"),
-            @ApiResponse( responseCode = "404", description = "Setor ou unidade não encontrado"),
-            @ApiResponse( responseCode = "400", description = "Nenhum histórico de capacidade encontrado nessa unidade e setor"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    @Operation(summary = "Pesquisa o histórico de capacidade por ID do setor e ID da unidade",
+            description = "Retorna uma lista de históricos de capacidade para o setor e unidade fornecidos.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Histórico de capacidade encontrado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Histórico de capacidade não encontrado para o setor e unidade fornecidos"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<List<CapacityHistoryResponseDTO>> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId,
-                                                                                              @RequestParam Long unitId);
-
-    @Operation(summary = "Deletar histórico de capacidade por ID da unidade",
-            description = "Deleta todos os históricos de capacidade associados a uma unidade específica com base no ID fornecido.")
-    @ApiResponses({
-            @ApiResponse( responseCode = "200", description = "Históricos de capacidade deletados com sucesso"),
-            @ApiResponse( responseCode = "404", description = "Unidade não encontrada"),
-            @ApiResponse( responseCode = "400", description = "Nenhum histórico de capacidade encontrado nessa unidade e setor"),
-            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
-    })
-    ResponseEntity<Object> deleteCapacityHistoryBySectorAndUnit(@RequestParam Long unitId, @RequestParam Long sectorId);
+    ResponseEntity<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId);
 }

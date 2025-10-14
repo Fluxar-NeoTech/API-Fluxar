@@ -9,17 +9,6 @@ public class ProductBatchResponseDTO {
     private Double length;
     private Double width;
     private String productName;
-//    private UnitResponseDTO unit;
-
-//    public BatchResponseDTO(Double height, Double length, String batchCode, Double width, ProductResponseDTO product, UnitResponseDTO unit, LocalDate expirationDate) {
-//        this.height = height;
-//        this.length = length;
-//        this.batchCode = batchCode;
-//        this.width = width;
-//        this.product = product;
-////        this.unit = unit;
-//        this.expirationDate = expirationDate;
-//    }
 
     public ProductBatchResponseDTO(String batchCode, LocalDate expirationDate, Double height, Double length, Double width, String productName) {
         this.productName = productName;
@@ -77,13 +66,5 @@ public class ProductBatchResponseDTO {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
-    //    public UnitResponseDTO getUnit() {
-//        return unit;
-//    }
-//
-//    public void setUnit(UnitResponseDTO unit) {
-//        this.unit = unit;
-//    }
 
 }

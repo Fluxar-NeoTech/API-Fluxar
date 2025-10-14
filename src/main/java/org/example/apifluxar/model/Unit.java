@@ -3,7 +3,7 @@ package org.example.apifluxar.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Unidade")
+@Table(name = "unidade")
 public class Unit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +11,8 @@ public class Unit {
 
     @Column(name = "nome")
     private String name;
+
+    private String email;
 
     @Column(name = "cep")
     private String postalCode;
@@ -72,4 +74,12 @@ public class Unit {
     public Industry getIndustry() { return industry; }
 
     public void setIndustry(Industry industry) { this.industry = industry; }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

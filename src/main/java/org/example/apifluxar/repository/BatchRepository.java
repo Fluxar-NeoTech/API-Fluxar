@@ -15,16 +15,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface BatchRepository extends JpaRepository<Batch, Long> {
     Optional<Batch> findByBatchCode(String batchCode);
-
-//    @Modifying
-//    @Transactional
-//    @Query("DELETE FROM Batch b WHERE b.id = :id")
-//    void deleteByIdCustom(@Param("id") Long id);
 
     @Query("SELECT l FROM Batch l " +
             "JOIN l.product p " +
@@ -32,18 +28,38 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
     List<Batch> findAllBatchesInUnitAndSector(@Param("unitId") Long unitId,
                                               @Param("sectorId") Long sectorId);
 
-    //Métodos com procedures
-    @Procedure(name = "adicionar_lote")
-    MessageResponseDTO addBatch(String productName,
-                                                String productType,
-                                                Long idSector,
-                                                Double height,
-                                                Double width,
-                                                Double length,
-                                                LocalDate expirationDate,
-                                                String batchCode,
-                                                Long idUnit);
 
-    @Procedure(name = "remover_lote")
-    MessageResponseDTO deleteBatch(String productName, String batchCode);
+    @Transactional
+    @Modifying
+    @Query(value = """
+    CALL adicionar_lote(
+        :sku_param,
+        CAST(:val AS timestamp),
+        CAST(:alt AS numeric),
+        CAST(:comp AS numeric),
+        CAST(:larg AS numeric),
+        :nome_prod,
+        :tipo_prod,
+        :id_unidade_param,
+        :id_setor
+    )
+""", nativeQuery = true)
+    void addBatch(
+            @Param("sku_param") String sku_param,
+            @Param("val") java.sql.Timestamp val,
+            @Param("alt") Double alt,
+            @Param("comp") Double comp,
+            @Param("larg") Double larg,
+            @Param("nome_prod") String nome_prod,
+            @Param("tipo_prod") String tipo_prod,
+            @Param("id_unidade_param") Long id_unidade_param,
+            @Param("id_setor") Long id_setor
+    );
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "CALL remover_do_estoque(:sku_param)", nativeQuery = true)
+    void deleteBatch(@Param("sku_param") String sku_param);
+
 }

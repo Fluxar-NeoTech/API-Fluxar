@@ -5,15 +5,6 @@ public class IndustryResponseDTO {
     private String name;
     private String cnpj;
 
-//    public IndustryResponseDTO() {
-//    }
-//
-//    public IndustryResponseDTO(Long id, String name, String cnpj) {
-//        this.id = id;
-//        this.name = name;
-//        this.cnpj = cnpj;
-//    }
-
     // Getters and Setters
     public Long getId() {
         return id;
