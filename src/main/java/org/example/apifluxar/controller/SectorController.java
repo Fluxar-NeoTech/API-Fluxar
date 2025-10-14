@@ -13,13 +13,13 @@ public class SectorController {
         this.sectorService = sectorService;
     }
 
-    @GetMapping("/search/volume/remaining/in/sector/{sectorId}")
-    public Double getRemainingVolumeInSector(@PathVariable Long sectorId) {
-        return sectorService.getRemainingVolumeInSector(sectorId);
+    @GetMapping("/search/volume/remaining/in/sector/employee")
+    public Double getRemainingVolumeInSector(@RequestParam Long sectorId, @RequestParam Long employeeId) {
+        return sectorService.getRemainingVolumeInSector(sectorId, employeeId);
     }
 
-    @GetMapping("/search/volume/used/in/sector/{sectorId}")
-    public Double getUsedVolumeInSector(@PathVariable Long sectorId) {
-        return sectorService.getUsedVolumeInSector(sectorId);
+    @GetMapping("/search/volume/used/in/sector/employee")
+    public Double getUsedVolumeInSector(@RequestParam Long sectorId, @RequestParam Long employeeId) {
+        return sectorService.getUsedVolumeInSector(sectorId, employeeId);
     }
 }
