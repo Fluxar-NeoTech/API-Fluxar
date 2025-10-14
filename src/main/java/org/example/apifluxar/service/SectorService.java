@@ -23,13 +23,13 @@ public class SectorService {
         return objectMapper.convertValue(sector, SectorResponseDTO.class);
     }
 
-    public Double getRemainingVolumeInSector(Long sectorId, Long employeeId) {
-        return sectorRepository.getRemainingVolumeInSector(sectorId, employeeId).orElseThrow(
+    public Double getRemainingVolumeInSector(Long sectorId) {
+        return sectorRepository.getRemainingVolumeInSector(sectorId).orElseThrow(
                 () -> new EntityNotFoundException("Setor não encontrado ou sem capacidade definida"));
     }
 
-    public Double getUsedVolumeInSector(Long sectorId, Long employeeId) {
-        return sectorRepository.getUsedVolumeInSector(sectorId, employeeId).orElseThrow(() ->
+    public Double getUsedVolumeInSector(Long sectorId) {
+        return sectorRepository.getUsedVolumeInSector(sectorId).orElseThrow(() ->
                 new EntityNotFoundException("Setor não encontrado ou sem produtos cadastrados"));
     }
 }
