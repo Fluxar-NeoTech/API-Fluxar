@@ -64,8 +64,8 @@ public class EmployeeController implements EmployeeOpenAPI {
     }
 
     @PutMapping("/update/senha")
-    public ResponseEntity<MessageResponseDTO> updateSenha( @RequestBody @Validated EmployeeRequestDTO employeeRequestDTO) {
-        MessageResponseDTO messageResponseDTO = employeeService.updateSenha(employeeRequestDTO);
+    public ResponseEntity<MessageResponseDTO> updatePassword(@RequestParam String email, @RequestParam String newPassword) {
+        MessageResponseDTO messageResponseDTO = employeeService.updatePassword(email, newPassword);
         return ResponseEntity.ok(messageResponseDTO);
     }
 }
