@@ -11,9 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CapacityHistoryRepository extends JpaRepository<CapacityHistory, Long> {
-    @Query("SELECT c FROM CapacityHistory c WHERE c.sector.id = :sectorId and c.unit.id = :unitId")
-    List<CapacityHistory> findBySectorAndAndUnit(@Param("sectorId") Long sectorId,
-                                                              @Param("unitId") Long unitId);
+    @Query("SELECT c FROM CapacityHistory c WHERE c.unit.id = :unitId")
+    List<CapacityHistory> findByUnit(@Param("unitId") Long unitId);
 
     @Query(value = "SELECT porcent_ocupacao_setor as OccupancyPercentage, volume_restante_setor RemainingVolume " +
             " FROM obter_ocupacao_setor(:sectorId,:employeeId)", nativeQuery = true)

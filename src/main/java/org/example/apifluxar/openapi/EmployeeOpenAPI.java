@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface EmployeeOpenAPI {
 
@@ -56,4 +58,14 @@ public interface EmployeeOpenAPI {
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
     ResponseEntity<MessageResponseDTO> updatePassword(@RequestParam String email, @RequestParam String newPassword);
+
+    @Operation(summary = "Atualizar foto de perfil do funcionário via site",
+            description = "Atualiza a foto de perfil de um funcionário com base nas informações fornecidas via site.")
+    @ApiResponses({
+            @ApiResponse( responseCode = "200", description = "Foto de perfil atualizada com sucesso"),
+            @ApiResponse( responseCode = "404", description = "Funcionário não encontrado"),
+            @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
+    })
+    ResponseEntity<MessageResponseDTO> updatePhotoSite(@RequestParam("email") String email,
+            @RequestPart("file") MultipartFile file);
 }
