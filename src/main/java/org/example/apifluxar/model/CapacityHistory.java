@@ -26,16 +26,12 @@ public class CapacityHistory {
     private Unit unit;
 
     @ManyToOne()
-    @JoinColumn(name = "setor_id")
-    private Sector sector;
-
-    @ManyToOne()
     @JoinColumn(name = "produto_id")
     private Product product;
 
     @ManyToOne()
     @JoinColumn(name = "industria_id")
-    private Industry industria;
+    private Industry industry;
 
     public CapacityHistory() {}
 
@@ -47,10 +43,6 @@ public class CapacityHistory {
     public LocalDate getFullDate() { return fullDate; }
 
     public void setFullDate(LocalDate fullDate) { this.fullDate = fullDate; }
-
-    public Sector getSector() { return sector; }
-
-    public void setSector(Sector sector) { this.sector = sector; }
 
     public Unit getUnit() { return unit; }
 
@@ -80,11 +72,11 @@ public class CapacityHistory {
         this.product = product;
     }
 
-    public Industry getIndustria() {
-        return industria;
+    public Industry getIndustry() {
+        return industry;
     }
 
-    public void setIndustria(Industry industria) {
-        this.industria = industria;
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
     }
 }
