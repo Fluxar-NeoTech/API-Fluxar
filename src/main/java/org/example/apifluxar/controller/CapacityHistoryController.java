@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.example.apifluxar.dto.capacityHistory.CapacityHistoryOccupationResponse;
 import org.example.apifluxar.dto.capacityHistory.CapacityHistoryResponseDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.openapi.CapacityHistoryOpenAPI;
@@ -29,5 +30,10 @@ public class CapacityHistoryController implements CapacityHistoryOpenAPI {
     public ResponseEntity<CapacityHistoryResponseDTO> getCapacityHistoryBySectorAndUnit(@RequestParam Long sectorId, @RequestParam Long unitId) {
         CapacityHistoryResponseDTO res = capacityHistoryService.getCapacityHistoryBySectorAndUnit( sectorId, unitId);
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/search/occupation/by/sector")
+    public ResponseEntity<CapacityHistoryOccupationResponse> getSectorCapacityUsage(@RequestParam Long sectorId, @RequestParam Long employeeId) {
+        return ResponseEntity.ok(capacityHistoryService.getSectorCapacityUsage(sectorId, employeeId));
     }
 }
