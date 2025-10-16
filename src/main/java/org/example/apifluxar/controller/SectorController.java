@@ -1,12 +1,13 @@
 package org.example.apifluxar.controller;
 
+import org.example.apifluxar.openapi.SectorOpenAPI;
 import org.example.apifluxar.service.SectorService;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("api/sector")
-public class SectorController {
+public class SectorController implements SectorOpenAPI {
     final SectorService sectorService;
 
     public SectorController(SectorService sectorService) {

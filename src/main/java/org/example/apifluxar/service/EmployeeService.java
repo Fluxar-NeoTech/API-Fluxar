@@ -139,8 +139,8 @@ public class EmployeeService {
         PlanProjection planProjection = employeeRepository.findByIndustryPlan(employee.getId(), employee.getUnit().getIndustry().getId());
         if (planProjection != null) {
             PlanResponseDTO planDto = new PlanResponseDTO(
-                    planProjection.getNomeDoPlano(),
-                    planProjection.getDuracaoMeses()
+                    planProjection.getPlanName(),
+                    planProjection.getMonthsDuration()
             );
             dto.setPlan(planDto);
         }

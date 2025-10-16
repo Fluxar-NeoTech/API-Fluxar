@@ -28,10 +28,6 @@ public class StockHistory {
     private Unit unit;
 
     @ManyToOne()
-    @JoinColumn(name = "setor_id")
-    private Sector sector;
-
-    @ManyToOne()
     @JoinColumn(name = "industria_id")
     private Industry industry;
 
@@ -53,10 +49,6 @@ public class StockHistory {
     public Unit getUnit() { return unit; }
 
     public void setUnit(Unit unit) { this.unit = unit; }
-
-    public Sector getSector() { return sector; }
-
-    public void setSector(Sector sector) { this.sector = sector; }
 
     public Character getMovement() {
         return movement;
