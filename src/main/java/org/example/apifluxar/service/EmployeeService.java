@@ -153,4 +153,10 @@ public class EmployeeService {
         return dto;
     }
 
+    public Employee findByEmail(String email) {
+        return employeeRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado")
+                );
+    }
 }
