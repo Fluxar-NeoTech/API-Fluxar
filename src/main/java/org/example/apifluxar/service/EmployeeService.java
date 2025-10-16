@@ -103,11 +103,11 @@ public class EmployeeService {
         return new MessageResponseDTO("Foto de perfil atualizada com sucesso!");
     }
 
-    public MessageResponseDTO updateSenha(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
-                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));
+    public MessageResponseDTO updatePassword(String email, String newPassword) {
+        Employee employee = employeeRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));;
 
-        employee.setPassword(employeeRequestDTO.getPassword());
+        employee.setPassword(newPassword);
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
@@ -153,4 +153,10 @@ public class EmployeeService {
         return dto;
     }
 
+    public Employee findByEmail(String email) {
+        return employeeRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado")
+                );
+    }
 }

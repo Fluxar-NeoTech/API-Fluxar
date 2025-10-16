@@ -22,8 +22,8 @@ public class CapacityHistoryService {
         this.capacityHistoryRepository = capacityHistoryRepository;
     }
 
-    public CapacityHistoryResponseDTO getCapacityHistoryBySectorAndUnit(Long sectorId, Long unitId) {
-        List<CapacityHistory> capacityHistory = capacityHistoryRepository.findBySectorAndAndUnit(sectorId, unitId);
+    public CapacityHistoryResponseDTO getCapacityHistoryByUnit(Long unitId) {
+        List<CapacityHistory> capacityHistory = capacityHistoryRepository.findByUnit(unitId);
 
         if (capacityHistory.isEmpty()) {
             throw new EmptyCapacityHistory("Histórico de capacidade vazio nessa unidade e setor");

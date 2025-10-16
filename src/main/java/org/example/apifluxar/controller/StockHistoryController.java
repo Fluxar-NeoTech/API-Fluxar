@@ -21,10 +21,9 @@ public class StockHistoryController implements StockHistoryOpenAPI {
         this.stockHistoryService = stockHistoryService;
     }
 
-    @GetMapping("/search/by/unit/sector")
-    public ResponseEntity<StockHistoryResponseDTO> getStockHistoryById(@RequestParam Long unitId, @RequestParam Long sectorId) {
-
-        StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryById(unitId, sectorId);
+    @GetMapping("/search/by/unit/{unitId}")
+    public ResponseEntity<StockHistoryResponseDTO> getStockHistoryByUnit(@PathVariable Long unitId) {
+        StockHistoryResponseDTO dto = stockHistoryService.getStockHistoryByUnit(unitId);
         return ResponseEntity.ok(dto);
     }
 

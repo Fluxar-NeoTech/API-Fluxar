@@ -19,8 +19,8 @@ public class StockHistoryService {
         this.stockHistoryRepository = stockHistoryRepository;
     }
 
-    public StockHistoryResponseDTO getStockHistoryById(Long unitId, Long sectorId) {
-        List<StockHistory> stockHistory = stockHistoryRepository.findByUnitAndSector(unitId, sectorId);
+    public StockHistoryResponseDTO getStockHistoryByUnit(Long unitId) {
+        List<StockHistory> stockHistory = stockHistoryRepository.findByUnit(unitId);
         List<StockHistoryResponseDTO> dto = new ArrayList<>();
 
         if (stockHistory.isEmpty()) {
