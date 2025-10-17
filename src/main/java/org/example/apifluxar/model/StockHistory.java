@@ -31,6 +31,10 @@ public class StockHistory {
     @JoinColumn(name = "industria_id")
     private Industry industry;
 
+    @ManyToOne()
+    @JoinColumn(name = "setor_id")
+    private Sector sector;
+
     public StockHistory() {}
 
     // Getters and Setters
@@ -72,5 +76,13 @@ public class StockHistory {
 
     public void setIndustry(Industry industry) {
         this.industry = industry;
+    }
+
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
     }
 }

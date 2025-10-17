@@ -38,6 +38,8 @@ public class EmployeeService {
     final Logger log = LoggerFactory.getLogger(EmployeeService.class);
     final CloudinaryService cloudinaryService;
     final DailyActiveUsersService dailyActiveUsersService;
+    final Argon2PasswordEncoder passwordEncoder;
+
 
 
     public EmployeeService(EmployeeRepository employeeRepository,
@@ -46,7 +48,9 @@ public class EmployeeService {
                            SectorService sectorService,
                            UnitService unitService,
                            CloudinaryService cloudinaryService,
-                           DailyActiveUsersService dailyActiveUsersService) {
+                           DailyActiveUsersService dailyActiveUsersService,
+                           Argon2PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         this.unitService = unitService;
         this.sectorService = sectorService;
         this.industryService = industryService;
@@ -58,18 +62,28 @@ public class EmployeeService {
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository
-                .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
-                .orElseThrow(() -> new NotAuthorizedEmployee("Você não está autorizado a acessar o sistema. " +
+                .findByEmail(employeeRequestDTO.getEmail())
+                .orElseThrow(() -> new NotAuthorizedEmployee(
+                        "Você não está autorizado a acessar o sistema. " +
                         "Verifique suas credenciais e tente novamente."));
 
+        boolean comparePassword = passwordEncoder.matches(
+                employeeRequestDTO.getPassword(),
+                employee.getPassword()
+        );
+
+        if (!comparePassword) {
+            throw new NotAuthorizedEmployee(
+                    "Você não está autorizado a acessar o sistema. " +
+                    "Verifique suas credenciais e tente novamente.");
+        }
 
         LoginEmployeeResponseDTO dto = new LoginEmployeeResponseDTO(
                 employee.getId(),
                 employee.getRole(),
                 employee.getEmail()
         );
-
-        dailyActiveUsersService.insertAccess(employee.getId(),employeeRequestDTO.getOrigin());
+        dailyActiveUsersService.insertAccess(employee.getId(), employeeRequestDTO.getOrigin());
 
         return dto;
     }
@@ -107,7 +121,10 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));;
 
-        employee.setPassword(newPassword);
+        //Hash password with Argon2
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        employee.setPassword(hashedPassword);
+
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());

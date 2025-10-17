@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface StockHistoryRepository extends JpaRepository<StockHistory, Long> {
 
-    @Query("SELECT sh FROM StockHistory sh WHERE sh.unit.id = :unitId")
-    List<StockHistory> findByUnit(@Param("unitId") Long unitId);
-
+    @Query("SELECT sh FROM StockHistory sh WHERE sh.unit.id = :unitId AND sh.sector.id = :sectorId")
+    List<StockHistory> findByUnitAndSector(@Param("unitId") Long unitId,
+                                           @Param("sectorId") Long sectorId);
 }

@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface CapacityHistoryOpenAPI {
-    @Operation(summary = "Pesquisa o histórico de capacidade por ID do setor e ID da unidade",
-            description = "Retorna uma lista de históricos de capacidade para o setor e unidade fornecidos.")
+    @Operation(summary = "Pesquisa o histórico de capacidade por ID da unidade",
+            description = "Retorna uma lista de históricos de capacidade para a unidade fornecidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Histórico de capacidade encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Histórico de capacidade não encontrado para o setor e unidade fornecidos"),
+            @ApiResponse(responseCode = "404", description = "Histórico de capacidade não encontrado para a unidade fornecidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     ResponseEntity<CapacityHistoryResponseDTO> getCapacityHistoryByUnit(@PathVariable Long unitId);
