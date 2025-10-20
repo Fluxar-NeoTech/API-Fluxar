@@ -1,4 +1,4 @@
-package org.example.apifluxar.openapi;
+package org.example.apifluxar.config;
 
 import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;

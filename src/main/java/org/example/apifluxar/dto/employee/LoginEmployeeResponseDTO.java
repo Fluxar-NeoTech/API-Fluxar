@@ -37,4 +37,8 @@ public class LoginEmployeeResponseDTO {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getToken() {
+        return token;
+    }
 }
