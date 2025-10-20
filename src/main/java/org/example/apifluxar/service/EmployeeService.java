@@ -1,5 +1,6 @@
 package org.example.apifluxar.service;
 
+import org.springframework.security.core.Authentication;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.cloud.CloudinayUploadResponse;
@@ -13,20 +14,18 @@ import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.exception.NotAuthorizedEmployee;
 import org.example.apifluxar.model.Employee;
-import org.example.apifluxar.model.Plan;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.projection.PlanProjection;
 import org.example.apifluxar.repository.EmployeeRepository;
+import org.example.apifluxar.security.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class EmployeeService {
@@ -38,7 +37,8 @@ public class EmployeeService {
     final Logger log = LoggerFactory.getLogger(EmployeeService.class);
     final CloudinaryService cloudinaryService;
     final DailyActiveUsersService dailyActiveUsersService;
-
+    final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
     public EmployeeService(EmployeeRepository employeeRepository,
                            IndustryService industryService,
@@ -46,7 +46,9 @@ public class EmployeeService {
                            SectorService sectorService,
                            UnitService unitService,
                            CloudinaryService cloudinaryService,
-                           DailyActiveUsersService dailyActiveUsersService) {
+                           DailyActiveUsersService dailyActiveUsersService,
+                           JwtService jwtService,
+                           PasswordEncoder passwordEncoder) {
         this.unitService = unitService;
         this.sectorService = sectorService;
         this.industryService = industryService;
@@ -54,24 +56,38 @@ public class EmployeeService {
         this.capacityStockService = capacityStockService;
         this.cloudinaryService =cloudinaryService;
         this.dailyActiveUsersService = dailyActiveUsersService;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employee = employeeRepository
-                .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
-                .orElseThrow(() -> new NotAuthorizedEmployee("Você não está autorizado a acessar o sistema. " +
-                        "Verifique suas credenciais e tente novamente."));
+        // Busca o usuário pelo e-mail
+        Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
+                .orElseThrow(() -> new NotAuthorizedEmployee(
+                        "Usuário não encontrado. Verifique suas credenciais."));
 
+        // Verifica a senha usando Argon2 (ou outro encoder configurado)
+        if (!passwordEncoder.matches(employeeRequestDTO.getPassword(), employee.getPassword())) {
+            throw new NotAuthorizedEmployee("Senha incorreta. Verifique suas credenciais.");
+        }
 
-        LoginEmployeeResponseDTO dto = new LoginEmployeeResponseDTO(
+        // Cria o objeto Authentication “manual” para gerar o token
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(employee.getEmail(), null);
+
+        // Gera o token JWT
+        String token = jwtService.generateToken(authentication);
+
+        // Salva o acesso (exemplo de lógica adicional sua)
+        dailyActiveUsersService.insertAccess(employee.getId(), employeeRequestDTO.getOrigin());
+
+        // Retorna dados + token JWT
+        return new LoginEmployeeResponseDTO(
                 employee.getId(),
                 employee.getRole(),
-                employee.getEmail()
+                employee.getEmail(),
+                token
         );
-
-        dailyActiveUsersService.insertAccess(employee.getId(),employeeRequestDTO.getOrigin());
-
-        return dto;
     }
 
     public MessageResponseDTO updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
