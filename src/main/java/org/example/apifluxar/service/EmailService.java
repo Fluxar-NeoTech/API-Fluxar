@@ -2,6 +2,7 @@ package org.example.apifluxar.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.example.apifluxar.dto.email.SendEmailRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.model.Employee;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,8 +20,9 @@ public class EmailService {
         this.emailSender = emailSender;
     }
 
-    public MessageResponseDTO sendTemplateMessage(String to) {
+    public MessageResponseDTO sendTemplateMessage(SendEmailRequestDTO emailRequestDTO) {
         // variables
+        String to = emailRequestDTO.getEmail();
         String link = "https://areademulher.r7.com/wp-content/uploads/2022/07/tipos-de-macarrao-saiba-quais-sao-e-como-servir.jpg";
         Employee username = employeeService.findByEmail(to);
 
