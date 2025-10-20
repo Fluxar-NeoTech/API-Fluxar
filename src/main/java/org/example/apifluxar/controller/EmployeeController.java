@@ -54,7 +54,7 @@ public class EmployeeController implements EmployeeOpenAPI {
         return ResponseEntity.ok(messageResponseDTO);
     }
 
-    @PutMapping(value = "/update-photo-site", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/update/photo/site", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MessageResponseDTO> updatePhotoSite(
             @RequestParam("email") String email,
             @RequestPart("file") MultipartFile file) {
@@ -63,7 +63,7 @@ public class EmployeeController implements EmployeeOpenAPI {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update/senha")
+    @PutMapping("/update/password")
     public ResponseEntity<MessageResponseDTO> updatePassword(@RequestParam String email, @RequestParam String newPassword) {
         MessageResponseDTO messageResponseDTO = employeeService.updatePassword(email, newPassword);
         return ResponseEntity.ok(messageResponseDTO);

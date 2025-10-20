@@ -59,7 +59,6 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "CALL remover_do_estoque(:sku_param)", nativeQuery = true)
+    @Query(value = "CALL remover_lote(:sku_param)", nativeQuery = true)
     void deleteBatch(@Param("sku_param") String sku_param);
-
 }

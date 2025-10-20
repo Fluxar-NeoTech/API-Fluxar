@@ -1,5 +1,6 @@
 package org.example.apifluxar.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,9 +23,11 @@ import org.example.apifluxar.security.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -38,7 +41,9 @@ public class EmployeeService {
     final CloudinaryService cloudinaryService;
     final DailyActiveUsersService dailyActiveUsersService;
     final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
+    final Argon2PasswordEncoder passwordEncoder;
+
+
 
     public EmployeeService(EmployeeRepository employeeRepository,
                            IndustryService industryService,
@@ -48,7 +53,7 @@ public class EmployeeService {
                            CloudinaryService cloudinaryService,
                            DailyActiveUsersService dailyActiveUsersService,
                            JwtService jwtService,
-                           PasswordEncoder passwordEncoder) {
+                           Argon2PasswordEncoder passwordEncoder) {
         this.unitService = unitService;
         this.sectorService = sectorService;
         this.industryService = industryService;
@@ -61,14 +66,21 @@ public class EmployeeService {
     }
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
-        // Busca o usuário pelo e-mail
-        Employee employee = employeeRepository.findByEmail(employeeRequestDTO.getEmail())
+     Employee employee = employeeRepository
+                .findByEmail(employeeRequestDTO.getEmail())
                 .orElseThrow(() -> new NotAuthorizedEmployee(
-                        "Usuário não encontrado. Verifique suas credenciais."));
+                        "Você não está autorizado a acessar o sistema. " +
+                        "Verifique suas credenciais e tente novamente."));
 
-        // Verifica a senha usando Argon2 (ou outro encoder configurado)
-        if (!passwordEncoder.matches(employeeRequestDTO.getPassword(), employee.getPassword())) {
-            throw new NotAuthorizedEmployee("Senha incorreta. Verifique suas credenciais.");
+        boolean comparePassword = passwordEncoder.matches(
+                employeeRequestDTO.getPassword(),
+                employee.getPassword()
+        );
+
+        if (!comparePassword) {
+            throw new NotAuthorizedEmployee(
+                    "Você não está autorizado a acessar o sistema. " +
+                    "Verifique suas credenciais e tente novamente.");
         }
 
         // Cria o objeto Authentication “manual” para gerar o token
@@ -88,6 +100,7 @@ public class EmployeeService {
                 employee.getEmail(),
                 token
         );
+
     }
 
     public MessageResponseDTO updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
@@ -123,7 +136,10 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));;
 
-        employee.setPassword(newPassword);
+        //Hash password with Argon2
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        employee.setPassword(hashedPassword);
+
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
