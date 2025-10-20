@@ -12,7 +12,7 @@ public interface UnitRepository extends JpaRepository<Unit,Long> {
     @Query("SELECT u FROM Unit u WHERE u.industry.id = :id")
     List<Unit> findAllByIndustry(@Param("id")Long id);
 
-    @Query(value = "SELECT unidade_id, disponibilidade " +
+    @Query(value = "SELECT unidade_id as UnitId, disponibilidade as Availability \n" +
             "FROM disponibilidade_por_industria(:industryId)", nativeQuery = true)
     List<UnitIndustryProjection> findAvailabilityByIndustry(@Param("industryId")Long id);
 

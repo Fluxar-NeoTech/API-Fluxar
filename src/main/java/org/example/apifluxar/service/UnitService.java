@@ -61,11 +61,11 @@ public class UnitService {
         for (Unit unitItem : units) {
 
             UnitIndustryProjection projection = projections.stream()
-                    .filter(p -> p.getUnidadeId().equals(unitItem.getId()))
+                    .filter(p -> p.getUnitId().equals(unitItem.getId()))
                     .findFirst()
                     .orElse(null);
 
-            Integer disponibilidade = projection.getDisponibilidade();
+            Integer disponibilidade = projection.getAvailability();
 
             if (disponibilidade == null) {
                 throw new EmptyAvailability("Sem disponibilidade no momento");
@@ -81,7 +81,7 @@ public class UnitService {
                     unitItem.getNumber(),
                     unitItem.getNeighborhood(),
                     unitItem.getEmail(),
-                    projection.getDisponibilidade()
+                    projection.getAvailability()
             );
             dtos.add(dto);
         }

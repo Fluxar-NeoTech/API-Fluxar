@@ -15,7 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findByEmailAndPassword(String email, String password);
     Optional<Employee> findByEmail(String email);
 
-    @Query(value = "SELECT nome_do_plano, duracao_meses " +
+    @Query(value = "SELECT nome_do_plano as PlanName, duracao_meses as MonthsDuration \n" +
             "FROM retornar_duracao_plano_por_industria_e_func(:employeeId, :industryId)",
             nativeQuery = true)
     PlanProjection findByIndustryPlan(@Param("employeeId") Long employeeId,
