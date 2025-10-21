@@ -45,7 +45,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
                         .requestMatchers("api/**").hasRole("G")
-                        .requestMatchers("/api/employee/**").hasRole("A")
+                        .requestMatchers("/api/employee/profile/","/api/employee/update/photo/site","api/employee/").hasRole("A")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
