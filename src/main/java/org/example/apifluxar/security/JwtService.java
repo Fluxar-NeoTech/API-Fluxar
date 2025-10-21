@@ -10,13 +10,13 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-    @Value("${JWT_SCRET}")
+    @Value("${JWT_SECRET}")
     private String SECRET;
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + 86400000); // 1 dia
+        Date expiry = new Date(now.getTime() + 86400000);
 
         return Jwts.builder()
                 .setSubject(username)

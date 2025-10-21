@@ -43,7 +43,7 @@ public class SecurityConfig {
                                 "/swagger-resources",
                                 "/webjars/**"
                         ).permitAll()
-                        .requestMatchers("api/employee/login").permitAll()
+                        .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
                         .requestMatchers("api/**").hasRole("G")
                         .requestMatchers("/api/employee/**").hasRole("A")
                         .anyRequest().authenticated()
