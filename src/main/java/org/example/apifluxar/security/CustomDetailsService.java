@@ -27,9 +27,6 @@ public class CustomDetailsService implements UserDetailsService {
 
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + employee.getRole());
 
-        System.out.println("Usuário autenticado: " + email);
-        System.out.println("Authorities: " + authority);
-
         return new org.springframework.security.core.userdetails.User(
                 employee.getEmail(),
                 employee.getPassword(),

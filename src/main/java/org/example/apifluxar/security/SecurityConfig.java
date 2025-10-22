@@ -44,8 +44,8 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
                         .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
-                        .requestMatchers("api/**").hasRole("G")
                         .requestMatchers("api/employee/**").hasRole("A")
+                        .requestMatchers("api/**").hasRole("G")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
