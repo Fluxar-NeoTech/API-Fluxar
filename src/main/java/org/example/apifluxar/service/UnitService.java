@@ -28,7 +28,7 @@ public class UnitService {
     public UnitResponseDTO getUnitById(Long id) {
         Unit unit = unitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada"));
 
-        Integer availability = unitRepository.findAvailabilityByUnitId(id);
+        Long availability = unitRepository.findAvailabilityByUnitId(id);
 
         UnitResponseDTO dto = new UnitResponseDTO(
                 unit.getId(),
@@ -65,7 +65,7 @@ public class UnitService {
                     .findFirst()
                     .orElse(null);
 
-            Integer disponibilidade = projection.getAvailability();
+            Long disponibilidade = projection.getAvailability();
 
             if (disponibilidade == null) {
                 throw new EmptyAvailability("Sem disponibilidade no momento");

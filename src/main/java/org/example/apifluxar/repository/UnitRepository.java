@@ -18,5 +18,5 @@ public interface UnitRepository extends JpaRepository<Unit,Long> {
 
     @Query(value = "SELECT * FROM " +
             "disponibilidade_ocupacao_unidade(:unitId)", nativeQuery = true)
-    Integer findAvailabilityByUnitId(@Param("unitId")Long unitId);
+    Long findAvailabilityByUnitId(@Param("unitId")Long unitId);
 }
