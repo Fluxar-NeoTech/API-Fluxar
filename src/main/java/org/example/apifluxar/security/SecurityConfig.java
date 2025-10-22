@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
                         .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
-                        .requestMatchers("api/employee/**").hasRole("A")
+                        .requestMatchers("api/employee/**").hasAnyRole("A", "G")
                         .requestMatchers("api/**").hasRole("G")
                         .anyRequest().authenticated()
                 )
