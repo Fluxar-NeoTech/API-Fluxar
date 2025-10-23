@@ -24,15 +24,12 @@ public class EmailService {
     }
 
     public MessageResponseDTO sendTemplateMessage(String to) {
-        // variables
         String link = "https://areademulher.r7.com/wp-content/uploads/2022/07/tipos-de-macarrao-saiba-quais-sao-e-como-servir.jpg";
 
         Employee username = employeeService.findByEmail(to);
 
-        // ID do template do SendGrid (Dynamic Template)
         String templateId = "d-71bbe8a900a340a68d3e58157eff16b0";
 
-        // ⚠️ Use exatamente o mesmo email verificado no painel do SendGrid
         Email from = new Email("suporte2025.neo.tech@gmail.com", "NeoTech");
         Email toEmail = new Email(to);
 
@@ -40,7 +37,6 @@ public class EmailService {
         mail.setFrom(from);
         mail.setTemplateId(templateId);
 
-        // Personalização (dados dinâmicos do template)
         Personalization personalization = new Personalization();
         personalization.addTo(toEmail);
         personalization.addDynamicTemplateData("firstName", username.getFirstName());
