@@ -12,10 +12,10 @@ public class UnitResponseDTO {
     private String number;
     private String neighborhood;
     private String email;
-    private Integer availabilityUnit;
+    private Long availabilityUnit;
     private IndustryResponseDTO industry;
 
-    public UnitResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Integer avaliabilityUnit, IndustryResponseDTO industry) {
+    public UnitResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Long avaliabilityUnit, IndustryResponseDTO industry) {
         this.id = id;
         this.name = name;
         this.postalCode = postalCode;
@@ -110,11 +110,11 @@ public class UnitResponseDTO {
         this.email = email;
     }
 
-    public Integer getAvailabilityUnit() {
+    public Long getAvailabilityUnit() {
         return availabilityUnit;
     }
 
-    public void setAvailabilityUnit(Integer availabilityUnit) {
+    public void setAvailabilityUnit(Long availabilityUnit) {
         this.availabilityUnit = availabilityUnit;
     }
 }

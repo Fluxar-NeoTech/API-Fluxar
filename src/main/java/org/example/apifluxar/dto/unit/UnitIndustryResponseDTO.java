@@ -10,9 +10,9 @@ public class UnitIndustryResponseDTO {
     private String number;
     private String neighborhood;
     private String email;
-    private Integer availability;
+    private Long availability;
 
-    public UnitIndustryResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Integer availability) {
+    public UnitIndustryResponseDTO(Long id, String name, String postalCode, String street, String city, String state, String number, String neighborhood, String email, Long availability) {
         this.id = id;
         this.name = name;
         this.postalCode = postalCode;
@@ -98,11 +98,11 @@ public class UnitIndustryResponseDTO {
         this.id = id;
     }
 
-    public Integer getAvailability() {
+    public Long getAvailability() {
         return availability;
     }
 
-    public void setAvailability(Integer availability) {
+    public void setAvailability(Long availability) {
         this.availability = availability;
     }
 }
