@@ -19,12 +19,12 @@ public class StockHistoryService {
         this.stockHistoryRepository = stockHistoryRepository;
     }
 
-    public StockHistoryResponseDTO getStockHistoryByUnit(Long unitId) {
-        List<StockHistory> stockHistory = stockHistoryRepository.findByUnit(unitId);
+    public StockHistoryResponseDTO getStockHistoryByUnit(Long unitId, Long sectorId) {
+        List<StockHistory> stockHistory = stockHistoryRepository.findByUnitAndSector(unitId, sectorId);
         List<StockHistoryResponseDTO> dto = new ArrayList<>();
 
         if (stockHistory.isEmpty()) {
-            throw new EntityNotFoundException("Histórico de estoque não encontrado para a unidade e setor fornecidos.");
+            throw new EntityNotFoundException("Histórico de estoque não encontrado para esse setor.");
         }
 
         for (StockHistory sh : stockHistory) {

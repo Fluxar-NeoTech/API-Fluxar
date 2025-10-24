@@ -1,5 +1,7 @@
 package org.example.apifluxar.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.cloud.CloudinayUploadResponse;
@@ -13,20 +15,19 @@ import org.example.apifluxar.dto.sector.SectorResponseDTO;
 import org.example.apifluxar.dto.unit.UnitResponseDTO;
 import org.example.apifluxar.exception.NotAuthorizedEmployee;
 import org.example.apifluxar.model.Employee;
-import org.example.apifluxar.model.Plan;
 import org.example.apifluxar.model.Sector;
 import org.example.apifluxar.model.Unit;
 import org.example.apifluxar.projection.PlanProjection;
 import org.example.apifluxar.repository.EmployeeRepository;
+import org.example.apifluxar.security.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class EmployeeService {
@@ -38,6 +39,9 @@ public class EmployeeService {
     final Logger log = LoggerFactory.getLogger(EmployeeService.class);
     final CloudinaryService cloudinaryService;
     final DailyActiveUsersService dailyActiveUsersService;
+    final JwtService jwtService;
+    final Argon2PasswordEncoder passwordEncoder;
+
 
 
     public EmployeeService(EmployeeRepository employeeRepository,
@@ -46,7 +50,9 @@ public class EmployeeService {
                            SectorService sectorService,
                            UnitService unitService,
                            CloudinaryService cloudinaryService,
-                           DailyActiveUsersService dailyActiveUsersService) {
+                           DailyActiveUsersService dailyActiveUsersService,
+                           JwtService jwtService,
+                           Argon2PasswordEncoder passwordEncoder) {
         this.unitService = unitService;
         this.sectorService = sectorService;
         this.industryService = industryService;
@@ -54,24 +60,46 @@ public class EmployeeService {
         this.capacityStockService = capacityStockService;
         this.cloudinaryService =cloudinaryService;
         this.dailyActiveUsersService = dailyActiveUsersService;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
-        Employee employee = employeeRepository
-                .findByEmailAndPassword(employeeRequestDTO.getEmail(), employeeRequestDTO.getPassword())
-                .orElseThrow(() -> new NotAuthorizedEmployee("Você não está autorizado a acessar o sistema. " +
+     Employee employee = employeeRepository
+                .findByEmail(employeeRequestDTO.getEmail())
+                .orElseThrow(() -> new NotAuthorizedEmployee(
+                        "Você não está autorizado a acessar o sistema. " +
                         "Verifique suas credenciais e tente novamente."));
 
-
-        LoginEmployeeResponseDTO dto = new LoginEmployeeResponseDTO(
-                employee.getId(),
-                employee.getRole(),
-                employee.getEmail()
+        boolean comparePassword = passwordEncoder.matches(
+                employeeRequestDTO.getPassword(),
+                employee.getPassword()
         );
 
-        dailyActiveUsersService.insertAccess(employee.getId(),employeeRequestDTO.getOrigin());
+        if (!comparePassword) {
+            throw new NotAuthorizedEmployee(
+                    "Você não está autorizado a acessar o sistema. " +
+                    "Verifique suas credenciais e tente novamente.");
+        }
 
-        return dto;
+        // Cria o objeto Authentication “manual” para gerar o token
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(employee.getEmail(), null);
+
+        // Gera o token JWT
+        String token = jwtService.generateToken(authentication);
+
+        // Salva o acesso (exemplo de lógica adicional sua)
+        dailyActiveUsersService.insertAccess(employee.getId(), employeeRequestDTO.getOrigin());
+
+        // Retorna dados + token JWT
+        return new LoginEmployeeResponseDTO(
+                employee.getId(),
+                employee.getRole(),
+                employee.getEmail(),
+                token
+        );
+
     }
 
     public MessageResponseDTO updatePhoto(UpdatePhotoRequestDTO updatePhotoRequestDTO) {
@@ -107,7 +135,10 @@ public class EmployeeService {
         Employee employee = employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));;
 
-        employee.setPassword(newPassword);
+        //Hash password with Argon2
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        employee.setPassword(hashedPassword);
+
         employeeRepository.save(employee);
 
         log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());

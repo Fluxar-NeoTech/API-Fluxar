@@ -1,4 +1,4 @@
-package org.example.apifluxar.openapi;
+package org.example.apifluxar.config;
 
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;

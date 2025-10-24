@@ -1,8 +1,11 @@
 package org.example.apifluxar.controller;
 
+import jakarta.validation.Valid;
+import org.example.apifluxar.dto.email.SendEmailRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.service.EmailService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -16,9 +19,9 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @GetMapping("send/{email}")
-    public ResponseEntity<MessageResponseDTO> sendEmail(@PathVariable String email) {
-        MessageResponseDTO message= emailService.sendTemplateMessage(email);
+    @PostMapping("/send")
+    public ResponseEntity<MessageResponseDTO> sendEmail(@RequestBody @Validated SendEmailRequestDTO emailRequestDTO) {
+        MessageResponseDTO message= emailService.sendTemplateMessage(emailRequestDTO);
         return ResponseEntity.ok(message);
     }
 }
