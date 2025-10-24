@@ -18,7 +18,7 @@ public interface SectorRepository extends JpaRepository<Sector, Long> {
     Optional<Double> getRemainingVolumeInSector(@Param("sectorId") Long sectorId,
                                                 @Param("employeeId") Long employeeId);
 
-    @Query("SELECT SUM(b.volume) as volume_utilizado_setor FROM Batch b\n" +
+    @Query("SELECT coalesce(SUM(b.volume), 0) as volume_utilizado_setor FROM Batch b\n" +
             "JOIN Product p ON p.id = b.product.id\n" +
             "JOIN Sector s ON s.id = p.sector.id\n" +
             "JOIN Employee e ON e.sector.id = s.id\n" +
