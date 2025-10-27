@@ -3,14 +3,17 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.apifluxar.dto.capacityHistory.CapacityHistoryOccupationResponse;
 import org.example.apifluxar.dto.capacityHistory.CapacityHistoryResponseDTO;
+import org.example.apifluxar.security.SecurityConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface CapacityHistoryOpenAPI {
     @Operation(summary = "Pesquisa o histórico de capacidade por ID da unidade",
             description = "Retorna uma lista de históricos de capacidade para a unidade fornecidos.")

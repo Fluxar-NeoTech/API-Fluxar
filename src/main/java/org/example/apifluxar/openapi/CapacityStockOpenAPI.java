@@ -3,14 +3,17 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.apifluxar.dto.capacityStock.CapacityStockRequestDTO;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
+import org.example.apifluxar.security.SecurityConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface CapacityStockOpenAPI {
 
     @Operation(summary = "Adiciona ou atualiza a capacidade de um setor em uma unidade")
