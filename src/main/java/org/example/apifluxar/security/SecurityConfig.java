@@ -46,11 +46,13 @@ public class SecurityConfig {
                             "/v3/api-docs/**",
                             "/swagger-resources/**",
                             "/swagger-resources",
-                            "/webjars/**"
+                            "/webjars/**",
+                            "/api/employee/login",
+                            "/api/employee/update/password",
+                            "/api/email/send"
                     ).permitAll()
-                    .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
-                    .requestMatchers("api/employee/**").hasAnyRole("A", "G")
-                    .requestMatchers("api/**").hasRole("G")
+                    .requestMatchers("/api/employee/**").hasAnyRole("A", "G")
+                    .requestMatchers("/api/**").hasRole("G")
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -63,11 +65,7 @@ public class SecurityConfig {
     public Argon2PasswordEncoder passwordEncoder() {
         return new Argon2PasswordEncoder(16, 32, 1, 1 << 12, 3);
     }
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        //return new BCryptPasswordEncoder();
-//        return NoOpPasswordEncoder.getInstance();
-//    }
+
 
 
 }
