@@ -62,7 +62,6 @@ public class CapacityStockService {
         CapacityStock capacityStock;
 
         if (existingOpt.isPresent()) {
-            // Atualiza registro existente
             capacityStock = existingOpt.get();
             capacityStock.setHeight(dto.getHeight());
             capacityStock.setWidth(dto.getWidth());
@@ -70,7 +69,6 @@ public class CapacityStockService {
 
             capacityStock = capacityStockRepository.saveAndFlush(capacityStock);
         } else {
-            // Cria novo registro
             capacityStock = new CapacityStock();
             capacityStock.setHeight(dto.getHeight());
             capacityStock.setWidth(dto.getWidth());
@@ -86,7 +84,6 @@ public class CapacityStockService {
         return new MessageResponseDTO("Capacidade do estoque registrada com sucesso!");
     }
 
-    //não sei se vai usar
     public CapacityStockResponseDTO getByUnitAndSector(Long unitId, Long sectorId) {
         CapacityStock capacityStock = capacityStockRepository.findBySectorAndUnit(unitId, sectorId).orElseThrow(() -> new EntityNotFoundException(
                 "Capacidade de estoque não encontrada para a unidade e setor informados"));

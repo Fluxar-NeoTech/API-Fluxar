@@ -1,5 +1,8 @@
 package org.example.apifluxar.security;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,8 +19,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@SecurityScheme(name = SecurityConfig.SECURITY, type = SecuritySchemeType.HTTP, bearerFormat = "JWT",scheme = "bearer")
 public class SecurityConfig {
 
+    public static final String SECURITY = "BearerAuth";
     final CustomAccessDeniedHandler customAcessDeniedHandler;
     final JwtAuthenticationFilter  jwtAuthenticationFilter;
 
@@ -32,25 +37,25 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/swagger-resources/**",
-                                "/swagger-resources",
-                                "/webjars/**"
-                        ).permitAll()
-                        .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
-                        .requestMatchers("api/employee/**").hasAnyRole("A", "G")
-                        .requestMatchers("api/**").hasRole("G")
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(excepition -> excepition
-                        .accessDeniedHandler(customAcessDeniedHandler));
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/swagger-resources/**",
+                            "/swagger-resources",
+                            "/webjars/**"
+                    ).permitAll()
+                    .requestMatchers("api/employee/login","api/employee/update/password","api/email/send").permitAll()
+                    .requestMatchers("api/employee/**").hasAnyRole("A", "G")
+                    .requestMatchers("api/**").hasRole("G")
+                    .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling(excepition -> excepition
+                    .accessDeniedHandler(customAcessDeniedHandler));
         return http.build();
     }
 

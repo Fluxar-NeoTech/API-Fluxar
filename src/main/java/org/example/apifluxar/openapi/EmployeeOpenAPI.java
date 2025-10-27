@@ -3,12 +3,14 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.groups.Default;
 import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
 import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
 import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
+import org.example.apifluxar.security.SecurityConfig;
 import org.example.apifluxar.validation.OnCreate;
 import org.example.apifluxar.validation.OnPatch;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface EmployeeOpenAPI {
 
     @Operation(summary = "Login de funcionário",

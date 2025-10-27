@@ -3,12 +3,15 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.apifluxar.dto.unit.UnitIndustryResponseDTO;
+import org.example.apifluxar.security.SecurityConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface UnitOpenAPI {
 
     @Operation(summary = "Buscar todas as unidades por ID da indústria",

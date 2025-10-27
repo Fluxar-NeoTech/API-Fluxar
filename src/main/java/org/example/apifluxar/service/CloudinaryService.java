@@ -44,11 +44,9 @@ public class CloudinaryService {
             Integer height = (Integer) uploadResult.get("height");
 
             return new CloudinayUploadResponse(url, returnedPublicId, width, height);
-
         } catch (IOException e) {
             throw new RuntimeException("Erro ao enviar o arquivo para o Cloudinary", e);
         } catch (FunctionArgumentException fae) {
-            // caso FileUpdateUtil lance essa exceção específica
             throw fae;
         }
     }

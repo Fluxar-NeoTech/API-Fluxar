@@ -66,7 +66,7 @@ public class EmployeeService {
 
     public LoginEmployeeResponseDTO login(EmployeeRequestDTO employeeRequestDTO) {
      Employee employee = employeeRepository
-                .findByEmail(employeeRequestDTO.getEmail())
+                .findByEmail(employeeRequestDTO.getEmail().toLowerCase())
                 .orElseThrow(() -> new NotAuthorizedEmployee(
                         "Você não está autorizado a acessar o sistema. " +
                         "Verifique suas credenciais e tente novamente."));
@@ -82,17 +82,13 @@ public class EmployeeService {
                     "Verifique suas credenciais e tente novamente.");
         }
 
-        // Cria o objeto Authentication “manual” para gerar o token
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(employee.getEmail(), null);
 
-        // Gera o token JWT
         String token = jwtService.generateToken(authentication);
 
-        // Salva o acesso (exemplo de lógica adicional sua)
         dailyActiveUsersService.insertAccess(employee.getId(), employeeRequestDTO.getOrigin());
 
-        // Retorna dados + token JWT
         return new LoginEmployeeResponseDTO(
                 employee.getId(),
                 employee.getRole(),
@@ -184,10 +180,41 @@ public class EmployeeService {
         return dto;
     }
 
-    public Employee findByEmail(String email) {
-        return employeeRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado para o email informado")
-                );
+    public EmployeeResponseDTO findByEmail(String email) {
+        Employee employee = employeeRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Funcionario não encontrado"));
+        EmployeeResponseDTO dto = new EmployeeResponseDTO(
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getProfilePicture()
+        );
+
+        Sector setor = employee.getSector();
+        if (setor != null) {
+            SectorResponseDTO sectorResponseDTO = sectorService.getSectorById(setor.getId());
+            dto.setSector(sectorResponseDTO);
+        }
+
+        Unit unit = employee.getUnit();
+        if (unit != null) {
+            UnitResponseDTO unitResponseDTO = unitService.getUnitById(unit.getId());
+            dto.setUnit(unitResponseDTO);
+        }
+
+        PlanProjection planProjection = employeeRepository.findByIndustryPlan(employee.getId(), employee.getUnit().getIndustry().getId());
+        if (planProjection != null) {
+            PlanResponseDTO planDto = new PlanResponseDTO(
+                    planProjection.getPlanName(),
+                    planProjection.getMonthsDuration()
+            );
+            dto.setPlan(planDto);
+        }
+
+        CapacityStockResponseDTO capacityStockResponseDTO = capacityStockService.getByUnitAndSector(unit.getId(), setor.getId());
+        if (capacityStockResponseDTO != null) {
+            Double capacidadeMaxima= capacityStockResponseDTO.getMaxCapacity();
+            dto.setMaxCapacity(capacidadeMaxima);
+        }
+        return dto;
     }
 }

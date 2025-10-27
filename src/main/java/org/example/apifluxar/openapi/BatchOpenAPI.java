@@ -3,10 +3,12 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.apifluxar.dto.batch.BatchRequestDTO;
 import org.example.apifluxar.dto.batch.BatchResponseDTO;
 import org.example.apifluxar.dto.batch.ProductBatchResponseDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
+import org.example.apifluxar.security.SecurityConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface BatchOpenAPI {
     @Operation(summary = "Listar todos os lotes por ID da unidade e setor",
             description = "Retorna uma lista de todos os lotes cadastrados no sistema filtrando pelo ID da unidade e setor.")

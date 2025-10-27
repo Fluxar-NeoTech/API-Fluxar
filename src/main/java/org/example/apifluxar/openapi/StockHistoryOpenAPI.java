@@ -3,13 +3,16 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.apifluxar.dto.stockHistory.StockHistoryResponseDTO;
+import org.example.apifluxar.security.SecurityConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface StockHistoryOpenAPI {
     @Operation(summary = "Pesquisa o histórico de estoque por ID da unidade e ID do setor",
             description = "Retorna uma lista de históricos de estoque para a unidade e setor fornecidos.")

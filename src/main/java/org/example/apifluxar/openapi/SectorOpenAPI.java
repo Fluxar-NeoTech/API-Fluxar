@@ -3,8 +3,11 @@ package org.example.apifluxar.openapi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.example.apifluxar.security.SecurityConfig;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@SecurityRequirement(name = SecurityConfig.SECURITY)
 public interface SectorOpenAPI {
 
     @Operation(summary = "Busca o volume restante em um setor para um funcionário específico")
