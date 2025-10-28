@@ -26,9 +26,9 @@ A aplicação também está preparada para deployment via **Docker** e possui do
 
 ## Desenvolvimento 🛠️
 <p>
-  <img src="./images/Java_Icon.png" alt="Java" width="29"/>
-  <img src="./images/Spring_Boot_Icon.png" alt="Spring Boot" width="29"/>
-  <img src="./images/PostgreSQL_icon.png" alt="PostgreSQL" height="30"/>
+  <img src="./.github/images/Java_Icon.png" alt="Java" width="29"/>
+  <img src="./.github/images/Spring_Boot_Icon.png" alt="Spring Boot" width="29"/>
+  <img src="./.github/images/PostgreSQL_icon.png" alt="PostgreSQL" height="30"/>
 </p>
 
 ---
