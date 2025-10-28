@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.groups.Default;
-import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
-import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
-import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
-import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
+import org.example.apifluxar.dto.employee.*;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.security.SecurityConfig;
 import org.example.apifluxar.validation.OnCreate;
@@ -60,7 +57,7 @@ public interface EmployeeOpenAPI {
             @ApiResponse( responseCode = "404", description = "Funcionário não encontrado"),
             @ApiResponse( responseCode = "500", description = "Erro interno do servidor")
     })
-    ResponseEntity<MessageResponseDTO> updatePassword(@RequestParam String email, @RequestParam String newPassword);
+    ResponseEntity<MessageResponseDTO> updatePassword(@RequestBody PasswordUpdateRequest request);
 
     @Operation(summary = "Atualizar foto de perfil do funcionário via site",
             description = "Atualiza a foto de perfil de um funcionário com base nas informações fornecidas via site.")

@@ -4,10 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.groups.Default;
-import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
-import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
-import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
-import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
+import org.example.apifluxar.dto.employee.*;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.openapi.EmployeeOpenAPI;
 import org.example.apifluxar.service.EmployeeService;
@@ -64,8 +61,8 @@ public class EmployeeController implements EmployeeOpenAPI {
     }
 
     @PutMapping("/update/password")
-    public ResponseEntity<MessageResponseDTO> updatePassword(@RequestParam String email, @RequestParam String newPassword) {
-        MessageResponseDTO messageResponseDTO = employeeService.updatePassword(email, newPassword);
+    public ResponseEntity<MessageResponseDTO> updatePassword(@RequestBody PasswordUpdateRequest request) {
+        MessageResponseDTO messageResponseDTO = employeeService.updatePassword(request);
         return ResponseEntity.ok(messageResponseDTO);
     }
 }
