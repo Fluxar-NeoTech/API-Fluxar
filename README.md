@@ -60,8 +60,8 @@ docker build -t fluxar-api .
 docker run -p 8080:8080 fluxar-api
 ```
 
-Localmente, API estará disponível em [http://localhost:8080](http://localhost:8080)
-Para consumo da versão deployada, estará disponível em 
+Localmente, API estará disponível em [http://localhost:8080](http://localhost:8080)  
+Para consumo da versão deployada, estará disponível em [https://api-fluxar.onrender.com](https://api-fluxar.onrender.com)
 
 ---
 
