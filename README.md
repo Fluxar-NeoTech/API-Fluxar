@@ -20,7 +20,6 @@ A aplicação também está preparada para deployment via **Docker** e possui do
 - Documentação via [**Swagger**](https://api-fluxar.onrender.com/swagger-ui/index.html#)
 - Integração com **PostgreSQL**
 - Containerização com **Docker**
-- Estrutura **MVC** baseada em **Spring Boot com JPA**
 
 ---
 
@@ -61,7 +60,8 @@ docker build -t fluxar-api .
 docker run -p 8080:8080 fluxar-api
 ```
 
-A API estará disponível em [http://localhost:8080](http://localhost:8080)
+Localmente, API estará disponível em [http://localhost:8080](http://localhost:8080)
+Para consumo da versão deployada, estará disponível em 
 
 ---
 
