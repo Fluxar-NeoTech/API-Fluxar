@@ -29,7 +29,7 @@ public class EmailService {
 
     public MessageResponseDTO sendTemplateMessage(SendEmailRequestDTO emailRequestDTO) {
         String to = emailRequestDTO.getEmail();
-        String link = "https://areademulher.r7.com/wp-content/uploads/2022/07/tipos-de-macarrao-saiba-quais-sao-e-como-servir.jpg";
+        String link = "https://web-site-fluxar.vercel.app/redefinePassword";
 
         EmployeeResponseDTO username = employeeService.findByEmail(to);
 
@@ -46,7 +46,7 @@ public class EmailService {
         personalization.addTo(toEmail);
         personalization.addDynamicTemplateData("firstName", username.getFirstName());
         personalization.addDynamicTemplateData("reset_link",
-                "https://areademulher.r7.com/wp-content/uploads/2022/07/tipos-de-macarrao-saiba-quais-sao-e-como-servir.jpg");
+                "https://web-site-fluxar.vercel.app/redefinePassword");
 
         mail.addPersonalization(personalization);
 

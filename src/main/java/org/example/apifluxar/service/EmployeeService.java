@@ -1,14 +1,11 @@
 package org.example.apifluxar.service;
 
+import org.example.apifluxar.dto.employee.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.apifluxar.dto.cloud.CloudinayUploadResponse;
-import org.example.apifluxar.dto.employee.EmployeeRequestDTO;
-import org.example.apifluxar.dto.employee.EmployeeResponseDTO;
-import org.example.apifluxar.dto.employee.LoginEmployeeResponseDTO;
-import org.example.apifluxar.dto.employee.UpdatePhotoRequestDTO;
 import org.example.apifluxar.dto.message.MessageResponseDTO;
 import org.example.apifluxar.dto.plan.PlanResponseDTO;
 import org.example.apifluxar.dto.sector.SectorResponseDTO;
@@ -127,17 +124,20 @@ public class EmployeeService {
         return new MessageResponseDTO("Foto de perfil atualizada com sucesso!");
     }
 
-    public MessageResponseDTO updatePassword(String email, String newPassword) {
-        Employee employee = employeeRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado para o email informado"));;
+    public MessageResponseDTO updatePassword(PasswordUpdateRequest request) {
+        Employee employee = employeeRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Funcionário não encontrado para o email: %s", request.getEmail())
+                ));
 
-        //Hash password with Argon2
-        String hashedPassword = passwordEncoder.encode(newPassword);
+        // Hash da nova senha
+        String hashedPassword = passwordEncoder.encode(request.getNewPassword());
         employee.setPassword(hashedPassword);
 
         employeeRepository.save(employee);
 
-        log.info("Senha do funcionário ID={} | Email={} atualizada com sucesso!", employee.getId(), employee.getEmail());
+        log.info("Senha atualizada com sucesso para o funcionário (ID={}, Email={})",
+                employee.getId(), employee.getEmail());
 
         return new MessageResponseDTO("Senha atualizada com sucesso!");
     }
