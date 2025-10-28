@@ -44,6 +44,19 @@ cd API-Fluxar
 
 Edite o arquivo `src/main/resources/application.properties`, configurando-o de acordo com suas ENVs
 
+```
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+cloudinary.cloud-name=${CLOUD_NAME}
+cloudinary.api-key=${API_KEY}
+cloudinary.api-secret=${API_SECRET}
+
+sendgrid.api-key=${SENDGRID_API_KEY}
+```
+
 ### 3 - Executar o projeto
 
 #### Via Maven:
