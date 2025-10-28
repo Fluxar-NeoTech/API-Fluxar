@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    List<ProductProjection> findAllProductRegistered(@Param("employeeId") Long id);
 
 
-   @Query("SELECT b.batchCode FROM Batch b\n" +
+   @Query("SELECT DISTINCT b.batchCode FROM Batch b\n" +
            "JOIN Product p ON p.id = b.product.id\n" +
            "JOIN Unit u ON u.id = b.unit.id\n" +
            "JOIN Employee e ON u.id = e.unit.id\n" +

@@ -33,7 +33,7 @@ public class EmailService {
 
         EmployeeResponseDTO username = employeeService.findByEmail(to);
 
-        String templateId = "d-71bbe8a900a340a68d3e58157eff16b0";
+        String templateId = "d-ec7e20f549d8468691a49db823d0b2ab";
 
         Email from = new Email("suporte2025.neo.tech@gmail.com", "NeoTech");
         Email toEmail = new Email(to);
@@ -41,9 +41,9 @@ public class EmailService {
         Mail mail = new Mail();
         mail.setFrom(from);
         mail.setTemplateId(templateId);
-
         Personalization personalization = new Personalization();
         personalization.addTo(toEmail);
+        personalization.setSubject("Redefinição de senha");
         personalization.addDynamicTemplateData("firstName", username.getFirstName());
         personalization.addDynamicTemplateData("reset_link",
                 "https://web-site-fluxar.vercel.app/redefinePassword");
