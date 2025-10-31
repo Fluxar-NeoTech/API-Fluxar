@@ -1,17 +1,17 @@
 package org.example.apifluxar.repository;
 
 import jakarta.transaction.Transactional;
-import org.example.apifluxar.model.DailyActiveUsers;
+import org.example.apifluxar.model.ActiveUsers;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface DailyActiveUsersRepository extends JpaRepository<DailyActiveUsers, Long> {
+public interface ActiveUsersRepository extends JpaRepository<ActiveUsers, Long> {
     @Modifying
     @Transactional
     @Query(value = """
-    INSERT INTO daily_active_users (user_id, data_acesso, hora_acesso, origem)
+    INSERT INTO usuarios_ativos (user_id, data_acesso, hora_acesso, origem)
     VALUES (:userId, CURRENT_DATE, CURRENT_TIME, :origin)
     """, nativeQuery = true)
     void insertAccess(

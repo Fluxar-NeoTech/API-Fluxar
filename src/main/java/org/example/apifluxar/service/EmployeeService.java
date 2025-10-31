@@ -1,7 +1,6 @@
 package org.example.apifluxar.service;
 
 import org.example.apifluxar.dto.employee.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.example.apifluxar.dto.capacityStock.CapacityStockResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,7 +22,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -35,7 +33,7 @@ public class EmployeeService {
     final UnitService unitService;
     final Logger log = LoggerFactory.getLogger(EmployeeService.class);
     final CloudinaryService cloudinaryService;
-    final DailyActiveUsersService dailyActiveUsersService;
+    final ActiveUsersService activeUsersService;
     final JwtService jwtService;
     final Argon2PasswordEncoder passwordEncoder;
 
@@ -47,7 +45,7 @@ public class EmployeeService {
                            SectorService sectorService,
                            UnitService unitService,
                            CloudinaryService cloudinaryService,
-                           DailyActiveUsersService dailyActiveUsersService,
+                           ActiveUsersService activeUsersService,
                            JwtService jwtService,
                            Argon2PasswordEncoder passwordEncoder) {
         this.unitService = unitService;
@@ -56,7 +54,7 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
         this.capacityStockService = capacityStockService;
         this.cloudinaryService =cloudinaryService;
-        this.dailyActiveUsersService = dailyActiveUsersService;
+        this.activeUsersService = activeUsersService;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -84,7 +82,7 @@ public class EmployeeService {
 
         String token = jwtService.generateToken(authentication);
 
-        dailyActiveUsersService.insertAccess(employee.getId(), employeeRequestDTO.getOrigin());
+        activeUsersService.insertAccess(employee.getId(), employeeRequestDTO.getOrigin());
 
         return new LoginEmployeeResponseDTO(
                 employee.getId(),
