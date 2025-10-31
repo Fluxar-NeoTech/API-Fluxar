@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "daily_active_users")
-public class DailyActiveUsers {
+@Table(name = "usuarios_ativos")
+public class ActiveUsers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class DailyActiveUsers {
     @Column(name = "origem")
     private String origin;
 
-    public DailyActiveUsers() {
+    public ActiveUsers() {
     }
 
     public Long getId() {
